@@ -7,6 +7,17 @@ An extension that allows you to use Twitch emotes on Boosty, including third-par
 
 Add Twitch streams to the extension to use their emotes on their Boosty pages.
 
+
+### Usage
+1. Install [exntension](https://chromewebstore.google.com/detail/pejlmncncgbgabfhakeogmhmjinpbign/)
+2. Log in to the extension using you Twitch account
+3. Add users you want to use emotes of
+
+
+You can see the extension in action on my Boosty page: https://boosty.to/stimulx. Add the user with the following usernames:
+
+Twitch: `stimulx`; Boosty: `stimulx`
+
 ### Roadmap
 
 - [x] Emotes on channel page: description, goals, sub tiers, posts, comments, chat (`https://boosty.to/<username>`)
