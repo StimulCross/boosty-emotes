@@ -45,6 +45,8 @@ export class ChannelPageContext extends SingleUserContext {
 				this._replaceEmotesInSubscriptionDescription(subscription.firstChild);
 			}
 		}
+
+		this._logger.debug('Initialized', this._user);
 	}
 
 	protected _createMutationObserver(): MutationObserver {

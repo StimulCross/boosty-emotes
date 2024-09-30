@@ -15,7 +15,7 @@ export abstract class PageContext extends DomListener {
 	) {
 		super($root, { emitter, listeners });
 		this._logger = createLogger(createLoggerOptions(this.constructor.name));
-		this._logger.debug('Initialized', this.$root);
+		this._logger.debug('Created');
 	}
 
 	public async init(): Promise<void> {

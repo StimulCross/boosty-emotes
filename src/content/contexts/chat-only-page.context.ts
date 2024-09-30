@@ -27,6 +27,8 @@ export class ChatOnlyPageContext extends SingleUserContext {
 		for (const message of messages) {
 			this._replaceEmotesInChatMessage(message);
 		}
+
+		this._logger.debug('Initialized', this._user);
 	}
 
 	protected _createMutationObserver(): MutationObserver {
