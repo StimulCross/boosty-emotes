@@ -67,6 +67,16 @@ export class ChannelPageContext extends SingleUserContext {
 							}
 						}
 					}
+					// Watch for layout update
+					else if (mutation.target.classList.value.includes('Layout_content_')) {
+						if (mutation.addedNodes.length > 0) {
+							const posts = mutation.target.querySelectorAll('[class^=Feed_itemWrap_]');
+
+							for (const post of posts) {
+								this._processPost(post);
+							}
+						}
+					}
 					// Watch for about section content updates
 					else if (mutation.target.classList.value.includes('AboutAuthor_content_')) {
 						for (const node of mutation.addedNodes) {
