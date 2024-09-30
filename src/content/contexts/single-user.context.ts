@@ -58,12 +58,14 @@ export abstract class SingleUserContext extends PageContext {
 	public abstract init(): Promise<void>;
 
 	public override async destroy(): Promise<void> {
+		await super.destroy();
+
 		this._observer.disconnect();
 		this._tooltip.destroy();
+		this._emotePickerContainer.hide();
+
 		// eslint-disable-next-line @typescript-eslint/unbound-method
 		browser.runtime.onMessage.removeListener(this._handleBackgroundMessage);
-
-		await Promise.resolve();
 	}
 
 	protected abstract _createMutationObserver(): MutationObserver;
