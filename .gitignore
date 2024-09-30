@@ -1,0 +1,53 @@
+boosty-emotes.zip
+*/**/.env
+*/**/.development.env
+*/**/.production.env
+*/**/package_synced.json
+.env
+# IDE and code editors
+.idea
+.vscode
+
+# Builds
+dist/
+
+yarn.lock
+package-lock.json
+
+# Logs
+logs
+*.log
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+.pnp
+.pnp.js
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
+/TODO.md

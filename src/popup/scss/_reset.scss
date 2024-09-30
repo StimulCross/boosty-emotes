@@ -1,0 +1,79 @@
+html {
+	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: inherit;
+
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+
+	color: inherit;
+}
+
+button {
+	padding: 0;
+
+	cursor: pointer;
+
+	color: inherit;
+	border-width: 0;
+
+	background-color: transparent;
+}
+
+input::-moz-focus-inner {
+	margin: 0;
+	padding: 0;
+
+	border: 0;
+}
+
+input,
+textarea {
+	outline: 0;
+}
+
+ul,
+ol,
+dd {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+cite {
+	font-style: normal;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+
+	border-width: 0;
+}
+
+figure {
+	margin: 0;
+}

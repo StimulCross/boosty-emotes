@@ -1,0 +1,45 @@
+@use 'variables';
+
+$footer-height: 35px;
+
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: $footer-height;
+	max-height: $footer-height;
+
+	padding: 0 8px;
+}
+
+.footer__social {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.footer__social-name {
+	font-size: 14px;
+}
+
+.footer__social-item {
+	margin: 0 10px;
+
+	&:hover {
+		.footer__social-name {
+			text-decoration: underline;
+		}
+	}
+}
+
+.footer__social-link {
+	display: flex;
+	align-items: center;
+}
+
+.footer__social-icon {
+	width: 18px;
+	height: 18px;
+	margin-right: 6px;
+}

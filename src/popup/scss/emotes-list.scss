@@ -1,0 +1,321 @@
+@use '@shared/styles/common';
+
+$search-background-color-light: rgb(225 225 225);
+$search-background-color-dark: rgb(30 30 30);
+
+.emotes-list {
+	width: 100%;
+	padding: 10px;
+
+	// height: 350px;
+
+	color: common.$black;
+}
+
+.emotes-list__providers {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+	margin-bottom: 10px;
+	gap: 6px;
+
+	color: common.$black;
+}
+
+.emotes-list__provider-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 3px;
+
+	max-width: 16px;
+	height: 16px;
+
+	svg {
+		max-width: 16px;
+		height: 16px;
+		fill: common.$dark;
+	}
+}
+
+.emotes-list__provider-name {
+	font-size: 14px;
+
+	display: none;
+	overflow: hidden;
+
+	width: auto !important;
+	margin-left: 8px;
+
+	cursor: pointer;
+	user-select: none;
+	text-align: center;
+
+	color: common.$black;
+}
+
+.emotes-list__provider {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: center;
+
+	padding: 10px 8px;
+
+	cursor: pointer;
+
+	border-radius: 8px;
+
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+
+	&--hide {
+		display: none;
+	}
+
+	&--active {
+		background: common.$background-active-dark;
+
+		.emotes-list__provider-name {
+			font-weight: bold;
+
+			display: block;
+		}
+	}
+
+	&--boosty {
+		&:hover {
+			.emotes-list__provider-icon {
+				svg {
+					fill: common.$boosty-color;
+				}
+			}
+		}
+	}
+
+	&--twitch {
+		&:hover {
+			.emotes-list__provider-icon {
+				svg {
+					fill: common.$twitch-color;
+				}
+			}
+		}
+	}
+
+	&--7tv {
+		&:hover {
+			.emotes-list__provider-icon {
+				svg {
+					fill: common.$stv-color;
+				}
+			}
+		}
+	}
+
+	&--ffz {
+		&:hover {
+			.emotes-list__provider-icon {
+				svg {
+					fill: common.$ffz-color;
+				}
+			}
+		}
+	}
+
+	&--bttv {
+		&:hover {
+			.emotes-list__provider-icon {
+				svg {
+					fill: common.$bttv-color;
+				}
+			}
+		}
+	}
+}
+
+.emotes-list__provider--active.emotes-list__provider--boosty {
+	.emotes-list__provider-icon {
+		svg {
+			fill: common.$boosty-color;
+		}
+	}
+}
+
+.emotes-list__provider--active.emotes-list__provider--twitch {
+	.emotes-list__provider-icon {
+		svg {
+			fill: common.$twitch-color;
+		}
+	}
+}
+
+.emotes-list__provider--active.emotes-list__provider--7tv {
+	.emotes-list__provider-icon {
+		svg {
+			fill: common.$stv-color;
+		}
+	}
+}
+
+.emotes-list__provider--active.emotes-list__provider--ffz {
+	.emotes-list__provider-icon {
+		svg {
+			fill: common.$ffz-color;
+		}
+	}
+}
+
+.emotes-list__provider--active.emotes-list__provider--bttv {
+	.emotes-list__provider-icon {
+		svg {
+			fill: common.$bttv-color;
+		}
+	}
+}
+
+.emotes-list__search {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 10px;
+	padding: 5px;
+
+	border-radius: 5px;
+
+	background-color: $search-background-color-light;
+}
+
+.emotes-list__search-icon {
+	width: 16px;
+	height: 16px;
+	margin: 2px 6px 0;
+
+	/* stylelint-disable-next-line no-descending-specificity */
+	svg {
+		fill: common.$dark;
+	}
+}
+
+.emotes-list__search-input {
+	width: 100%;
+
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.emotes-list__body {
+	overflow: hidden;
+}
+
+.emotes-list__emotes-set {
+	display: none;
+
+	margin-bottom: 10px;
+
+	&--show {
+		display: block;
+	}
+}
+
+.emotes-list__emotes-set-container {
+	font-size: 14px;
+	font-weight: bold;
+
+	width: 100%;
+	padding: 5px 10px;
+
+	cursor: pointer;
+	text-align: left;
+
+	color: common.$black;
+	border: none;
+	outline: none;
+	background-color: transparent;
+
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+
+	&::after {
+		font-weight: bold;
+
+		float: right;
+
+		margin-left: 5px;
+
+		content: '\2212';
+
+		color: common.$black;
+	}
+
+	&--collapsed {
+		&::after {
+			content: '\002B';
+		}
+	}
+}
+
+.emotes-list__emotes-container {
+	display: flex;
+	flex-flow: column;
+
+	margin-top: 5px;
+
+	&--hide {
+		display: none;
+	}
+}
+
+.emotes-list__emotes-stats {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.emotes-list__emotes-stats-item {
+	font-size: 13px;
+
+	color: common.$secondary-color;
+}
+
+.emotes-list__emotes {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	width: 100%;
+
+	margin-top: 10px;
+
+	&--hide {
+		display: none;
+	}
+}
+
+.emotes-list__emote {
+	display: block;
+
+	max-width: 100%;
+	height: 100%;
+
+	margin: 0 2px;
+	padding: 3px;
+
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+
+	&--hide {
+		display: none;
+	}
+}

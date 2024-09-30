@@ -1,0 +1,450 @@
+@use '@shared/styles/common';
+
+$search-background-color-light: rgb(225 225 225);
+$search-background-color-dark: rgb(30 30 30);
+$comment-publisher-button-color: #7c7c7c;
+
+.BE-emote-picker__icon {
+	width: 24px;
+	height: 24px;
+
+	color: $comment-publisher-button-color;
+
+	&:hover,
+	&:active {
+		color: common.$primary-color;
+	}
+}
+
+.BE-emote-picker__button {
+	font-family: inherit;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 0 8px;
+
+	cursor: pointer;
+
+	color: inherit;
+	border: none;
+	background-color: transparent;
+	appearance: none;
+
+	&:focus {
+		outline-color: common.$primary-color;
+	}
+
+	&--active {
+		.BE-emote-picker__icon {
+			color: common.$primary-color;
+		}
+	}
+}
+
+.BE-emote-picker__overlay {
+	position: fixed;
+	z-index: 7;
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
+}
+
+.BE-emote-picker {
+	position: absolute;
+	z-index: 100 !important;
+	right: 15px;
+	bottom: calc(100% - 2px);
+
+	width: 300px;
+	padding: 10px;
+
+	// height: 350px;
+
+	color: common.$black;
+	border: 1px solid common.$border-light;
+	border-radius: 8px;
+
+	background: common.$white;
+}
+
+.dark-theme .BE-emote-picker {
+	color: common.$white;
+	border: 1px solid common.$border-dark;
+
+	background: common.$dark;
+}
+
+.BE-emote-picker__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+	margin-bottom: 10px;
+	gap: 6px;
+
+	color: common.$black;
+}
+
+.dark-theme .BE-emote-picker__header {
+	color: common.$white;
+}
+
+.BE-emote-picker__provider-icon {
+	max-width: 16px;
+	height: 16px;
+	margin-bottom: 1px;
+
+	.provider-icon {
+		max-width: 16px;
+		height: 16px;
+		fill: common.$dark;
+	}
+
+	.provider-icon#twitch-icon-svg {
+		margin-top: 1px;
+	}
+}
+
+.dark-theme .BE-emote-picker__provider-icon {
+	svg {
+		fill: common.$light;
+	}
+}
+
+.BE-emote-picker__provider-name {
+	font-size: 14px;
+
+	display: none;
+	overflow: hidden;
+
+	width: auto !important;
+	margin-left: 8px;
+
+	cursor: pointer;
+	user-select: none;
+	text-align: center;
+
+	color: common.$black;
+}
+
+.dark-theme .BE-emote-picker__provider-name {
+	color: common.$white;
+}
+
+.BE-emote-picker__provider {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: center;
+
+	padding: 10px 8px;
+
+	cursor: pointer;
+
+	border-radius: 8px;
+
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+
+	&--hide {
+		display: none;
+	}
+
+	&--active {
+		background: common.$background-active-dark;
+
+		.BE-emote-picker__provider-name {
+			font-weight: bold;
+
+			display: block;
+
+			animation: provider-name-fade-in 0.1s ease-out forwards;
+		}
+	}
+
+	&--boosty {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$boosty-color;
+				}
+			}
+		}
+	}
+
+	&--twitch {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$twitch-color;
+				}
+			}
+		}
+	}
+
+	&--7tv {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$stv-color;
+				}
+			}
+		}
+	}
+
+	&--ffz {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$ffz-color;
+				}
+			}
+		}
+	}
+
+	&--bttv {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$bttv-color;
+				}
+			}
+		}
+	}
+}
+
+.dark-theme .BE-emote-picker__provider {
+	&:hover {
+		background: common.$background-hover-light;
+	}
+
+	&--active {
+		background: common.$background-active-light;
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--boosty {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$boosty-color;
+		}
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--twitch {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$twitch-color;
+		}
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--7tv {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$stv-color;
+		}
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--ffz {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$ffz-color;
+		}
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--bttv {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$bttv-color;
+		}
+	}
+}
+
+.BE-emote-picker__search {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin: 0 6px 10px;
+	padding: 5px;
+
+	background-color: $search-background-color-light;
+}
+
+.dark-theme .BE-emote-picker__search {
+	background-color: $search-background-color-dark;
+}
+
+.BE-emote-picker__search-icon {
+	width: 16px;
+	height: 16px;
+	margin: 2px 6px 0;
+
+	/* stylelint-disable-next-line no-descending-specificity */
+	svg {
+		fill: common.$dark;
+	}
+}
+
+.dark-theme .BE-emote-picker__search-icon {
+	/* stylelint-disable-next-line no-descending-specificity */
+	svg {
+		fill: common.$light;
+	}
+}
+
+.BE-emote-picker__search-input {
+	width: 100%;
+
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.BE-emote-picker__body {
+	overflow: hidden;
+
+	height: 280px;
+}
+
+.BE-emote-picker__emote-sets {
+	display: none;
+	overflow-y: scroll;
+
+	width: 100%;
+	height: 100%;
+	scrollbar-color: common.$gray transparent;
+	scrollbar-width: thin;
+
+	&--show {
+		display: block;
+	}
+}
+
+.dark-theme .BE-emote-picker__emote-sets {
+	scrollbar-color: common.$gray transparent;
+}
+
+.BE-emote-picker__emotes-set {
+	display: none;
+
+	margin-bottom: 10px;
+
+	&--show {
+		display: block;
+	}
+}
+
+.BE-emote-picker__emotes-set-container {
+	font-size: 14px;
+	font-weight: bold;
+
+	width: 100%;
+	padding: 5px 10px;
+
+	cursor: pointer;
+	text-align: left;
+
+	color: common.$black;
+	border: none;
+	outline: none;
+	background-color: transparent;
+
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+
+	&::after {
+		font-weight: bold;
+
+		float: right;
+
+		margin-left: 5px;
+
+		content: '\2212';
+
+		color: common.$black;
+	}
+
+	&--collapsed {
+		&::after {
+			content: '\002B';
+		}
+	}
+}
+
+.dark-theme .BE-emote-picker__emotes-set-container {
+	color: common.$white;
+
+	&:hover {
+		background: common.$background-hover-light;
+	}
+
+	&::after {
+		color: common.$white;
+	}
+}
+
+.BE-emote-picker__emotes-list {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	margin-top: 5px;
+	padding: 0 10px;
+
+	&--hide {
+		display: none;
+	}
+}
+
+.BE-emote-picker__emote {
+	display: block;
+
+	max-width: 100%;
+	height: 100%;
+
+	// max-height: 40px;
+	margin: 0 2px;
+	padding: 3px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: scale 0.1s ease-out;
+
+	&:hover {
+		background: common.$background-hover-dark;
+		scale: 1.1;
+	}
+
+	&--hide {
+		display: none;
+	}
+}
+
+.dark-theme .BE-emote-picker__emote {
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+}
+
+@keyframes provider-name-fade-in {
+	from {
+		width: 0;
+	}
+
+	to {
+		width: 100%;
+	}
+}

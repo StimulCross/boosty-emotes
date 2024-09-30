@@ -1,0 +1,10 @@
+@use '../../shared/components/emote-tooltip/emote-tooltip';
+@use 'emote-picker';
+
+.BE-emote {
+	display: inline-block;
+
+	max-height: 32px;
+
+	vertical-align: middle;
+}

@@ -1,0 +1,34 @@
+{
+	"manifest_version": 3,
+	"name": "Boosty Emotes",
+	"description": "__MSG_description__",
+	"homepage_url": "https://github.com/stimulcross",
+	"permissions": ["storage", "unlimitedStorage", "identity"],
+	"minimum_chrome_version": "110",
+	"default_locale": "en",
+	"host_permissions": ["https://*.boosty.to/*"],
+	"icons": {
+		"16": "images/icon/icon-16.png",
+		"32": "images/icon/icon-32.png",
+		"48": "images/icon/icon-48.png",
+		"128": "images/icon/icon-128.png"
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"matches": ["https://boosty.to/*"],
+			"css": ["content.css"]
+		},
+		{
+			"run_at": "document_end",
+			"matches": ["https://boosty.to/*"],
+			"js": ["content.js"]
+		}
+	],
+	"action": {
+		"default_popup": "popup.html"
+	}
+}

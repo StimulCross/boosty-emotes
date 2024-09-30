@@ -1,0 +1,206 @@
+@use '@shared/styles/common';
+@use 'variables';
+@use 'animations';
+@use 'mixins';
+@use 'sass:color';
+
+$user-card-width: 220px;
+$select-shadow: rgb(245 133 60 / 80%) 0 15px 40px;
+
+.body {
+	display: none;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
+
+	min-height: 0;
+
+	margin-top: 15px;
+
+	&--show {
+		display: flex !important;
+	}
+}
+
+.body__add-user-button {
+	margin-top: 5px;
+	margin-bottom: 10px;
+
+	animation: fadein 0.1s ease-in-out forwards;
+	animation-delay: 0.1s;
+
+	opacity: 0;
+}
+
+.body__users-list {
+	position: relative;
+
+	display: flex;
+
+	overflow: scroll;
+	overflow-x: hidden;
+	align-items: center;
+	flex-direction: column;
+
+	width: 280px;
+	padding: 10px 0;
+
+	animation: fadein 0.1s ease-in-out forwards;
+	animation-delay: 0.1s;
+
+	opacity: 0;
+
+	@include mixins.scrollbar;
+}
+
+.body__user-card {
+	position: relative;
+	left: 11px;
+
+	display: flex;
+	justify-content: space-between;
+
+	width: $user-card-width;
+	max-width: $user-card-width;
+	margin-bottom: 25px;
+	padding: 5px 0 5px 10px;
+
+	transition:
+		fadein 1s ease-in-out,
+		scale 0.1s ease-in-out;
+
+	border-radius: 5px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-clip: border-box;
+	background-size: cover;
+
+	box-shadow: variables.$shadow-top, variables.$shadow-bottom;
+
+	&:hover {
+		cursor: pointer;
+
+		box-shadow: $select-shadow;
+		scale: 1.02;
+	}
+}
+
+.body__avatar {
+	position: absolute;
+	top: 13px;
+	left: -29px;
+
+	width: 60px;
+	height: 60px;
+
+	border: 3px solid common.$secondary-color;
+	border-radius: 50%;
+
+	background-color: common.$white;
+	background-size: contain;
+
+	img {
+		width: 100%;
+		height: 100%;
+
+		border-radius: 50%;
+	}
+}
+
+.body__user-card:hover > .body__avatar {
+	border: 3px solid common.$primary-color;
+}
+
+.body__usernames-container {
+	position: relative;
+	left: 30px;
+
+	display: flex;
+	flex-direction: column;
+
+	margin-right: auto;
+	padding: 9px 0;
+	gap: 4px;
+}
+
+.body__cross-button {
+	position: absolute;
+	top: -7px;
+	right: -7px;
+
+	display: flex;
+	align-items: center;
+	flex-flow: column nowrap;
+	justify-content: center;
+
+	width: 19px;
+	height: 19px;
+
+	margin: 0;
+	padding: 0;
+
+	cursor: pointer;
+	transition: transform 150ms;
+
+	border: 0;
+	border-radius: 50%;
+	background-color: variables.$gray;
+
+	&:hover {
+		transform: rotateZ(90deg);
+
+		background-color: common.$critical-color;
+	}
+
+	.body__icon-cross {
+		@include mixins.cross(14px, white, 3px);
+
+		&:hover {
+			background-color: common.$critical-color;
+		}
+	}
+}
+
+.body__username-container {
+	display: flex;
+	align-items: center;
+
+	padding-bottom: 4px;
+}
+
+.body__platform-icon {
+	display: flex;
+
+	max-width: 16px;
+	margin-top: 2px;
+	margin-right: 6px;
+
+	.provider-icon {
+		width: 16px;
+		height: 16px;
+		margin-bottom: 1px;
+	}
+
+	#twitch-icon-svg {
+		margin-top: 2px;
+		fill: common.$twitch-color;
+	}
+
+	#boosty-icon-svg {
+		fill: common.$boosty-color;
+	}
+}
+
+.body__username {
+	font-family: sans-serif, serif;
+	font-size: 15px;
+	font-weight: bold;
+
+	overflow: hidden;
+
+	max-width: 160px;
+
+	text-overflow: ellipsis;
+
+	color: black;
+}

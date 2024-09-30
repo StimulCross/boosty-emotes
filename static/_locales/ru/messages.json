@@ -1,0 +1,109 @@
+{
+	"description": {
+		"message": "Расширение, которое дает возможность использовать смайлы Twitch на Boosty, включая сторонние провайдеры 7TV, FrankerFaceZ и BetterTTV."
+	},
+	"login_button": {
+		"message": "Войти через Twitch"
+	},
+	"header_global_emotes": {
+		"message": "Глобальные смайлы"
+	},
+	"header_logout": {
+		"message": "Выйти"
+	},
+	"body_add_user": {
+		"message": "Добавить"
+	},
+	"add_user_add_button": {
+		"message": "Добавить"
+	},
+	"add_user_cancel_button": {
+		"message": "Отмена"
+	},
+	"add_user_close_button": {
+		"message": "Закрыть"
+	},
+	"add_user_twitch_input_placeholder": {
+		"message": "Никнейм Twitch"
+	},
+	"add_user_boosty_input_placeholder": {
+		"message": "Никнейм Boosty"
+	},
+	"add_user_empty_inputs_error": {
+		"message": "Все поля должны быть заполнены"
+	},
+	"add_user_user_does_not_exist": {
+		"message": "Twitch пользователя @$USER$ не существует. Возможно он был забанен.",
+		"placeholders": {
+			"user": {
+				"content": "$1",
+				"example": "StimulX"
+			}
+		}
+	},
+	"add_user_twitch_user_already_exists": {
+		"message": "Twitch пользователь @$TWITCH_USER$ уже связан с Boosty пользователем @$BOOSTY_USER$",
+		"placeholders": {
+			"twitch_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"boosty_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_boosty_user_already_exists": {
+		"message": "Boosty пользователь @$BOOSTY_USER$ уже связан с Twitch пользователем @$TWITCH_USER$",
+		"placeholders": {
+			"boosty_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"twitch_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_unknown_error": {
+		"message": "Неизвестная ошибка. Попробуйте ещё раз."
+	},
+	"user_info_back_button": {
+		"message": "Назад"
+	},
+	"user_info_total_emotes": {
+		"message": "Всего"
+	},
+	"user_info_emotes_updated_at": {
+		"message": "Обновлено"
+	},
+	"boosty_global_emotes_title": {
+		"message": "Boosty смайлы"
+	},
+	"twitch_global_emotes_title": {
+		"message": "Twitch глобальные смайлы"
+	},
+	"twitch_channel_emotes_title": {
+		"message": "Twitch смайлы канала"
+	},
+	"7tv_global_emotes_title": {
+		"message": "7TV глобальные смайлы"
+	},
+	"7tv_channel_emotes_title": {
+		"message": "7TV смайлы канала"
+	},
+	"ffz_global_emotes_title": {
+		"message": "FFZ глобальные смайлы"
+	},
+	"ffz_channel_emotes_title": {
+		"message": "FFZ смайлы канала"
+	},
+	"bttv_global_emotes_title": {
+		"message": "BTTV глобальные смайлы"
+	},
+	"bttv_channel_emotes_title": {
+		"message": "BTTV смайлы канала"
+	}
+}

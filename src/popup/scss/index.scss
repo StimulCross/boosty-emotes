@@ -1,0 +1,35 @@
+@use '@shared/styles/common';
+@use 'reset';
+@use 'popup-common';
+@use 'app';
+@use 'login';
+@use 'header';
+@use 'body';
+@use 'global-emotes';
+@use 'user-info';
+@use 'add-user-modal';
+@use 'footer';
+@use 'emotes-list';
+@use '../../shared/components/emote-tooltip/emote-tooltip';
+
+$page-width: 300px;
+$page-height: 500px;
+
+body {
+	font-family: sans-serif, serif;
+
+	width: $page-width;
+	max-width: $page-width;
+	height: $page-height;
+	max-height: $page-height;
+	margin: 0;
+
+	color: common.$black;
+
+	background: common.$white;
+}
+
+body.dark-theme {
+	color: common.$white;
+	background: common.$dark;
+}

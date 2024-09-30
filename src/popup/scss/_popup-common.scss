@@ -1,0 +1,75 @@
+@use 'sass:color';
+@use '@shared/styles/common';
+@use 'variables';
+
+.button {
+	font-weight: bold;
+
+	padding: 6px 8px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: box-shadow 0.1s ease-in-out;
+
+	color: common.$white;
+	border: none;
+	border-radius: 5px;
+
+	&--primary {
+		background-color: common.$primary-color;
+
+		&:hover {
+			background-color: color.adjust(common.$primary-color, $lightness: 5%);
+		}
+
+		&:active,
+		&:disabled {
+			background-color: color.adjust(common.$primary-color, $lightness: -5%);
+		}
+	}
+
+	&--secondary {
+		background-color: variables.$gray;
+
+		&:hover {
+			background-color: color.adjust(variables.$gray, $lightness: 8%);
+		}
+
+		&:active,
+		&:disabled {
+			background-color: color.adjust(variables.$gray, $lightness: -10%);
+		}
+	}
+
+	&--small {
+		font-size: 14px;
+	}
+
+	&--medium {
+		font-size: 16px;
+
+		padding: 8px 10px;
+	}
+
+	&--large {
+		font-size: 18px;
+
+		padding: 10px 12px;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.popup {
+	position: fixed;
+	z-index: 1000;
+
+	display: none;
+
+	&--show {
+		display: block;
+	}
+}

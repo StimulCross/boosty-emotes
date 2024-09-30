@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"module": "CommonJS",
+		"target": "ES2018",
+		"esModuleInterop": true,
+		"sourceMap": true,
+		"rootDir": "src",
+		"outDir": "dist",
+		"noEmitOnError": true,
+		"lib": ["ESNext.Promise", "DOM", "DOM.Iterable", "ES2021.String"],
+		"typeRoots": ["node_modules/@types"],
+		"paths": {
+			"@/*": ["./src/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@content/*": ["./src/content/*"],
+			"@popup/*": ["./src/popup/*"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist"]
+}

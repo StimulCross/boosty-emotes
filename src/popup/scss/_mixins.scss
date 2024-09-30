@@ -1,0 +1,45 @@
+@use '@shared/styles/common';
+
+@mixin scrollbar() {
+	scrollbar-color: common.$primary-color common.$white;
+	scrollbar-width: thin;
+}
+
+@mixin cross($size: 10px, $color: currentColor, $thickness: 1px) {
+	position: relative;
+
+	width: $size;
+	height: $size;
+	margin: 0;
+	padding: 0;
+
+	border: 0;
+	background: none;
+
+	&::before,
+	&::after {
+		position: absolute;
+		top: calc(($size - $thickness) / 2);
+		right: 0;
+		left: 0;
+
+		height: $thickness;
+
+		content: '';
+
+		border-radius: $thickness;
+		background: $color;
+	}
+
+	&::before {
+		transform: rotate(45deg);
+	}
+
+	&::after {
+		transform: rotate(-45deg);
+	}
+
+	span {
+		display: block;
+	}
+}

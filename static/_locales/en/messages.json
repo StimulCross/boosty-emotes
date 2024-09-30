@@ -1,0 +1,109 @@
+{
+	"description": {
+		"message": "An extension that allows you to use Twitch emotes on Boosty, including third-party providers: 7TV, FrankerFaceZ, and BetterTTV."
+	},
+	"login_button": {
+		"message": "Log in with Twitch"
+	},
+	"header_global_emotes": {
+		"message": "Global emotes"
+	},
+	"header_logout": {
+		"message": "Log out"
+	},
+	"body_add_user": {
+		"message": "Add user"
+	},
+	"add_user_add_button": {
+		"message": "Add"
+	},
+	"add_user_cancel_button": {
+		"message": "Cancel"
+	},
+	"add_user_close_button": {
+		"message": "Close"
+	},
+	"add_user_twitch_input_placeholder": {
+		"message": "Twitch username"
+	},
+	"add_user_boosty_input_placeholder": {
+		"message": "Boosty username"
+	},
+	"add_user_empty_inputs_error": {
+		"message": "All fields must be filled in"
+	},
+	"add_user_user_does_not_exist": {
+		"message": "Twitch user @$USER$ does not exist",
+		"placeholders": {
+			"user": {
+				"content": "$1",
+				"example": "StimulX"
+			}
+		}
+	},
+	"add_user_twitch_user_already_exists": {
+		"message": "Twitch user @$TWITCH_USER$ is already linked to Boosty user @$BOOSTY_USER$",
+		"placeholders": {
+			"twitch_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"boosty_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_boosty_user_already_exists": {
+		"message": "Boosty user @$BOOSTY_USER$ is already linked to Twitch user @$TWITCH_USER$",
+		"placeholders": {
+			"boosty_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"twitch_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_unknown_error": {
+		"message": "Unknown error. Try again."
+	},
+	"user_info_back_button": {
+		"message": "Back"
+	},
+	"user_info_total_emotes": {
+		"message": "Total"
+	},
+	"user_info_emotes_updated_at": {
+		"message": "Updated at"
+	},
+	"boosty_global_emotes_title": {
+		"message": "Boosty Emotes"
+	},
+	"twitch_global_emotes_title": {
+		"message": "Twitch Global Emotes"
+	},
+	"twitch_channel_emotes_title": {
+		"message": "Twitch Global Emotes"
+	},
+	"7tv_global_emotes_title": {
+		"message": "7TV Global Emotes"
+	},
+	"7tv_channel_emotes_title": {
+		"message": "7TV Channel Emotes"
+	},
+	"ffz_global_emotes_title": {
+		"message": "FFZ Global Emotes"
+	},
+	"ffz_channel_emotes_title": {
+		"message": "FFZ Channel Emotes"
+	},
+	"bttv_global_emotes_title": {
+		"message": "BTTV Global Emotes"
+	},
+	"bttv_channel_emotes_title": {
+		"message": "BTTV Channel Emotes"
+	}
+}

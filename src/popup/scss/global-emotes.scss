@@ -1,0 +1,35 @@
+@use 'mixins';
+
+.global-emotes {
+	display: none;
+	overflow: scroll;
+	overflow-x: hidden;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
+
+	width: 100%;
+	min-height: 0;
+
+	animation: global-emotes-fade-in 0.1s ease-in-out;
+
+	@include mixins.scrollbar;
+
+	&--show {
+		display: flex !important;
+	}
+}
+
+@keyframes global-emotes-fade-in {
+	from {
+		transform: translateY(-20px);
+
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+
+		opacity: 1;
+	}
+}
