@@ -15,7 +15,7 @@
 
 Вы можете оценить работу расширения на моей странице Boosty: https://boosty.to/stimulx. Добавьте пользователя со следующими никами:
 
-Twitch: **stimulx**; Boosty: **stimulx**
+Twitch: `stimulx`; Boosty: `stimulx`
 
 
 
