@@ -42,12 +42,14 @@ export class RootContext {
 		this.$root = $root;
 		this._initListeners();
 
-		this._logger.debug('Initialized', this.$root);
+		this._logger.debug('Created', this.$root);
 	}
 
 	public async init(): Promise<void> {
 		await this._updateGlobalEmotes();
 		await this._updateContext();
+
+		this._logger.debug('Inititalized', this._context);
 	}
 
 	private _initListeners(): void {
