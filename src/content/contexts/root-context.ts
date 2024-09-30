@@ -14,7 +14,7 @@ import { StreamPageContext } from './stream-page.context';
 
 export class RootContext {
 	private readonly _logger = createLogger(createLoggerOptions(RootContext.name));
-	private _state: PageContext | null = null;
+	private _context: PageContext | null = null;
 	public currentPath: string[];
 	public currentUrl: URL = new URL(window.location.href);
 	public $root: Element;
@@ -114,46 +114,43 @@ export class RootContext {
 	}
 
 	private async _updateContext(): Promise<void> {
-		await this._updateState();
-		await this._state?.init();
-	}
-
-	private async _updateState(): Promise<void> {
-		await this._state?.destroy();
+		await this._context?.destroy();
 
 		// Main page if no path
 		if (this.currentPath.length === 0) {
-			this._state = new MainPageContext(this);
+			this._context = new MainPageContext(this);
 		}
 		// Skip all pages prefixed with `app/*` except for `app/messages`
 		else if (this.currentPath[0] === 'app') {
 			if (this.currentPath[1] === 'messages') {
-				this._state = new MessagesPageContext(this);
+				this._context = new MessagesPageContext(this);
 			} else {
-				this._state = null;
+				this._context = null;
 			}
 		}
 		// Check for posts and streams pages
 		else if (this.currentPath[1]) {
 			if (this.currentPath[1] === 'streams') {
 				if (this.currentPath[2] === 'video_stream') {
-					this._state = new StreamPageContext(this);
+					this._context = new StreamPageContext(this);
 				} else if (this.currentPath[2] === 'only-chat') {
-					this._state = new ChatOnlyPageContext(this);
+					this._context = new ChatOnlyPageContext(this);
 				}
 			} else if (this.currentPath[1] === 'posts' && this.currentPath[2]) {
 				// The post page markup is similar to the channel page markup.
-				this._state = new ChannelPageContext(this);
+				this._context = new ChannelPageContext(this);
 			}
 		}
 		// Check for channel main page
 		else if (this.currentPath.length === 1) {
-			this._state = new ChannelPageContext(this);
+			this._context = new ChannelPageContext(this);
 		}
 		// All other pages should not be handled
 		else {
-			this._state = null;
+			this._context = null;
 		}
+
+		await this._context?.init();
 	}
 
 	private _convertPathToArr(path: string): string[] {
