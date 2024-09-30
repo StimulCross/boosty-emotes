@@ -5,7 +5,7 @@ import { EmotesUpdater } from './emotes-updater';
 import { TabsObserver } from './tabs-observer';
 
 const keepAlive = (): unknown => setInterval(() => void browser.runtime.getPlatformInfo(), 20_000);
-chrome.runtime.onStartup.addListener(keepAlive);
+browser.runtime.onStartup.addListener(keepAlive);
 keepAlive();
 
 async function main(): Promise<void> {
