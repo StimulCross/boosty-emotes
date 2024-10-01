@@ -179,7 +179,7 @@ export class EmotesUpdater {
 				this._shouldUpdateGlobalEmotes(globalEmotesState.twitchGlobalEmotesUpdatedAt) &&
 				(await Store.getTwitchAccessToken())
 			) {
-				this._logger.debug('Twitch global emotes update');
+				this._logger.debug('Updating Twitch global emotes...');
 
 				const twitchGlobalEmotes = await TwitchApi.getGlobalEmotes();
 				let isChanged = false;
@@ -196,7 +196,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('Twitch global emotes updated');
+					this._logger.info('Twitch global emotes have been updated');
 
 					areGlobalEmotesChanged ||= true;
 					await Store.setTwitchGlobalEmotes(twitchGlobalEmotes);
@@ -211,7 +211,7 @@ export class EmotesUpdater {
 
 		try {
 			if (this._shouldUpdateGlobalEmotes(globalEmotesState.sevenTvGlobalEmotesUpdatedAt)) {
-				this._logger.debug('7TV global emotes update');
+				this._logger.debug('Updating 7TV global emotes...');
 
 				const sevenTvGlobalEmotes = await this._emotesFetcher.stv.getGlobalEmotes();
 				let isChanged = false;
@@ -228,7 +228,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('7TV global emotes updated');
+					this._logger.info('7TV global emotes have been updated');
 
 					areGlobalEmotesChanged ||= true;
 					await Store.setSevenTvGlobalEmotes(sevenTvGlobalEmotes);
@@ -243,7 +243,7 @@ export class EmotesUpdater {
 
 		try {
 			if (this._shouldUpdateGlobalEmotes(globalEmotesState.ffzGlobalEmotesUpdatedAt)) {
-				this._logger.debug('FFZ global emotes update');
+				this._logger.debug('Updating FFZ global emotes...');
 
 				const ffzGlobalEmotes = await this._emotesFetcher.ffz.getGlobalEmotes();
 				let isChanged = false;
@@ -260,7 +260,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('FFZ global emotes updated');
+					this._logger.info('FFZ global emotes have been updated');
 
 					areGlobalEmotesChanged ||= true;
 					await Store.setFfzGlobalEmotes(ffzGlobalEmotes);
@@ -275,7 +275,7 @@ export class EmotesUpdater {
 
 		try {
 			if (this._shouldUpdateGlobalEmotes(globalEmotesState.bttvGlobalEmotesUpdatedAt)) {
-				this._logger.debug('BTTV global emotes update');
+				this._logger.debug('Updating BTTV global emotes...');
 
 				const bttvGlobalEmotes = await this._emotesFetcher.bttv.getGlobalEmotes();
 				let isChanged = false;
@@ -292,7 +292,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('BTTV global emotes updated');
+					this._logger.info('BTTV global emotes have been updated');
 
 					areGlobalEmotesChanged ||= true;
 					await Store.setBttvGlobalEmotes(bttvGlobalEmotes);
@@ -318,7 +318,7 @@ export class EmotesUpdater {
 
 		if (this._shouldUpdateChannelEmotes(user.state.twitchEmotesUpdatedAt) && (await Store.getTwitchAccessToken())) {
 			try {
-				this._logger.debug('Twitch channel emotes update', user);
+				this._logger.debug('Updating Twitch channel emotes...', user);
 
 				const twitchChannelEmotes = await TwitchApi.getChannelEmotes(userId);
 				const localTwitchChannelEmotes = await Store.getTwitchChannelEmotes(userId);
@@ -338,7 +338,7 @@ export class EmotesUpdater {
 				}
 
 				if (isTwitchChannelEmotesChanged) {
-					this._logger.info('Twitch channel emotes updated');
+					this._logger.info('Twitch channel emotes have been updated', user);
 
 					areChannelEmotesChanged ||= true;
 					await Store.setTwitchChannelEmotes(userId, twitchChannelEmotes);
@@ -346,16 +346,13 @@ export class EmotesUpdater {
 
 				await Store.updateUser(user.twitchProfile, { twitchEmotesUpdatedAt: Date.now() });
 			} catch (e) {
-				this._logger.warn(
-					`Could not update Twitch channel emotes for user ${user.twitchProfile.displayName}`,
-					e
-				);
+				this._logger.warn('Could not update Twitch channel emotes', user, e);
 			}
 		}
 
 		if (this._shouldUpdateChannelEmotes(user.state.sevenTvEmotesUpdatedAt)) {
 			try {
-				this._logger.debug('7TV channel emotes update', user);
+				this._logger.debug('Updating 7TV channel emotes...', user);
 
 				const sevenTvChannelEmotes = await this._emotesFetcher.stv.getChannelEmotes(userId);
 
@@ -380,7 +377,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('7TV channel emotes updated');
+					this._logger.info('7TV channel emotes have been updated', user);
 
 					areChannelEmotesChanged ||= true;
 					await Store.setSevenTvChannelEmotes(userId, sevenTvChannelEmotes);
@@ -388,13 +385,13 @@ export class EmotesUpdater {
 
 				await Store.updateUser(user.twitchProfile, { sevenTvEmotesUpdatedAt: Date.now() });
 			} catch (e) {
-				this._logger.warn(`Could not update 7TV channel emotes for user @${user.twitchProfile.displayName}`, e);
+				this._logger.warn('Could not update 7TV channel emotes', user, e);
 			}
 		}
 
 		if (this._shouldUpdateChannelEmotes(user.state.ffzEmotesUpdatedAt)) {
 			try {
-				this._logger.debug('FFZ channel emotes update', user);
+				this._logger.debug('Updating FFZ channel emotes...', user);
 
 				const ffzTvChannelEmotes = await this._emotesFetcher.ffz.getChannelEmotes(userId);
 				const localFfzChannelEmotes = await Store.getFfzChannelEmotes(userId);
@@ -414,7 +411,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('FFZ channel emotes updated');
+					this._logger.info('FFZ channel emotes have been updated', user);
 
 					areChannelEmotesChanged ||= true;
 					await Store.setFfzChannelEmotes(userId, ffzTvChannelEmotes);
@@ -422,13 +419,13 @@ export class EmotesUpdater {
 
 				await Store.updateUser(user.twitchProfile, { ffzEmotesUpdatedAt: Date.now() });
 			} catch (e) {
-				this._logger.warn(`Could not update FFZ channel emotes for user @${user.twitchProfile.displayName}`, e);
+				this._logger.warn('Could not update FFZ channel emotes', user, e);
 			}
 		}
 
 		if (this._shouldUpdateChannelEmotes(user.state.bttvEmotesUpdatedAt)) {
 			try {
-				this._logger.debug('BTTV channel emotes update', user);
+				this._logger.debug('Updating BTTV channel emotes...', user);
 				const bttvChannelEmotes = await this._emotesFetcher.bttv.getChannelEmotes(userId);
 				const localBttvChannelEmotes = await Store.getBttvChannelEmotes(userId);
 				let isChanged = false;
@@ -446,7 +443,7 @@ export class EmotesUpdater {
 				}
 
 				if (isChanged) {
-					this._logger.info('BTTV channel emotes updated');
+					this._logger.info('BTTV channel emotes have been updated', user);
 
 					areChannelEmotesChanged ||= true;
 					await Store.setBttvChannelEmotes(userId, bttvChannelEmotes);
@@ -454,10 +451,7 @@ export class EmotesUpdater {
 
 				await Store.updateUser(user.twitchProfile, { bttvEmotesUpdatedAt: Date.now() });
 			} catch (e) {
-				this._logger.warn(
-					`Could not update BTTV channel emotes for user @${user.twitchProfile.displayName}`,
-					e
-				);
+				this._logger.warn('Could not update BTTV channel emotes', user, e);
 			}
 		}
 
