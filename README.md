@@ -8,7 +8,7 @@
 Добавьте стримера в расширение, чтобы использовать все его смайлы с Twitch'а на его странице Boosty.
 
 ### Использование
-1. Установи [расширение](https://chromewebstore.google.com/detail/pejlmncncgbgabfhakeogmhmjinpbign/)
+1. Установи [расширение](https://chromewebstore.google.com/detail/boosty-emotes/pejlmncncgbgabfhakeogmhmjinpbign)
 2. Войди в расширение через свой аккаунт Twitch
 3. Добавь пользователей, чьи смайлы ты хочешь использовать.
 

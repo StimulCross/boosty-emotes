@@ -9,7 +9,7 @@ Add Twitch streams to the extension to use their emotes on their Boosty pages.
 
 
 ### Usage
-1. Install [exntension](https://chromewebstore.google.com/detail/pejlmncncgbgabfhakeogmhmjinpbign/)
+1. Install [exntension](https://chromewebstore.google.com/detail/boosty-emotes/pejlmncncgbgabfhakeogmhmjinpbign)
 2. Log in to the extension using you Twitch account
 3. Add users you want to use emotes of
 
