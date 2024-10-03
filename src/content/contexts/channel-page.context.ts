@@ -270,25 +270,25 @@ export class ChannelPageContext extends SingleUserContext {
 	private async _onClick(evt: MouseEvent): Promise<void> {
 		try {
 			if (evt.target instanceof Element) {
-				let button: HTMLButtonElement | null = null;
+				let emotePickerBtn: HTMLButtonElement | null = null;
 
 				if (evt.target.classList.contains('BE-emote-picker__button')) {
-					button = evt.target as HTMLButtonElement;
+					emotePickerBtn = evt.target as HTMLButtonElement;
 				} else if (evt.target.classList.contains('BE-emote-picker__icon')) {
-					button = evt.target.parentElement! as HTMLButtonElement;
+					emotePickerBtn = evt.target.parentElement! as HTMLButtonElement;
 				} else if (evt.target.parentElement?.classList.contains('BE-emote-picker__icon')) {
-					button = evt.target.parentElement.parentElement! as HTMLButtonElement;
+					emotePickerBtn = evt.target.parentElement.parentElement! as HTMLButtonElement;
 				}
 
-				if (button) {
+				if (emotePickerBtn) {
 					if (
-						button.classList.contains('BE-emote-picker__button--active') ||
+						emotePickerBtn.classList.contains('BE-emote-picker__button--active') ||
 						this._emotePickerContainer.isShown
 					) {
 						this._emotePickerContainer.hide();
 					} else {
 						await this._emotePickerContainer.show(
-							button,
+							emotePickerBtn,
 							this._rootContext.globalEmotesByProvider,
 							this._channelEmotesByProvider
 						);
