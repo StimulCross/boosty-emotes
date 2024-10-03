@@ -4,6 +4,12 @@ import { type RootContext } from './root-context';
 import { SingleUserContext } from './single-user.context';
 
 export class ChannelPageContext extends SingleUserContext {
+	private static readonly _aboutSectionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+	private static readonly _postTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u', 'article']);
+	private static readonly _targetDescriptionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+	private static readonly _commentTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+	private static readonly _subscriptionDescriptionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+
 	constructor(rootContext: RootContext) {
 		super(rootContext, ['CommentPublisher_root__', 'ChatPublisher_root_']);
 	}
@@ -207,7 +213,7 @@ export class ChannelPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u'])
+			ChannelPageContext._aboutSectionTagsSet
 		);
 	}
 
@@ -215,7 +221,7 @@ export class ChannelPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u', 'article']),
+			ChannelPageContext._postTagsSet,
 			(child: Node) => {
 				if (
 					child instanceof Element &&
@@ -234,7 +240,7 @@ export class ChannelPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u', 'article'])
+			ChannelPageContext._targetDescriptionTagsSet
 		);
 	}
 
@@ -242,7 +248,7 @@ export class ChannelPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u']),
+			ChannelPageContext._commentTagsSet,
 			(child: Node) => {
 				if (child instanceof Element && child.classList.value.includes('AttachedImagesRenderer_wrapper_')) {
 					return false;
@@ -257,7 +263,7 @@ export class ChannelPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u'])
+			ChannelPageContext._subscriptionDescriptionTagsSet
 		);
 	}
 

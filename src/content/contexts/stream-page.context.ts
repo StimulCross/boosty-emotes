@@ -4,6 +4,9 @@ import type { RootContext } from './root-context';
 import { SingleUserContext } from './single-user.context';
 
 export class StreamPageContext extends SingleUserContext {
+	private static readonly _streamDescriptionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+	private static readonly _chatMessageTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+
 	constructor(rootContext: RootContext) {
 		super(rootContext, ['ChatPublisher_root_'], { bottomOffset: -10, zIndex: 9 });
 	}
@@ -88,7 +91,7 @@ export class StreamPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u'])
+			StreamPageContext._streamDescriptionTagsSet
 		);
 	}
 
@@ -96,7 +99,7 @@ export class StreamPageContext extends SingleUserContext {
 		replaceEmotesInNode(
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
-			new Set(['div', 'span', 'b', 'strong', 'i', 'u']),
+			StreamPageContext._chatMessageTagsSet,
 			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage_tooltip_'))
 		);
 	}
