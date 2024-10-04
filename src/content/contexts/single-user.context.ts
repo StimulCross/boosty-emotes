@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { EmotePickerContainer, type EmotePickerStyleOptions, RedactorsState } from '@content/components';
+import { EmotePickerComponent, type EmotePickerStyleOptions, RedactorsState } from '@content/components';
 import { getCaretPosition } from '@content/utils';
 import { EmoteTooltip } from '@shared/components/emote-tooltip';
 import type { Emote, User } from '@shared/models';
@@ -19,7 +19,7 @@ export abstract class SingleUserContext extends PageContext {
 	]);
 	private readonly _observer: MutationObserver;
 	private readonly _tooltip: EmoteTooltip;
-	protected readonly _emotePickerContainer: EmotePickerContainer;
+	protected readonly _emotePickerComponent: EmotePickerComponent;
 	private readonly _redactorsState = new RedactorsState();
 
 	protected constructor(
@@ -36,7 +36,7 @@ export abstract class SingleUserContext extends PageContext {
 		super(rootContext, $root, rootContext.emitter, ['click', 'input', 'keyup']);
 
 		this._tooltip = new EmoteTooltip(this.$root);
-		this._emotePickerContainer = new EmotePickerContainer(
+		this._emotePickerComponent = new EmotePickerComponent(
 			this.$root,
 			publisherRootClassNames,
 			this._rootContext.emitter,
@@ -62,7 +62,7 @@ export abstract class SingleUserContext extends PageContext {
 
 		this._observer.disconnect();
 		this._tooltip.destroy();
-		this._emotePickerContainer.hide();
+		this._emotePickerComponent.hide();
 
 		// eslint-disable-next-line @typescript-eslint/unbound-method
 		browser.runtime.onMessage.removeListener(this._handleBackgroundMessage);
@@ -136,8 +136,8 @@ export abstract class SingleUserContext extends PageContext {
 		try {
 			if (evt.target instanceof HTMLElement && evt.target.classList.contains('cdx-block')) {
 				this._updateRedactorCaretPosition(evt.target);
-			} else if (evt.key === 'Escape' && this._emotePickerContainer.isShown) {
-				this._emotePickerContainer.hide();
+			} else if (evt.key === 'Escape' && this._emotePickerComponent.isShown) {
+				this._emotePickerComponent.hide();
 			}
 		} catch (e) {
 			this._logger.error(e);

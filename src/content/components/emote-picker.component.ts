@@ -10,7 +10,7 @@ export interface EmotePickerStyleOptions {
 	bottomOffset?: number;
 }
 
-export class EmotePickerContainer {
+export class EmotePickerComponent {
 	private _currentEmotePickerActiveButton: HTMLElement | null = null;
 	private _emotePicker: EmotePicker | null = null;
 	private _emotePickerOverlay: HTMLElement | null = null;

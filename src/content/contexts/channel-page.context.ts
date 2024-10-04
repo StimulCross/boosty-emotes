@@ -283,25 +283,25 @@ export class ChannelPageContext extends SingleUserContext {
 				if (emotePickerBtn) {
 					if (
 						emotePickerBtn.classList.contains('BE-emote-picker__button--active') ||
-						this._emotePickerContainer.isShown
+						this._emotePickerComponent.isShown
 					) {
-						this._emotePickerContainer.hide();
+						this._emotePickerComponent.hide();
 					} else {
-						await this._emotePickerContainer.show(
+						await this._emotePickerComponent.show(
 							emotePickerBtn,
 							this._rootContext.globalEmotesByProvider,
 							this._channelEmotesByProvider
 						);
 					}
 				} else if (evt.target.classList.contains('BE-emote-picker__overlay')) {
-					this._emotePickerContainer.hide();
+					this._emotePickerComponent.hide();
 				} else if (evt.target.classList.contains('cdx-block')) {
 					this._updateRedactorCaretPosition(evt.target);
 				} else if (
-					this._emotePickerContainer.isShown &&
+					this._emotePickerComponent.isShown &&
 					evt.target.closest('[class*=Publisher_sendContainer_]')
 				) {
-					this._emotePickerContainer.hide();
+					this._emotePickerComponent.hide();
 				}
 			}
 		} catch (e) {
