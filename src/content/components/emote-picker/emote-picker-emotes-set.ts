@@ -18,7 +18,6 @@ export class EmotePickerEmotesSet extends DomListener {
 		emitter: EventEmitter,
 		private readonly _logger: Logger,
 		emotesSet: Map<string, Emote>,
-		name: string,
 		private readonly _provider: EmoteProvider,
 		private readonly _scope: EmoteScope,
 		private readonly _emoteInserter: EmoteInserter,
@@ -28,7 +27,7 @@ export class EmotePickerEmotesSet extends DomListener {
 		super($root, { emitter, listeners: ['click'] });
 
 		this.$root.classList.add('BE-emote-picker__emotes-set');
-		this.$root.innerHTML = this._getTemplate(name, emotesSet);
+		this.$root.innerHTML = this._getTemplate(emotesSet);
 
 		this._visibleEmoteCount = emotesSet.size;
 
@@ -128,7 +127,7 @@ export class EmotePickerEmotesSet extends DomListener {
 		this.$root.classList.remove('BE-emote-picker__emotes-set--show');
 	}
 
-	private _getTemplate(name: string, emotesSet: Map<string, Emote>): string {
+	private _getTemplate(emotesSet: Map<string, Emote>): string {
 		const isCollapsed = this._state.sets[this._provider].collapsed[this._scope];
 
 		return html`
