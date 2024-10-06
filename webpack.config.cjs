@@ -46,25 +46,6 @@ const _resolve = {
 	}
 };
 
-const _module = {
-	rules: [
-		{
-			test: /\.s[ac]ss$/i,
-			use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-		},
-		{
-			test: /\.ts$/,
-			exclude: /node_modules/,
-			use: {
-				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-env', '@babel/preset-typescript']
-				}
-			}
-		}
-	]
-};
-
 module.exports = [
 	{
 		...base,
