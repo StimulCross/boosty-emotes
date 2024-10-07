@@ -262,42 +262,10 @@ export class ChannelPageContext extends SingleUserContext {
 		);
 	}
 
-	private async _onClick(evt: MouseEvent): Promise<void> {
+	private _onClick(evt: MouseEvent): void {
 		try {
-			if (evt.target instanceof Element) {
-				let emotePickerBtn: HTMLButtonElement | null = null;
-
-				if (evt.target.classList.contains('BE-emote-picker__button')) {
-					emotePickerBtn = evt.target as HTMLButtonElement;
-				} else if (evt.target.classList.contains('BE-emote-picker__icon')) {
-					emotePickerBtn = evt.target.parentElement! as HTMLButtonElement;
-				} else if (evt.target.parentElement?.classList.contains('BE-emote-picker__icon')) {
-					emotePickerBtn = evt.target.parentElement.parentElement! as HTMLButtonElement;
-				}
-
-				if (emotePickerBtn) {
-					if (
-						emotePickerBtn.classList.contains('BE-emote-picker__button--active') ||
-						this._emotePickerComponent.isShown
-					) {
-						this._emotePickerComponent.hide();
-					} else {
-						await this._emotePickerComponent.show(
-							emotePickerBtn,
-							this._rootContext.globalEmotesByProvider,
-							this._channelEmotesByProvider
-						);
-					}
-				} else if (evt.target.classList.contains('BE-emote-picker__overlay')) {
-					this._emotePickerComponent.hide();
-				} else if (evt.target.classList.contains('cdx-block')) {
-					this._updateRedactorCaretPosition(evt.target);
-				} else if (
-					this._emotePickerComponent.isShown &&
-					evt.target.closest('[class*=Publisher_sendContainer_]')
-				) {
-					this._emotePickerComponent.hide();
-				}
+			if (evt.target instanceof Element && evt.target.classList.contains('cdx-block')) {
+				this._updateRedactorCaretPosition(evt.target);
 			}
 		} catch (e) {
 			this._logger.error(e);

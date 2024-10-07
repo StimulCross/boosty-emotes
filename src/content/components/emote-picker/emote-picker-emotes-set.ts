@@ -4,9 +4,8 @@ import browser from 'webextension-polyfill';
 import { type EmotePickerState } from '@content/types';
 import { DomListener } from '@shared/dom-listener';
 import { type EventEmitter } from '@shared/event-emitter';
-import { type Emote } from '@shared/models';
 import { Store } from '@shared/store';
-import { type EmoteProvider, type EmoteScope } from '@shared/types';
+import { type EmoteProvider, type EmoteScope, type EmotesSet } from '@shared/types';
 import { type EmoteInserter } from '../emote-inserter';
 
 export class EmotePickerEmotesSet extends DomListener {
@@ -17,19 +16,18 @@ export class EmotePickerEmotesSet extends DomListener {
 		$root: HTMLDivElement,
 		emitter: EventEmitter,
 		private readonly _logger: Logger,
-		emotesSet: Map<string, Emote>,
+		private readonly _emotesSet: EmotesSet,
 		private readonly _provider: EmoteProvider,
 		private readonly _scope: EmoteScope,
 		private readonly _emoteInserter: EmoteInserter,
-		private readonly _state: EmotePickerState,
-		private readonly _globalEmotesByProvider: Map<EmoteProvider, Map<string, Emote>>
+		private readonly _state: EmotePickerState
 	) {
 		super($root, { emitter, listeners: ['click'] });
 
 		this.$root.classList.add('BE-emote-picker__emotes-set');
-		this.$root.innerHTML = this._getTemplate(emotesSet);
+		this.$root.innerHTML = this._getTemplate(this._emotesSet);
 
-		this._visibleEmoteCount = emotesSet.size;
+		this._visibleEmoteCount = this._emotesSet.size;
 
 		if (this._visibleEmoteCount > 0) {
 			this.$root.classList.add('BE-emote-picker__emotes-set--show');
@@ -101,14 +99,14 @@ export class EmotePickerEmotesSet extends DomListener {
 				evt.target.classList.contains('BE-emote-picker__emote')
 			) {
 				if (evt.target.dataset.provider === 'boosty' && evt.target.dataset.id) {
-					const emote = this._globalEmotesByProvider.get('boosty')?.get(evt.target.dataset.id);
+					const emote = this._emotesSet.get(evt.target.dataset.id);
 
 					if (!emote) {
 						return;
 					}
 
 					const emoteContainer = document.createElement('span');
-					emoteContainer.innerHTML = emote.toHtml(1);
+					emoteContainer.innerHTML = emote.toHtml();
 					this._emoteInserter.insertEmote(emoteContainer.firstElementChild as HTMLImageElement);
 				} else {
 					this._emoteInserter.insertEmote(evt.target.alt);
@@ -127,7 +125,7 @@ export class EmotePickerEmotesSet extends DomListener {
 		this.$root.classList.remove('BE-emote-picker__emotes-set--show');
 	}
 
-	private _getTemplate(emotesSet: Map<string, Emote>): string {
+	private _getTemplate(emotesSet: EmotesSet): string {
 		const isCollapsed = this._state.sets[this._provider].collapsed[this._scope];
 
 		return html`
@@ -150,7 +148,7 @@ export class EmotePickerEmotesSet extends DomListener {
 		`;
 	}
 
-	private _getEmotesListHtml(emotesSet: Map<string, Emote>): string {
+	private _getEmotesListHtml(emotesSet: EmotesSet): string {
 		let emotes = '';
 
 		for (const emote of emotesSet.values()) {

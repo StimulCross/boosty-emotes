@@ -38,8 +38,9 @@ export abstract class SingleUserContext extends PageContext {
 		this._tooltip = new EmoteTooltip(this.$root);
 		this._emotePickerComponent = new EmotePickerComponent(
 			this.$root,
-			publisherRootClassNames,
 			this._rootContext.emitter,
+			publisherRootClassNames,
+			this,
 			this._redactorsState,
 			emotePickerStyleOptions
 		);
@@ -59,11 +60,11 @@ export abstract class SingleUserContext extends PageContext {
 
 	public override async destroy(): Promise<void> {
 		await super.destroy();
-
 		this._observer.disconnect();
 		this._tooltip.destroy();
-		this._emotePickerComponent.hide();
+		this._emotePickerComponent.destroy();
 
+		// Bound in the constructor
 		// eslint-disable-next-line @typescript-eslint/unbound-method
 		browser.runtime.onMessage.removeListener(this._handleBackgroundMessage);
 	}
@@ -153,8 +154,6 @@ export abstract class SingleUserContext extends PageContext {
 		try {
 			if (evt.target instanceof HTMLElement && evt.target.classList.contains('cdx-block')) {
 				this._updateRedactorCaretPosition(evt.target);
-			} else if (evt.key === 'Escape' && this._emotePickerComponent.isShown) {
-				this._emotePickerComponent.hide();
 			}
 		} catch (e) {
 			this._logger.error(e);

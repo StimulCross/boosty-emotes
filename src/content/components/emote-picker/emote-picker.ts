@@ -2,8 +2,7 @@ import { createLogger } from '@stimulcross/logger';
 import { EmoteInserter, type RedactorsState } from '@content/components';
 import { type EmotePickerState } from '@content/types';
 import { type EventEmitter } from '@shared/event-emitter';
-import { type Emote } from '@shared/models';
-import { type EmoteProvider, type ThirdPartyEmoteProvider } from '@shared/types';
+import { type ScopesEmotesSets, type ThirdPartyEmoteProvider } from '@shared/types';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
 import {
 	EmotePickerBody,
@@ -26,8 +25,7 @@ export class EmotePicker {
 		private readonly $publisher: HTMLElement,
 		private readonly _redactorsState: RedactorsState,
 		private readonly _state: EmotePickerState,
-		private readonly _globalEmotesByProvider: Map<EmoteProvider, Map<string, Emote>>,
-		private readonly _channelEmotesByProvider: Map<EmoteProvider, Map<string, Emote>>,
+		private readonly _emoteSets: ScopesEmotesSets,
 		bottomOffset?: number
 	) {
 		this.$root.classList.add('BE-emote-picker');
@@ -51,30 +49,66 @@ export class EmotePicker {
 
 		const emoteInserter = new EmoteInserter(this.$publisher, this._redactorsState);
 
-		providerEmoteSets.push(
-			new EmotePickerProviderEmoteSets(
-				document.createElement('div'),
-				_emitter,
-				EmotePicker._logger,
-				this._state,
-				'boosty',
-				[
+		const globalEmotes = this._emoteSets.get('global');
+		const channelEmotes = this._emoteSets.get('channel');
+
+		if (globalEmotes?.has('boosty')) {
+			providerEmoteSets.push(
+				new EmotePickerProviderEmoteSets(
+					document.createElement('div'),
+					_emitter,
+					EmotePicker._logger,
+					this._state,
+					'boosty',
+					[
+						new EmotePickerEmotesSet(
+							document.createElement('div'),
+							_emitter,
+							EmotePicker._logger,
+							globalEmotes.get('boosty')!,
+							'boosty',
+							'global',
+							emoteInserter,
+							this._state
+						)
+					]
+				)
+			);
+		}
+
+		(['twitch', '7tv', 'ffz', 'bttv'] satisfies ThirdPartyEmoteProvider[]).forEach(provider => {
+			const emoteSets: EmotePickerEmotesSet[] = [];
+
+			if (channelEmotes?.has(provider)) {
+				emoteSets.push(
 					new EmotePickerEmotesSet(
 						document.createElement('div'),
 						_emitter,
 						EmotePicker._logger,
-						this._globalEmotesByProvider.get('boosty')!,
-						'boosty',
+						channelEmotes.get(provider)!,
+						provider,
+						'channel',
+						emoteInserter,
+						this._state
+					)
+				);
+			}
+
+			if (globalEmotes?.has(provider)) {
+				emoteSets.push(
+					new EmotePickerEmotesSet(
+						document.createElement('div'),
+						_emitter,
+						EmotePicker._logger,
+						globalEmotes.get(provider)!,
+						provider,
 						'global',
 						emoteInserter,
-						this._state,
-						this._globalEmotesByProvider
+						this._state
 					)
-				]
-			)
-		);
+				);
+			}
 
-		(['twitch', '7tv', 'ffz', 'bttv'] satisfies ThirdPartyEmoteProvider[]).forEach(provider => {
 			providerEmoteSets.push(
 				new EmotePickerProviderEmoteSets(
 					document.createElement('div'),
@@ -82,30 +116,7 @@ export class EmotePicker {
 					EmotePicker._logger,
 					this._state,
 					provider,
-					[
-						new EmotePickerEmotesSet(
-							document.createElement('div'),
-							_emitter,
-							EmotePicker._logger,
-							this._channelEmotesByProvider.get(provider)!,
-							provider,
-							'channel',
-							emoteInserter,
-							this._state,
-							this._globalEmotesByProvider
-						),
-						new EmotePickerEmotesSet(
-							document.createElement('div'),
-							_emitter,
-							EmotePicker._logger,
-							this._globalEmotesByProvider.get(provider)!,
-							provider,
-							'global',
-							emoteInserter,
-							this._state,
-							this._globalEmotesByProvider
-						)
-					]
+					emoteSets
 				)
 			);
 		});
