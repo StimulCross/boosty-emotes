@@ -15,12 +15,7 @@ export class ChannelPageContext extends SingleUserContext {
 	}
 
 	public async init(): Promise<void> {
-		const user = await this._resolveUser();
-
-		if (user) {
-			this._user = user;
-			await this._updateChannelEmotes(user.twitchProfile.id);
-		}
+		await this._initUser();
 
 		const aboutContent = this.$root.querySelector('[class*=AboutAuthor_content]');
 

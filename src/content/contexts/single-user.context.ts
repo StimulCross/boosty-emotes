@@ -84,19 +84,13 @@ export abstract class SingleUserContext extends PageContext {
 		return null;
 	}
 
-	protected async _updateChannelEmotes(userId: string): Promise<void> {
-		const channelEmotes = await Store.getChannelEmotes(userId);
+	protected async _initUser(): Promise<void> {
+		const user = await this._resolveUser();
 
-		this._channelEmotes.clear();
-		this._channelEmotesByProvider.get('twitch')?.clear();
-		this._channelEmotesByProvider.get('7tv')?.clear();
-		this._channelEmotesByProvider.get('ffz')?.clear();
-		this._channelEmotesByProvider.get('bttv')?.clear();
-
-		channelEmotes.forEach(emote => {
-			this._channelEmotes.set(emote.name, emote);
-			this._channelEmotesByProvider.get(emote.provider)?.set(emote.name, emote);
-		});
+		if (user) {
+			this._user = user;
+			await this._updateChannelEmotes(user.twitchProfile.id);
+		}
 	}
 
 	protected _updateRedactorCaretPosition(element: Element): void {
@@ -108,6 +102,21 @@ export abstract class SingleUserContext extends PageContext {
 
 		const caretPosition = getCaretPosition(element);
 		this._redactorsState.set(redactor, caretPosition);
+	}
+
+	private async _updateChannelEmotes(userId: string): Promise<void> {
+		const channelEmotes = await Store.getChannelEmotes(userId);
+
+		this._channelEmotes = new Map();
+		this._channelEmotesByProvider.set('twitch', new Map());
+		this._channelEmotesByProvider.set('7tv', new Map());
+		this._channelEmotesByProvider.set('ffz', new Map());
+		this._channelEmotesByProvider.set('bttv', new Map());
+
+		channelEmotes.forEach(emote => {
+			this._channelEmotes.set(emote.name, emote);
+			this._channelEmotesByProvider.get(emote.provider)?.set(emote.name, emote);
+		});
 	}
 
 	private async _handleBackgroundMessage(message: Message): Promise<void> {
