@@ -68,6 +68,14 @@ export abstract class SingleUserContext extends PageContext {
 		browser.runtime.onMessage.removeListener(this._handleBackgroundMessage);
 	}
 
+	public getAvailableEmoteSetsByScope(): ScopesEmotesSets {
+		const map: ScopesEmotesSets = new Map();
+		map.set('channel', this._channelEmotesByProvider);
+		map.set('global', this._rootContext.globalEmotesByProvider);
+
+		return map;
+	}
+
 	protected abstract _createMutationObserver(): MutationObserver;
 
 	protected async _resolveUser(): Promise<User | null> {

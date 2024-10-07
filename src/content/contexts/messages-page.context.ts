@@ -1,4 +1,5 @@
 import type { RootContext } from '@content/contexts/root-context';
+import type { ScopesEmotesSets } from '@shared/types';
 import { PageContext } from './page-context';
 
 // TODO: Implement
@@ -16,5 +17,9 @@ export class MessagesPageContext extends PageContext {
 
 	public async init(): Promise<void> {
 		return await Promise.resolve();
+	}
+
+	public getAvailableEmoteSetsByScope(): ScopesEmotesSets {
+		return new Map();
 	}
 }
