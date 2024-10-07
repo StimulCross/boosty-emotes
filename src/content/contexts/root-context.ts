@@ -3,7 +3,7 @@ import browser from 'webextension-polyfill';
 import { EventEmitter } from '@shared/event-emitter';
 import { boostyEmotesMap, type Emote } from '@shared/models';
 import { Store } from '@shared/store';
-import { type EmoteProvider, type Message } from '@shared/types';
+import { type EmotesSet, type Message, type ProviderEmotesSets } from '@shared/types';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
 import { ChannelPageContext } from './channel-page.context';
 import { ChatOnlyPageContext } from './chat-only-page.context';
@@ -20,8 +20,8 @@ export class RootContext {
 	public $root: Element;
 	public emitter = new EventEmitter();
 
-	public readonly globalEmotes: Map<string, Emote> = new Map();
-	public readonly globalEmotesByProvider: Map<EmoteProvider, Map<string, Emote>> = new Map([
+	public readonly globalEmotes: EmotesSet = new Map();
+	public readonly globalEmotesByProvider: ProviderEmotesSets = new Map([
 		['boosty', boostyEmotesMap],
 		['twitch', new Map<string, Emote>()],
 		['7tv', new Map<string, Emote>()],

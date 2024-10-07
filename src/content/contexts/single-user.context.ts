@@ -4,14 +4,14 @@ import { getCaretPosition } from '@content/utils';
 import { EmoteTooltip } from '@shared/components/emote-tooltip';
 import type { Emote, User } from '@shared/models';
 import { Store } from '@shared/store';
-import type { EmoteProvider, Message } from '@shared/types';
+import type { EmotesSet, Message, ProviderEmotesSets, ScopesEmotesSets } from '@shared/types';
 import { PageContext } from './page-context';
 import type { RootContext } from './root-context';
 
 export abstract class SingleUserContext extends PageContext {
 	protected _user: User | null = null;
-	protected readonly _channelEmotes: Map<string, Emote> = new Map();
-	protected readonly _channelEmotesByProvider: Map<EmoteProvider, Map<string, Emote>> = new Map([
+	protected _channelEmotes: EmotesSet = new Map();
+	protected readonly _channelEmotesByProvider: ProviderEmotesSets = new Map([
 		['twitch', new Map<string, Emote>()],
 		['7tv', new Map<string, Emote>()],
 		['ffz', new Map<string, Emote>()],

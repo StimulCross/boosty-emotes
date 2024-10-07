@@ -1,7 +1,7 @@
 import { createLogger } from '@stimulcross/logger';
 import { EventEmitter } from '@shared/event-emitter';
-import { type Emote, type User } from '@shared/models';
-import type { ThirdPartyEmoteProvider } from '@shared/types';
+import { type User } from '@shared/models';
+import type { ThirdPartyEmoteProvider, ThirdPartyProviderEmotesSets } from '@shared/types';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
 import { EmotesListBodyComponent } from './emotes-list-body.component';
 import { EmotesListProvidersComponent } from './emotes-list-providers.component';
@@ -30,7 +30,7 @@ function getUpdatedDateForSet(user: User, provider: ThirdPartyEmoteProvider): nu
 
 export function createUserEmotesListComponent(
 	user: User,
-	emoteSetsByProvider: Map<ThirdPartyEmoteProvider, Map<string, Emote>>
+	emoteSetsByProvider: ThirdPartyProviderEmotesSets
 ): EmotesListComponent {
 	const emitter = new EventEmitter();
 	const logger = createLogger(createLoggerOptions(EmotesListComponent.name));

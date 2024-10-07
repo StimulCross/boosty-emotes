@@ -20,7 +20,7 @@ import {
 	type UserIdentity,
 	type UserState
 } from '@shared/models';
-import { type Theme, type ThirdPartyEmoteProvider } from '@shared/types';
+import { type Theme, type ThirdPartyEmoteProvider, type ThirdPartyProviderEmotesSets } from '@shared/types';
 
 const store = browser.storage.local;
 
@@ -224,7 +224,7 @@ export class Store {
 		return result;
 	}
 
-	public static async getGlobalEmotesByProvider(): Promise<Map<ThirdPartyEmoteProvider, Map<string, Emote>>> {
+	public static async getGlobalEmotesByProvider(): Promise<ThirdPartyProviderEmotesSets> {
 		const data = (await store.get([
 			StoreKeys.TwitchGlobalEmotes,
 			StoreKeys.SevenTvGlobalEmotes,
@@ -260,9 +260,7 @@ export class Store {
 		]);
 	}
 
-	public static async getChannelEmotesByProvider(
-		userId: string
-	): Promise<Map<ThirdPartyEmoteProvider, Map<string, Emote>>> {
+	public static async getChannelEmotesByProvider(userId: string): Promise<ThirdPartyProviderEmotesSets> {
 		const twitchChannelEmotesKey = this._getTwitchChannelEmotesKey(userId);
 		const sevenTvChannelEmotesKey = this._getSevenTvChannelEmotesKey(userId);
 		const ffzChannelEmotesKey = this._getFfzChannelEmotesKey(userId);
@@ -275,7 +273,7 @@ export class Store {
 			bttvChannelEmotesKey
 		])) as Partial<Record<string, EmoteData[]>>;
 
-		return new Map<ThirdPartyEmoteProvider, Map<string, Emote>>([
+		return new Map([
 			[
 				'twitch',
 				new Map<string, Emote>(
@@ -296,7 +294,7 @@ export class Store {
 				'bttv',
 				new Map<string, Emote>(data[bttvChannelEmotesKey]?.map(emote => [emote.id, new BttvEmote(emote)]) ?? [])
 			]
-		]);
+		]) satisfies ThirdPartyProviderEmotesSets;
 	}
 
 	public static async getTwitchGlobalEmotes(): Promise<TwitchEmoteData[]> {

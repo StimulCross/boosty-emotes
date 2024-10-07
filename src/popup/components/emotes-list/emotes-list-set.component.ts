@@ -3,8 +3,7 @@ import { html } from 'code-tag';
 import browser from 'webextension-polyfill';
 import { EVENTS } from '@/popup/constants';
 import { type EventEmitter } from '@shared/event-emitter';
-import type { Emote } from '@shared/models';
-import type { ThirdPartyEmoteProvider } from '@shared/types';
+import type { EmotesSet, ThirdPartyEmoteProvider } from '@shared/types';
 import { Component } from '../component';
 
 export class EmotesListSetComponent extends Component {
@@ -17,7 +16,7 @@ export class EmotesListSetComponent extends Component {
 		private readonly _logger: Logger,
 		private readonly _provider: ThirdPartyEmoteProvider,
 		private _activeProvider: ThirdPartyEmoteProvider,
-		emotesSet: Map<string, Emote>,
+		emotesSet: EmotesSet,
 		private readonly _updatedAt: number
 	) {
 		super(document.createElement('div'), { emitter });
@@ -108,7 +107,7 @@ export class EmotesListSetComponent extends Component {
 		this._visibleEmoteCount = visibleEmoteCount;
 	}
 
-	private _getTemplate(emotesSet: Map<string, Emote>): string {
+	private _getTemplate(emotesSet: EmotesSet): string {
 		return html`
 			<div class="emotes-list__emotes-container">
 				<ul class="emotes-list__emotes-stats">
@@ -152,7 +151,7 @@ export class EmotesListSetComponent extends Component {
 		}
 	}
 
-	private _getEmotesListHtml(emotesSet: Map<string, Emote>): string {
+	private _getEmotesListHtml(emotesSet: EmotesSet): string {
 		let emotes = '';
 
 		for (const emote of emotesSet.values()) {

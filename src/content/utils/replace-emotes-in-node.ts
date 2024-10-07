@@ -1,16 +1,16 @@
 import { replaceEmotesInString } from '@content/utils';
-import { type Emote } from '@shared/models';
+import { type EmotesSet } from '@shared/types';
 
 export function replaceEmotesInNode(
 	node: Node,
-	emoteMaps: Array<Map<string, Emote>>,
+	emoteSets: EmotesSet[],
 	tags: Set<string>,
 	childPredicate?: (child: Node) => boolean
 ): void {
 	if (node.nodeType === Node.TEXT_NODE) {
 		if (node.textContent) {
 			const el = document.createElement('span');
-			el.innerHTML = replaceEmotesInString(node.textContent, emoteMaps);
+			el.innerHTML = replaceEmotesInString(node.textContent, emoteSets);
 
 			(node as Text).replaceWith(el);
 		}
@@ -19,10 +19,10 @@ export function replaceEmotesInNode(
 			for (const child of node.childNodes) {
 				if (childPredicate) {
 					if (childPredicate(child)) {
-						replaceEmotesInNode(child, emoteMaps, tags, childPredicate);
+						replaceEmotesInNode(child, emoteSets, tags, childPredicate);
 					}
 				} else {
-					replaceEmotesInNode(child, emoteMaps, tags);
+					replaceEmotesInNode(child, emoteSets, tags);
 				}
 			}
 		}
