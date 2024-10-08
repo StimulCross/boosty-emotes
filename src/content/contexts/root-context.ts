@@ -49,7 +49,7 @@ export class RootContext {
 		await this._updateGlobalEmotes();
 		await this._updateContext();
 
-		this._logger.debug('Inititalized', this._context);
+		this._logger.debug('Initialized', this._context);
 	}
 
 	private _initListeners(): void {
