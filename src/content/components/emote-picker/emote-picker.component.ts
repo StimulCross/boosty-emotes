@@ -1,5 +1,4 @@
 import { createLogger } from '@stimulcross/logger';
-import { EmotePicker, type RedactorsState } from '@content/components';
 import { type PageContext } from '@content/contexts/page-context';
 import { createEmotePickerOverlay } from '@content/templates';
 import { DomListener } from '@shared/dom-listener';
@@ -7,6 +6,8 @@ import { type EventEmitter } from '@shared/event-emitter';
 import { Store } from '@shared/store';
 import { type ScopesEmotesSets } from '@shared/types';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
+import { type RedactorsState } from '..';
+import { EmotePicker } from '.';
 
 export interface EmotePickerStyleOptions {
 	zIndex?: number;
