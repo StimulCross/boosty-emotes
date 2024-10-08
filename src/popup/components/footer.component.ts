@@ -18,12 +18,12 @@ export class FooterComponent extends Component {
 		this.$root.innerHTML = html`
 			<ul class="footer__social">
 				<li class="footer__social-item">
-					<a class="footer__social-link" href="https://github.com/stimulcross" target="_blank">
+					<a class="footer__social-link" href="https://github.com/StimulCross/boosty-emotes" target="_blank">
 						<img class="footer__social-icon" src="images/github-32.png" alt="GitHub" />
 						<span class="footer__social-name">GitHub</span></a
 					>
 				</li>
 			</ul>
-			`;
+		`;
 	}
 }
