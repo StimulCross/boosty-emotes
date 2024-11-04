@@ -25,8 +25,22 @@ import { type Theme, type ThirdPartyEmoteProvider, type ThirdPartyProviderEmotes
 const store = browser.storage.local;
 
 export class Store {
+	private static readonly _globalStorageEntries = new Set([
+		STORE_KEYS.GLOBAL_EMOTES_STATE,
+		STORE_KEYS.TWITCH_GLOBAL_EMOTES,
+		STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES,
+		STORE_KEYS.FFZ_GLOBAL_EMOTES,
+		STORE_KEYS.BTTV_GLOBAL_EMOTES,
+		STORE_KEYS.THEME
+	]);
+
 	public static async clear(): Promise<void> {
 		await store.clear();
+	}
+
+	public static async clearIdentityAndUsers(): Promise<void> {
+		const storage = await store.get();
+		await store.remove(Object.keys(storage).filter(key => !Store._globalStorageEntries.has(key)));
 	}
 
 	public static async getTheme(): Promise<Theme> {

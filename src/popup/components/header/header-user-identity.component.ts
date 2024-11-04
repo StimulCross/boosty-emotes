@@ -172,7 +172,7 @@ export class HeaderUserIdentityComponent extends Component {
 			menuBtn.disabled = true;
 			await TwitchApi.revokeAccessToken();
 			await browser.runtime.sendMessage({ type: 'logout' });
-			await Store.clear();
+			await Store.clearIdentityAndUsers();
 		} catch (e) {
 			this._logger.error(e);
 		} finally {
