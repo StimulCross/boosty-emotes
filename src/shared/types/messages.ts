@@ -1,4 +1,5 @@
 export type MessageType =
+	| 'auth'
 	| 'tab_open'
 	| 'tab_url_change'
 	| 'add_user'
@@ -25,6 +26,12 @@ export interface MessageRemoveUser {
 
 export interface MessageLogin {
 	type: Extract<MessageType, 'login'>;
+	success: boolean;
+	error?: string;
+}
+
+export interface MessageAuth {
+	type: Extract<MessageType, 'auth'>;
 }
 
 export interface MessageLogout {
@@ -50,6 +57,7 @@ export interface MessageChannelEmotesUpdate {
 }
 
 export type Message =
+	| MessageAuth
 	| MessageAddUser
 	| MessageRemoveUser
 	| MessageLogin

@@ -1,7 +1,9 @@
 import { createLogger } from '@stimulcross/logger';
 import browser from 'webextension-polyfill';
+import { BACKGROUND_EVENTS } from '@/background/constants';
 import { handleSendMessageError } from '@/background/utils';
 import { defaultGlobalEmotesState } from '@shared/constants';
+import { type EventEmitter } from '@shared/event-emitter';
 import { type User } from '@shared/models';
 import { type GlobalEmotesState } from '@shared/models/global-emotes-state';
 import { Store } from '@shared/store';
@@ -27,64 +29,15 @@ export class EmotesUpdater {
 
 	private readonly _emotesFetcher = new EmotesFetcher();
 
-	constructor() {
-		browser.runtime.onMessage.addListener(async (message: Message) => {
-			try {
-				switch (message.type) {
-					case 'add_user': {
-						try {
-							const user = await Store.getUser(message.data.userId);
-
-							if (!user) {
-								this._logger.warn(`User ${message.data.userId} not found.`);
-								return;
-							}
-
-							await this._updateChannelEmotesForUser(user);
-						} catch (e) {
-							this._logger.error(e);
-						}
-
-						break;
-					}
-
-					case 'login': {
-						await this.start();
-						break;
-					}
-
-					case 'logout': {
-						this.stop();
-						break;
-					}
-
-					default:
-						break;
-				}
-			} catch (e) {
-				this._logger.error(e);
-			}
-		});
+	constructor(private readonly _emitter: EventEmitter) {
+		this._initListeners();
 	}
 
 	public async init(): Promise<void> {
 		this._logger.debug('Initializing...');
 
-		const globalEmotesState = await Store.getGlobalEmotesState();
-
-		if (!globalEmotesState) {
-			await Store.updateTwitchGlobalEmotesState({
-				twitchGlobalEmotesUpdatedAt: 0,
-				sevenTvGlobalEmotesUpdatedAt: 0,
-				ffzGlobalEmotesUpdatedAt: 0,
-				bttvGlobalEmotesUpdatedAt: 0
-			});
-		}
-
-		this._twitchGlobalEmotesSet = new Set((await Store.getTwitchGlobalEmotes()).map(emote => emote.id));
-		this._sevenTvGlobalEmotesSet = new Set((await Store.getSevenTvGlobalEmotes()).map(emote => emote.id));
-		this._ffzGlobalEmotesSet = new Set((await Store.getFfzGlobalEmotes()).map(emote => emote.id));
-		this._bttvGlobalEmotesSet = new Set((await Store.getBttvGlobalEmotes()).map(emote => emote.id));
+		await this._initGlobalEmotesState();
+		await this._initGlobalEmotes();
 
 		this._logger.debug('Initialized');
 	}
@@ -106,6 +59,70 @@ export class EmotesUpdater {
 	public stop(): void {
 		this._clearTimers();
 		this._logger.success('Stopped');
+	}
+
+	private _initListeners(): void {
+		this._emitter.on(BACKGROUND_EVENTS.LOGIN, async () => {
+			try {
+				await this.init();
+				await this.start();
+			} catch (e) {
+				this._logger.error(e);
+			}
+		});
+
+		browser.runtime.onMessage.addListener(async (message: Message) => {
+			try {
+				switch (message.type) {
+					case 'add_user': {
+						try {
+							const user = await Store.getUser(message.data.userId);
+
+							if (!user) {
+								this._logger.warn(`User ${message.data.userId} not found.`);
+								return;
+							}
+
+							await this._updateChannelEmotesForUser(user);
+						} catch (e) {
+							this._logger.error(e);
+						}
+
+						break;
+					}
+
+					case 'logout': {
+						this.stop();
+						break;
+					}
+
+					default:
+						break;
+				}
+			} catch (e) {
+				this._logger.error(e);
+			}
+		});
+	}
+
+	private async _initGlobalEmotesState(): Promise<void> {
+		const globalEmotesState = await Store.getGlobalEmotesState();
+
+		if (!globalEmotesState) {
+			await Store.updateTwitchGlobalEmotesState({
+				twitchGlobalEmotesUpdatedAt: 0,
+				sevenTvGlobalEmotesUpdatedAt: 0,
+				ffzGlobalEmotesUpdatedAt: 0,
+				bttvGlobalEmotesUpdatedAt: 0
+			});
+		}
+	}
+
+	private async _initGlobalEmotes(): Promise<void> {
+		this._twitchGlobalEmotesSet = new Set((await Store.getTwitchGlobalEmotes()).map(emote => emote.id));
+		this._sevenTvGlobalEmotesSet = new Set((await Store.getSevenTvGlobalEmotes()).map(emote => emote.id));
+		this._ffzGlobalEmotesSet = new Set((await Store.getFfzGlobalEmotes()).map(emote => emote.id));
+		this._bttvGlobalEmotesSet = new Set((await Store.getBttvGlobalEmotes()).map(emote => emote.id));
 	}
 
 	private _initTimers(): void {
