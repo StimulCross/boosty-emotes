@@ -8,22 +8,22 @@ export const TWITCH_CLIENT_ID = '1vhiufgkxlf5h4f8r1udn4fvawnk8d';
 export const WHITE_SPACE_REGEX = /\s+/gu;
 export const BOOSTY_USERNAME_REGEX = /^https:\/\/boosty.to\/(?!app)(?<username>[\w\d]+)/u;
 
-export enum StoreKeys {
-	Theme = 'theme',
-	Identity = 'identity',
-	Users = 'users',
-	TwitchAccessToken = 'twitch_access_token',
-	GlobalEmotesState = 'global_emotes_state',
-	EmotePickerState = 'emote_picker_state',
-	TwitchGlobalEmotes = 'twitch_global_emotes',
-	SevenTvGlobalEmotes = 'stv_global_emotes',
-	FfzGlobalEmotes = 'ffz_global_emotes',
-	BttvGlobalEmotes = 'bttv_global_emotes',
-	TwitchChannelEmotesPrefix = 'twitch_emotes_',
-	SevenTvChannelEmotesPrefix = '7tv_emotes_',
-	FfzChannelEmotesPrefix = 'ffz_emotes_',
-	BttvChannelEmotesPrefix = 'bttv_emotes_'
-}
+export const STORE_KEYS = {
+	THEME: 'theme',
+	IDENTITY: 'identity',
+	USERS: 'users',
+	TWITCH_ACCESS_TOKEN: 'twitch_access_token',
+	GLOBAL_EMOTES_STATE: 'global_emotes_state',
+	EMOTE_PICKER_STATE: 'emote_picker_state',
+	TWITCH_GLOBAL_EMOTES: 'twitch_global_emotes',
+	SEVEN_TV_GLOBAL_EMOTES: 'stv_global_emotes',
+	FFZ_GLOBAL_EMOTES: 'ffz_global_emotes',
+	BTTV_GLOBAL_EMOTES: 'bttv_global_emotes',
+	TWITCH_CHANNEL_EMOTES_PREFIX: 'twitch_emotes_',
+	SEVEN_TV_CHANNEL_EMOTES_PREFIX: '7tv_emotes_',
+	FFZ_CHANNEL_EMOTES_PREFIX: 'ffz_emotes_',
+	BTTV_CHANNEL_EMOTES_PREFIX: 'bttv_emotes_'
+};
 
 export const defaultGlobalEmotesState: GlobalEmotesState = {
 	twitchGlobalEmotesUpdatedAt: 0,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import browser from 'webextension-polyfill';
-import { defaultEmotePickerState, StoreKeys } from '@shared/constants';
+import { defaultEmotePickerState, STORE_KEYS } from '@shared/constants';
 import { BoostyUserAlreadyExistsError, TwitchUserAlreadyExistsError } from '@shared/errors';
 import {
 	BttvEmote,
@@ -30,43 +30,43 @@ export class Store {
 	}
 
 	public static async getTheme(): Promise<Theme> {
-		const data = await store.get(StoreKeys.Theme);
-		return data[StoreKeys.Theme] ?? 'light';
+		const data = await store.get(STORE_KEYS.THEME);
+		return data[STORE_KEYS.THEME] ?? 'light';
 	}
 
 	public static async setTheme(theme: Theme): Promise<void> {
-		await store.set({ [StoreKeys.Theme]: theme });
+		await store.set({ [STORE_KEYS.THEME]: theme });
 	}
 
 	public static async getTwitchAccessToken(): Promise<string | null> {
-		const data = await store.get(StoreKeys.TwitchAccessToken);
-		return data[StoreKeys.TwitchAccessToken] ?? null;
+		const data = await store.get(STORE_KEYS.TWITCH_ACCESS_TOKEN);
+		return data[STORE_KEYS.TWITCH_ACCESS_TOKEN] ?? null;
 	}
 
 	public static async setTwitchAccessToken(token: string | null): Promise<void> {
 		if (token) {
-			await store.set({ [StoreKeys.TwitchAccessToken]: token });
+			await store.set({ [STORE_KEYS.TWITCH_ACCESS_TOKEN]: token });
 		} else {
-			await store.remove(StoreKeys.TwitchAccessToken);
+			await store.remove(STORE_KEYS.TWITCH_ACCESS_TOKEN);
 		}
 	}
 
 	public static async getIdentity(): Promise<UserIdentity | null> {
-		const data = await store.get(StoreKeys.Identity);
-		return data[StoreKeys.Identity] ?? null;
+		const data = await store.get(STORE_KEYS.IDENTITY);
+		return data[STORE_KEYS.IDENTITY] ?? null;
 	}
 
 	public static async setIdentity(profile: UserIdentity | null): Promise<void> {
 		if (profile) {
-			await store.set({ [StoreKeys.Identity]: profile });
+			await store.set({ [STORE_KEYS.IDENTITY]: profile });
 		} else {
-			await store.remove(StoreKeys.Identity);
+			await store.remove(STORE_KEYS.IDENTITY);
 		}
 	}
 
 	public static async getUsers(): Promise<User[]> {
-		const data = await store.get(StoreKeys.Users);
-		return data[StoreKeys.Users] ?? [];
+		const data = await store.get(STORE_KEYS.USERS);
+		return data[STORE_KEYS.USERS] ?? [];
 	}
 
 	public static async getUser(userId: string): Promise<User | null> {
@@ -106,7 +106,7 @@ export class Store {
 		}
 
 		users.push(user);
-		await store.set({ [StoreKeys.Users]: [...users] });
+		await store.set({ [STORE_KEYS.USERS]: [...users] });
 	}
 
 	public static async updateUser(twitchProfile: UserIdentity, state: Partial<UserState> = {}): Promise<void> {
@@ -132,7 +132,7 @@ export class Store {
 		}
 
 		const newUsers = users.filter(({ boostyUsername }) => username !== boostyUsername);
-		await store.set({ [StoreKeys.Users]: [...newUsers] });
+		await store.set({ [STORE_KEYS.USERS]: [...newUsers] });
 
 		const userId = user.twitchProfile.id;
 		await store.remove([
@@ -144,21 +144,21 @@ export class Store {
 	}
 
 	public static async getGlobalEmotesState(): Promise<GlobalEmotesState | null> {
-		const data = await store.get(StoreKeys.GlobalEmotesState);
-		return data[StoreKeys.GlobalEmotesState] ?? null;
+		const data = await store.get(STORE_KEYS.GLOBAL_EMOTES_STATE);
+		return data[STORE_KEYS.GLOBAL_EMOTES_STATE] ?? null;
 	}
 
 	public static async updateTwitchGlobalEmotesState(newState: Partial<GlobalEmotesState>): Promise<void> {
 		const state = await this.getGlobalEmotesState();
-		await store.set({ [StoreKeys.GlobalEmotesState]: { ...state, ...newState } });
+		await store.set({ [STORE_KEYS.GLOBAL_EMOTES_STATE]: { ...state, ...newState } });
 	}
 
 	public static async getGlobalEmotes(): Promise<Emote[]> {
 		const data = (await store.get([
-			StoreKeys.TwitchGlobalEmotes,
-			StoreKeys.SevenTvGlobalEmotes,
-			StoreKeys.FfzGlobalEmotes,
-			StoreKeys.BttvGlobalEmotes
+			STORE_KEYS.TWITCH_GLOBAL_EMOTES,
+			STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES,
+			STORE_KEYS.FFZ_GLOBAL_EMOTES,
+			STORE_KEYS.BTTV_GLOBAL_EMOTES
 		])) as Partial<Record<string, EmoteData[]>>;
 
 		const result: Emote[] = [];
@@ -167,19 +167,19 @@ export class Store {
 		// It represents the priority of displaying the emotes.
 		// The last ones have the highest priority.
 
-		data[StoreKeys.BttvGlobalEmotes]?.forEach(emote => {
+		data[STORE_KEYS.BTTV_GLOBAL_EMOTES]?.forEach(emote => {
 			result.push(new BttvEmote(emote));
 		});
 
-		data[StoreKeys.FfzGlobalEmotes]?.forEach(emote => {
+		data[STORE_KEYS.FFZ_GLOBAL_EMOTES]?.forEach(emote => {
 			result.push(new FfzEmote(emote));
 		});
 
-		data[StoreKeys.SevenTvGlobalEmotes]?.forEach(emote => {
+		data[STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES]?.forEach(emote => {
 			result.push(new StvEmote(emote));
 		});
 
-		data[StoreKeys.TwitchGlobalEmotes]?.forEach(emote => {
+		data[STORE_KEYS.TWITCH_GLOBAL_EMOTES]?.forEach(emote => {
 			result.push(new TwitchEmote(emote));
 		});
 
@@ -226,35 +226,35 @@ export class Store {
 
 	public static async getGlobalEmotesByProvider(): Promise<ThirdPartyProviderEmotesSets> {
 		const data = (await store.get([
-			StoreKeys.TwitchGlobalEmotes,
-			StoreKeys.SevenTvGlobalEmotes,
-			StoreKeys.FfzGlobalEmotes,
-			StoreKeys.BttvGlobalEmotes
+			STORE_KEYS.TWITCH_GLOBAL_EMOTES,
+			STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES,
+			STORE_KEYS.FFZ_GLOBAL_EMOTES,
+			STORE_KEYS.BTTV_GLOBAL_EMOTES
 		])) as Partial<Record<string, EmoteData[]>>;
 
 		return new Map<ThirdPartyEmoteProvider, Map<string, Emote>>([
 			[
 				'twitch',
 				new Map<string, Emote>(
-					data[StoreKeys.TwitchGlobalEmotes]?.map(emote => [emote.id, new TwitchEmote(emote)]) ?? []
+					data[STORE_KEYS.TWITCH_GLOBAL_EMOTES]?.map(emote => [emote.id, new TwitchEmote(emote)]) ?? []
 				)
 			],
 			[
 				'7tv',
 				new Map<string, Emote>(
-					data[StoreKeys.SevenTvGlobalEmotes]?.map(emote => [emote.id, new StvEmote(emote)]) ?? []
+					data[STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES]?.map(emote => [emote.id, new StvEmote(emote)]) ?? []
 				)
 			],
 			[
 				'ffz',
 				new Map<string, Emote>(
-					data[StoreKeys.FfzGlobalEmotes]?.map(emote => [emote.id, new FfzEmote(emote)]) ?? []
+					data[STORE_KEYS.FFZ_GLOBAL_EMOTES]?.map(emote => [emote.id, new FfzEmote(emote)]) ?? []
 				)
 			],
 			[
 				'bttv',
 				new Map<string, Emote>(
-					data[StoreKeys.BttvGlobalEmotes]?.map(emote => [emote.id, new BttvEmote(emote)]) ?? []
+					data[STORE_KEYS.BTTV_GLOBAL_EMOTES]?.map(emote => [emote.id, new BttvEmote(emote)]) ?? []
 				)
 			]
 		]);
@@ -298,39 +298,41 @@ export class Store {
 	}
 
 	public static async getTwitchGlobalEmotes(): Promise<TwitchEmoteData[]> {
-		const data = (await store.get(StoreKeys.TwitchGlobalEmotes)) as Partial<Record<string, TwitchEmoteData[]>>;
-		return data[StoreKeys.TwitchGlobalEmotes] ?? [];
+		const data = (await store.get(STORE_KEYS.TWITCH_GLOBAL_EMOTES)) as Partial<Record<string, TwitchEmoteData[]>>;
+		return data[STORE_KEYS.TWITCH_GLOBAL_EMOTES] ?? [];
 	}
 
 	public static async setTwitchGlobalEmotes(emotes: TwitchEmote[]): Promise<void> {
-		await store.set({ [StoreKeys.TwitchGlobalEmotes]: emotes.map(emote => emote.toJSON()) });
+		await store.set({ [STORE_KEYS.TWITCH_GLOBAL_EMOTES]: emotes.map(emote => emote.toJSON()) });
 	}
 
 	public static async getSevenTvGlobalEmotes(): Promise<SevenTvEmoteData[]> {
-		const data = (await store.get(StoreKeys.SevenTvGlobalEmotes)) as Partial<Record<string, SevenTvEmoteData[]>>;
-		return data[StoreKeys.SevenTvGlobalEmotes] ?? [];
+		const data = (await store.get(STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES)) as Partial<
+			Record<string, SevenTvEmoteData[]>
+		>;
+		return data[STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES] ?? [];
 	}
 
 	public static async setSevenTvGlobalEmotes(emotes: StvEmote[]): Promise<void> {
-		await store.set({ [StoreKeys.SevenTvGlobalEmotes]: emotes.map(emote => emote.toJSON()) });
+		await store.set({ [STORE_KEYS.SEVEN_TV_GLOBAL_EMOTES]: emotes.map(emote => emote.toJSON()) });
 	}
 
 	public static async getFfzGlobalEmotes(): Promise<FfzEmoteData[]> {
-		const data = (await store.get(StoreKeys.FfzGlobalEmotes)) as Partial<Record<string, FfzEmoteData[]>>;
-		return data[StoreKeys.FfzGlobalEmotes] ?? [];
+		const data = (await store.get(STORE_KEYS.FFZ_GLOBAL_EMOTES)) as Partial<Record<string, FfzEmoteData[]>>;
+		return data[STORE_KEYS.FFZ_GLOBAL_EMOTES] ?? [];
 	}
 
 	public static async setFfzGlobalEmotes(emotes: FfzEmote[]): Promise<void> {
-		await store.set({ [StoreKeys.FfzGlobalEmotes]: emotes.map(emote => emote.toJSON()) });
+		await store.set({ [STORE_KEYS.FFZ_GLOBAL_EMOTES]: emotes.map(emote => emote.toJSON()) });
 	}
 
 	public static async getBttvGlobalEmotes(): Promise<BttvEmoteData[]> {
-		const data = (await store.get(StoreKeys.BttvGlobalEmotes)) as Partial<Record<string, BttvEmoteData[]>>;
-		return data[StoreKeys.FfzGlobalEmotes] ?? [];
+		const data = (await store.get(STORE_KEYS.BTTV_GLOBAL_EMOTES)) as Partial<Record<string, BttvEmoteData[]>>;
+		return data[STORE_KEYS.FFZ_GLOBAL_EMOTES] ?? [];
 	}
 
 	public static async setBttvGlobalEmotes(emotes: BttvEmote[]): Promise<void> {
-		await store.set({ [StoreKeys.BttvGlobalEmotes]: emotes.map(emote => emote.toJSON()) });
+		await store.set({ [STORE_KEYS.BTTV_GLOBAL_EMOTES]: emotes.map(emote => emote.toJSON()) });
 	}
 
 	public static async getTwitchChannelEmotes(userId: string): Promise<TwitchEmoteData[]> {
@@ -374,32 +376,32 @@ export class Store {
 	}
 
 	public static async getEmotePickerState(): Promise<EmotePickerState> {
-		const data = await store.get(StoreKeys.EmotePickerState);
-		return data[StoreKeys.EmotePickerState] ?? defaultEmotePickerState;
+		const data = await store.get(STORE_KEYS.EMOTE_PICKER_STATE);
+		return data[STORE_KEYS.EMOTE_PICKER_STATE] ?? defaultEmotePickerState;
 	}
 
 	public static async setEmotePickerState(newState: EmotePickerState): Promise<void> {
 		const state = await this.getEmotePickerState();
-		await store.set({ [StoreKeys.EmotePickerState]: { ...state, ...newState } });
+		await store.set({ [STORE_KEYS.EMOTE_PICKER_STATE]: { ...state, ...newState } });
 	}
 
 	private static async _setUsers(users: User[]): Promise<void> {
-		await store.set({ [StoreKeys.Users]: users });
+		await store.set({ [STORE_KEYS.USERS]: users });
 	}
 
 	private static _getTwitchChannelEmotesKey(userId: string): string {
-		return `${StoreKeys.TwitchChannelEmotesPrefix}${userId}}`;
+		return `${STORE_KEYS.TWITCH_CHANNEL_EMOTES_PREFIX}${userId}}`;
 	}
 
 	private static _getSevenTvChannelEmotesKey(userId: string): string {
-		return `${StoreKeys.SevenTvChannelEmotesPrefix}${userId}}`;
+		return `${STORE_KEYS.SEVEN_TV_CHANNEL_EMOTES_PREFIX}${userId}}`;
 	}
 
 	private static _getFfzChannelEmotesKey(userId: string): string {
-		return `${StoreKeys.FfzChannelEmotesPrefix}${userId}}`;
+		return `${STORE_KEYS.FFZ_CHANNEL_EMOTES_PREFIX}${userId}}`;
 	}
 
 	private static _getBttvChannelEmotesKey(userId: string): string {
-		return `${StoreKeys.BttvChannelEmotesPrefix}${userId}}`;
+		return `${STORE_KEYS.BTTV_CHANNEL_EMOTES_PREFIX}${userId}}`;
 	}
 }
