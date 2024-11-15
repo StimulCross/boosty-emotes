@@ -62,6 +62,27 @@ export class StreamPageContext extends SingleUserContext {
 						for (const message of messages) {
 							this._replaceEmotesInChatMessage(message);
 						}
+					} else if (mutation.target.parentElement?.classList.value.includes('Layout_layout')) {
+						if (mutation.addedNodes.length > 0) {
+							for (const addedNode of mutation.addedNodes) {
+								if (
+									addedNode instanceof HTMLElement &&
+									addedNode.classList.value.includes('StreamPage_block_')
+								) {
+									const emotePickerBtn = addedNode.querySelector('[class*=SmileButton_root_]');
+
+									if (emotePickerBtn) {
+										emotePickerBtn.replaceWith(createEmotePickerButton());
+									}
+
+									const description = addedNode.querySelector('[class*=AboutStream_description_]');
+
+									if (description) {
+										this._replaceEmotesInDescription(description);
+									}
+								}
+							}
+						}
 					} else if (mutation.target.classList.value.includes('ChatMessage_text_')) {
 						this._replaceEmotesInChatMessage(mutation.target);
 					}
