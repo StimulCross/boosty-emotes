@@ -9,6 +9,7 @@ export class ChannelPageContext extends SingleUserContext {
 	private static readonly _targetDescriptionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
 	private static readonly _commentTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
 	private static readonly _subscriptionDescriptionTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
+	private static readonly _chatMessageTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
 
 	constructor(rootContext: RootContext) {
 		super(rootContext, ['CommentPublisher_root__', 'ChatPublisher_root_']);
@@ -150,23 +151,38 @@ export class ChannelPageContext extends SingleUserContext {
 						this._replaceEmotesInTargetDescription(mutation.target);
 					}
 					// Stream chat on channel page
-					else if (mutation.target.classList.value.includes('ReactVirtualized__Grid__innerScrollContainer')) {
-						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
+					else if (
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase_list_') &&
+						mutation.addedNodes.length > 0
+					) {
+						for (const addedNode of mutation.addedNodes) {
+							if (
+								addedNode instanceof HTMLDivElement &&
+								addedNode.firstChild instanceof HTMLDivElement &&
+								addedNode.firstChild.classList.value.includes('ChatBoxBase_messageContainer_')
+							) {
+								const message = addedNode.firstChild.querySelector('[class*=ChatMessage_text_]');
 
-						for (const message of messages) {
-							this._replaceEmotesInComment(message);
+								if (message) {
+									this._replaceEmotesInChatMessage(message);
+								}
+							}
 						}
 					} else if (mutation.target.parentElement?.classList.value.includes('ChatBoxBase_root_')) {
 						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
 
 						for (const message of messages) {
-							this._replaceEmotesInComment(message);
+							this._replaceEmotesInChatMessage(message);
 						}
 					} else if (mutation.target.classList.value.includes('ChatMessage_text_')) {
-						this._replaceEmotesInComment(mutation.target);
-					} else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
+						this._replaceEmotesInChatMessage(mutation.target);
+					}
+					// Hide original tooltip
+					else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
 						mutation.target.style.display = 'none';
-					} else if (mutation.target.classList.value.includes('StreamChatToggler_container_')) {
+					}
+					// Inject emote picker button
+					else if (mutation.target.classList.value.includes('StreamChatToggler_container_')) {
 						for (const node of mutation.addedNodes) {
 							if (node instanceof HTMLElement && node.classList.value.includes('Stream_chat_')) {
 								const emoteButton = node.querySelector('[class*=SmileButton_root_]');
@@ -259,6 +275,15 @@ export class ChannelPageContext extends SingleUserContext {
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
 			ChannelPageContext._subscriptionDescriptionTagsSet
+		);
+	}
+
+	private _replaceEmotesInChatMessage(node: Node): void {
+		replaceEmotesInNode(
+			node,
+			[this._channelEmotes, this._rootContext.globalEmotes],
+			ChannelPageContext._chatMessageTagsSet,
+			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage_tooltip_'))
 		);
 	}
 

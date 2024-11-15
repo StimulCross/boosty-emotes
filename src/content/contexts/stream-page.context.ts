@@ -39,11 +39,22 @@ export class StreamPageContext extends SingleUserContext {
 		return new MutationObserver(mutations => {
 			for (const mutation of mutations) {
 				if (mutation.target instanceof HTMLElement) {
-					if (mutation.target.classList.value.includes('ReactVirtualized__Grid__innerScrollContainer')) {
-						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
+					if (
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase_list_') &&
+						mutation.addedNodes.length > 0
+					) {
+						for (const addedNode of mutation.addedNodes) {
+							if (
+								addedNode instanceof HTMLDivElement &&
+								addedNode.firstChild instanceof HTMLDivElement &&
+								addedNode.firstChild.classList.value.includes('ChatBoxBase_messageContainer_')
+							) {
+								const message = addedNode.firstChild.querySelector('[class*=ChatMessage_text_]');
 
-						for (const message of messages) {
-							this._replaceEmotesInChatMessage(message);
+								if (message) {
+									this._replaceEmotesInChatMessage(message);
+								}
+							}
 						}
 					} else if (mutation.target.parentElement?.classList.value.includes('ChatBoxBase_root_')) {
 						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
@@ -53,29 +64,10 @@ export class StreamPageContext extends SingleUserContext {
 						}
 					} else if (mutation.target.classList.value.includes('ChatMessage_text_')) {
 						this._replaceEmotesInChatMessage(mutation.target);
-					} else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
+					}
+					// Hide original tooltip
+					else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
 						mutation.target.style.display = 'none';
-					} else if (mutation.target instanceof HTMLDivElement) {
-						if (mutation.addedNodes.length > 0) {
-							for (const addedNode of mutation.addedNodes) {
-								if (
-									addedNode instanceof HTMLElement &&
-									addedNode.classList.value.includes('StreamPage_block_')
-								) {
-									const emotePickerBtn = addedNode.querySelector('[class*=SmileButton_root_]');
-
-									if (emotePickerBtn) {
-										emotePickerBtn.replaceWith(createEmotePickerButton());
-									}
-
-									const description = addedNode.querySelector('[class*=AboutStream_description_]');
-
-									if (description) {
-										this._replaceEmotesInDescription(description);
-									}
-								}
-							}
-						}
 					}
 				}
 			}
