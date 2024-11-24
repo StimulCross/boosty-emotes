@@ -1,0 +1,20 @@
+.favorite-icon {
+	font-size: 12px;
+
+	position: absolute;
+	right: 0;
+	bottom: 0;
+
+	margin: 0;
+
+	color: gold;
+
+	border-radius: 50%;
+	background-color: rgb(0 0 0 / 70%);
+}
+
+.star-icon {
+	&::before {
+		content: '★';
+	}
+}
