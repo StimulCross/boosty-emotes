@@ -1,4 +1,6 @@
 import type { RootContext } from '@content/contexts/root-context';
+import { FavoriteEmotes } from '@shared/components/favorite-emotes';
+import { Store } from '@shared/store';
 import type { ScopesEmotesSets } from '@shared/types';
 import { PageContext } from './page-context';
 
@@ -21,5 +23,11 @@ export class MessagesPageContext extends PageContext {
 
 	public getAvailableEmoteSetsByScope(): ScopesEmotesSets {
 		return new Map();
+	}
+
+	public async getFavoriteEmotes(): Promise<FavoriteEmotes> {
+		const globalFavoriteEmotes = await Store.getGlobalFavoriteEmotes();
+
+		return new FavoriteEmotes(globalFavoriteEmotes);
 	}
 }

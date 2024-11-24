@@ -2,6 +2,7 @@ import browser from 'webextension-polyfill';
 import { EmotePickerComponent, type EmotePickerStyleOptions, RedactorsState } from '@content/components';
 import { getCaretPosition } from '@content/utils';
 import { EmoteTooltip } from '@shared/components/emote-tooltip';
+import { FavoriteEmotes } from '@shared/components/favorite-emotes';
 import type { Emote, User } from '@shared/models';
 import { Store } from '@shared/store';
 import type { EmotesSet, Message, ProviderEmotesSets, ScopesEmotesSets } from '@shared/types';
@@ -75,6 +76,17 @@ export abstract class SingleUserContext extends PageContext {
 		map.set('global', this._rootContext.globalEmotesByProvider);
 
 		return map;
+	}
+
+	public async getFavoriteEmotes(): Promise<FavoriteEmotes> {
+		const globalFavoriteEmotes = await Store.getGlobalFavoriteEmotes();
+
+		if (this._user?.twitchProfile.id) {
+			const channelFavoriteEmotes = await Store.getChannelFavoriteEmotes(this._user.twitchProfile.id);
+			return new FavoriteEmotes(globalFavoriteEmotes, channelFavoriteEmotes, this._user.twitchProfile.id);
+		}
+
+		return new FavoriteEmotes(globalFavoriteEmotes);
 	}
 
 	protected abstract _createMutationObserver(): MutationObserver;

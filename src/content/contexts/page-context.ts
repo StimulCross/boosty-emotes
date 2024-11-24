@@ -1,4 +1,5 @@
 import { createLogger, type Logger } from '@stimulcross/logger';
+import { type FavoriteEmotes } from '@shared/components/favorite-emotes';
 import { DomListener } from '@shared/dom-listener';
 import { type EventEmitter } from '@shared/event-emitter';
 import { type ScopesEmotesSets } from '@shared/types';
@@ -29,4 +30,5 @@ export abstract class PageContext extends DomListener {
 	}
 
 	public abstract getAvailableEmoteSetsByScope(): ScopesEmotesSets;
+	public abstract getFavoriteEmotes(): Promise<FavoriteEmotes>;
 }
