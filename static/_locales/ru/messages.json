@@ -105,5 +105,14 @@
 	},
 	"bttv_channel_emotes_title": {
 		"message": "BTTV смайлы канала"
+	},
+	"favorite_global_emotes_title": {
+		"message": "Избранные глобальные смайлы"
+	},
+	"favorite_channel_emotes_title": {
+		"message": "Избранные смайлы канала"
+	},
+	"favorite_tab_title": {
+		"message": "ИЗБР"
 	}
 }

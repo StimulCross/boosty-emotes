@@ -105,5 +105,14 @@
 	},
 	"bttv_channel_emotes_title": {
 		"message": "BTTV Channel Emotes"
+	},
+	"favorite_global_emotes_title": {
+		"message": "Favorite Global Emotes"
+	},
+	"favorite_channel_emotes_title": {
+		"message": "Favorite Channel Emotes"
+	},
+	"favorite_tab_title": {
+		"message": "FAV"
 	}
 }
