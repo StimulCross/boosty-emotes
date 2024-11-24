@@ -1,6 +1,7 @@
 import { createLogger } from '@stimulcross/logger';
 import { type PageContext } from '@content/contexts/page-context';
 import { createEmotePickerOverlay } from '@content/templates';
+import { type FavoriteEmotes } from '@shared/components/favorite-emotes';
 import { DomListener } from '@shared/dom-listener';
 import { type EventEmitter } from '@shared/event-emitter';
 import { Store } from '@shared/store';
@@ -45,7 +46,11 @@ export class EmotePickerComponent extends DomListener {
 		this._hide();
 	}
 
-	private async _show(button: HTMLElement, emoteSets: ScopesEmotesSets): Promise<void> {
+	private async _show(
+		button: HTMLElement,
+		emoteSets: ScopesEmotesSets,
+		favoriteEmotes: FavoriteEmotes
+	): Promise<void> {
 		let publisherRoot: Node | null = null;
 
 		for (const className of this._publisherRootClassNames) {
@@ -66,6 +71,7 @@ export class EmotePickerComponent extends DomListener {
 		this._currentEmotePickerActiveButton.classList.add('BE-emote-picker__button--active');
 
 		const emotePickerState = await Store.getEmotePickerState();
+
 		this._emotePicker = new EmotePicker(
 			document.createElement('div'),
 			this._emitter,
@@ -73,6 +79,7 @@ export class EmotePickerComponent extends DomListener {
 			this._redactorsState,
 			emotePickerState,
 			emoteSets,
+			favoriteEmotes,
 			this._styleOptions?.bottomOffset
 		);
 		this._emotePickerOverlay = createEmotePickerOverlay(this._styleOptions?.zIndex);
@@ -113,7 +120,11 @@ export class EmotePickerComponent extends DomListener {
 					if (emotePickerBtn.classList.contains('BE-emote-picker__button--active') || this.isShown) {
 						this._hide();
 					} else {
-						await this._show(emotePickerBtn, this._context.getAvailableEmoteSetsByScope());
+						await this._show(
+							emotePickerBtn,
+							this._context.getAvailableEmoteSetsByScope(),
+							await this._context.getFavoriteEmotes()
+						);
 					}
 				} else if (evt.target.classList.contains('BE-emote-picker__overlay')) {
 					this._hide();

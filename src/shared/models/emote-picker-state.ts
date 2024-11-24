@@ -1,4 +1,4 @@
-import type { EmoteProvider, EmoteScope } from '@shared/types';
+import type { EmotePickerTab, EmoteScope } from '@shared/types';
 
 export type EmotePickerEmotesSetCollapsedState = Record<EmoteScope, boolean>;
 
@@ -7,6 +7,6 @@ export interface EmotePickerEmotesSetState {
 }
 
 export interface EmotePickerState {
-	activeTab: EmoteProvider;
-	sets: Record<EmoteProvider, EmotePickerEmotesSetState>;
+	activeTab: EmotePickerTab;
+	sets: Record<EmotePickerTab, EmotePickerEmotesSetState>;
 }

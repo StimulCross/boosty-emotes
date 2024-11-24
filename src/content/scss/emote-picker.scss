@@ -1,4 +1,5 @@
 @use '@shared/styles/common';
+@use '@shared/components/favorite-icon/favorite-icon';
 
 $search-background-color-light: rgb(225 225 225);
 $search-background-color-dark: rgb(30 30 30);
@@ -117,13 +118,14 @@ $comment-publisher-button-color: #7c7c7c;
 }
 
 .BE-emote-picker__provider-name {
-	font-size: 14px;
+	font-size: 13px;
 
 	display: none;
 	overflow: hidden;
 
 	width: auto !important;
-	margin-left: 8px;
+	margin-bottom: 2px;
+	margin-left: 4px;
 
 	cursor: pointer;
 	user-select: none;
@@ -217,6 +219,16 @@ $comment-publisher-button-color: #7c7c7c;
 			}
 		}
 	}
+
+	&--favorite {
+		&:hover {
+			.BE-emote-picker__provider-icon {
+				svg {
+					fill: common.$favorite-color;
+				}
+			}
+		}
+	}
 }
 
 .dark-theme .BE-emote-picker__provider {
@@ -265,6 +277,14 @@ $comment-publisher-button-color: #7c7c7c;
 	.BE-emote-picker__provider-icon {
 		svg {
 			fill: common.$bttv-color;
+		}
+	}
+}
+
+.BE-emote-picker__provider--active.BE-emote-picker__provider--favorite {
+	.BE-emote-picker__provider-icon {
+		svg {
+			fill: common.$favorite-color;
 		}
 	}
 }
@@ -408,20 +428,19 @@ $comment-publisher-button-color: #7c7c7c;
 	}
 }
 
-.BE-emote-picker__emote {
-	display: block;
+.BE-emote-picker__emote-button {
+	position: relative;
 
-	max-width: 100%;
-	height: 100%;
-
-	// max-height: 40px;
-	margin: 0 2px;
+	margin: 2px;
 	padding: 3px;
 
 	cursor: pointer;
 	user-select: none;
 
 	transition: scale 0.1s ease-out;
+
+	border: none;
+	background: none;
 
 	&:hover {
 		background: common.$background-hover-dark;
@@ -431,6 +450,30 @@ $comment-publisher-button-color: #7c7c7c;
 	&--hide {
 		display: none;
 	}
+}
+
+.BE-emote-picker__emote {
+	display: block;
+
+	// max-width: 100%;
+	// height: 100%;
+
+	// margin: 0 2px;
+	// padding: 3px;
+
+	// cursor: pointer;
+	// user-select: none;
+
+	// transition: scale 0.1s ease-out;
+
+	// &:hover {
+	//	 background: common.$background-hover-dark;
+	//	 scale: 1.1;
+	// }
+
+	// &--hide {
+	//	 display: none;
+	// }
 }
 
 .dark-theme .BE-emote-picker__emote {

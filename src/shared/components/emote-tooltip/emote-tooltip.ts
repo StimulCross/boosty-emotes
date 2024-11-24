@@ -28,94 +28,108 @@ export class EmoteTooltip extends DomListener {
 
 	private _onMouseover(evt: MouseEvent): void {
 		try {
-			if (
-				evt.target instanceof HTMLImageElement &&
-				(evt.target.dataset.tooltip === 'true' || evt.target.dataset.type === 'smile')
-			) {
+			if (this._isEmoteButton(evt.target)) {
+				this._createEmoteTooltip(evt.target.firstElementChild! as HTMLImageElement);
+			} else if (this._isEmoteImage(evt.target)) {
+				this._createEmoteTooltip(evt.target);
+			} else if (!this._isEmoteImage(evt.relatedTarget) && !this._isEmoteButton(evt.relatedTarget)) {
 				this._reset();
-
-				this._currentEmote = evt.target;
-				const originalWidth = this._currentEmote.width;
-				const originalHeight = this._currentEmote.height;
-				const tooltipWidth = originalWidth * 3;
-				const tooltipHeight = originalHeight * 3;
-				this._currentEmote.addEventListener('mouseleave', () => this._reset());
-
-				this._currentTooltip = document.createElement('div');
-				this._currentTooltip.classList.add('BE-emote-tooltip');
-
-				if (this._currentEmote.dataset.type === 'smile') {
-					this._currentEmote.dataset.provider = 'boosty';
-				}
-
-				this._currentTooltip.innerHTML = html`
-						<div class="BE-emote-tooltip-container">
-						<img
-							class="BE-emote-tooltip-image"
-							src="${this._currentEmote.src}"
-							alt="${this._currentEmote.alt}"
-							width="${String(tooltipWidth)}"
-							height="${String(tooltipHeight)}"
-							sizes="auto"
-						/>
-						<div class="BE-emote-tooltip-provider">
-							${this._currentEmote.dataset.provider?.toUpperCase() ?? ''}
-						</div>
-						<div class="BE-emote-tooltip-name">${this._currentEmote.alt}</div>
-					</div>`;
-
-				this._rootContainer.appendChild(this._currentTooltip);
-
-				computePosition(this._currentEmote, this._currentTooltip, {
-					placement: 'top',
-					strategy: 'absolute',
-					middleware: [
-						flip(),
-						shift({ padding: 5 }),
-						offset(8),
-						size({
-							apply({ availableWidth, availableHeight, elements }) {
-								Object.assign(elements.floating.style, {
-									maxWidth: `${availableWidth - 20}px`,
-									maxHeight: `${availableHeight - 20}px`
-								});
-							}
-						})
-					]
-				})
-					.then(({ x, y }) => {
-						if (this._currentTooltip) {
-							Object.assign(this._currentTooltip.style, {
-								left: `${x}px`,
-								top: `${y}px`
-							});
-						}
-					})
-					.catch(e => this._logger.error(e));
-
-				this._timeout = setTimeout(() => {
-					if (this._currentTooltip) {
-						try {
-							this._currentTooltip.classList.add('BE-emote-tooltip--show');
-							const img = this._currentTooltip.querySelector('.BE-emote-tooltip-image');
-
-							if (img instanceof HTMLImageElement && this._currentEmote) {
-								img.srcset = getTooltipEmoteSrcset(
-									this._currentEmote.dataset.provider as EmoteProvider,
-									this._currentEmote.dataset.id!,
-									originalWidth,
-									originalHeight
-								);
-							}
-						} catch (e) {
-							this._logger.warn(e);
-						}
-					}
-				}, 300);
 			}
 		} catch (e) {
 			this._logger.error(e);
 		}
+	}
+
+	private _isEmoteButton(element: unknown): element is HTMLButtonElement {
+		return element instanceof HTMLButtonElement && element.dataset.tooltip === 'emote';
+	}
+
+	private _isEmoteImage(element: unknown): element is HTMLImageElement {
+		return element instanceof HTMLImageElement && element.dataset.tooltip === 'emote';
+	}
+
+	private _createEmoteTooltip(emoteImage: HTMLImageElement): void {
+		if (this._currentEmote === emoteImage) {
+			return;
+		}
+
+		this._reset();
+
+		this._currentEmote = emoteImage;
+		const originalWidth = this._currentEmote.width;
+		const originalHeight = this._currentEmote.height;
+		const tooltipWidth = originalWidth * 3;
+		const tooltipHeight = originalHeight * 3;
+
+		this._currentTooltip = document.createElement('div');
+		this._currentTooltip.classList.add('BE-emote-tooltip');
+
+		if (this._currentEmote.dataset.type === 'smile') {
+			this._currentEmote.dataset.provider = 'boosty';
+		}
+
+		this._currentTooltip.innerHTML = html`
+						<div class="BE-emote-tooltip-container">
+				<img
+					class="BE-emote-tooltip-image"
+					src="${this._currentEmote.src}"
+					alt="${this._currentEmote.alt}"
+					width="${String(tooltipWidth)}"
+					height="${String(tooltipHeight)}"
+					sizes="auto"
+				/>
+				<div class="BE-emote-tooltip-provider">${this._currentEmote.dataset.provider?.toUpperCase() ?? ''}</div>
+				<div class="BE-emote-tooltip-name">${this._currentEmote.alt}</div>
+			</div>`;
+
+		this._rootContainer.appendChild(this._currentTooltip);
+
+		computePosition(this._currentEmote, this._currentTooltip, {
+			placement: 'top',
+			strategy: 'absolute',
+			middleware: [
+				flip(),
+				shift({ padding: 5 }),
+				offset(8),
+				size({
+					apply({ availableWidth, availableHeight, elements }) {
+						Object.assign(elements.floating.style, {
+							maxWidth: `${availableWidth - 20}px`,
+							maxHeight: `${availableHeight - 20}px`
+						});
+					}
+				})
+			]
+		})
+			.then(({ x, y }) => {
+				if (this._currentTooltip) {
+					Object.assign(this._currentTooltip.style, {
+						left: `${x}px`,
+						top: `${y}px`
+					});
+				}
+			})
+			.catch(e => this._logger.error(e));
+
+		this._timeout = setTimeout(() => {
+			if (this._currentTooltip) {
+				try {
+					this._currentTooltip.classList.add('BE-emote-tooltip--show');
+					const img = this._currentTooltip.querySelector('.BE-emote-tooltip-image');
+
+					if (img instanceof HTMLImageElement && this._currentEmote) {
+						img.srcset = getTooltipEmoteSrcset(
+							this._currentEmote.dataset.provider as EmoteProvider,
+							this._currentEmote.dataset.id!,
+							originalWidth,
+							originalHeight
+						);
+					}
+				} catch (e) {
+					this._logger.warn(e);
+				}
+			}
+		}, 300);
 	}
 
 	private _reset(): void {
@@ -125,7 +139,6 @@ export class EmoteTooltip extends DomListener {
 		}
 
 		if (this._currentEmote) {
-			this._currentEmote.removeEventListener('mouseleave', () => this._reset());
 			this._currentEmote = null;
 		}
 

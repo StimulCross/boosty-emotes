@@ -1,4 +1,5 @@
 import { html } from 'code-tag';
+import { createFavoriteIcon } from '@shared/components/favorite-icon/create-favorite-icon';
 import { type EmoteScope, type EmoteProvider, type EmoteSize } from '../../types';
 
 export interface EmoteOwner {
@@ -54,6 +55,10 @@ export abstract class Emote {
 		this._data = { ...data, provider };
 	}
 
+	public get scope(): EmoteScope {
+		return this._data.scope;
+	}
+
 	public get id(): string {
 		return this._data.id;
 	}
@@ -71,11 +76,48 @@ export abstract class Emote {
 				src="${this.getSrc(size)}"
 				data-type="emote"
 				data-provider="${this._data.provider}"
+				data-scope="${this._data.scope}"
 				data-id="${this._data.id}"
-				data-tooltip="true"
+				data-tooltip="emote"
 				loading="lazy"
 				decoding="async"
 			/>`;
+	}
+
+	public toButton(
+		size: EmoteSize = 1,
+		buttonClasses: string = '',
+		imageClasses: string = 'BE-emote',
+		isFavorite?: boolean
+	): HTMLButtonElement {
+		const button = document.createElement('button');
+		button.setAttribute('class', buttonClasses);
+		button.dataset.type = 'emote';
+		button.dataset.provider = this._data.provider;
+		button.dataset.scope = this._data.scope;
+		button.dataset.id = this._data.id;
+		button.dataset.name = this._data.name;
+		button.dataset.tooltip = 'emote';
+
+		const image = document.createElement('img');
+		image.setAttribute('class', imageClasses);
+		image.setAttribute('alt', this._data.name);
+		image.setAttribute('src', this.getSrc(size));
+		image.setAttribute('loading', 'lazy');
+		image.setAttribute('decoding', 'async');
+		image.dataset.type = 'emote';
+		image.dataset.provider = this._data.provider;
+		image.dataset.scope = this._data.scope;
+		image.dataset.id = this._data.id;
+		image.dataset.tooltip = 'emote';
+
+		button.append(image);
+
+		if (isFavorite) {
+			button.append(createFavoriteIcon());
+		}
+
+		return button;
 	}
 
 	public toJSON(): EmoteData {
