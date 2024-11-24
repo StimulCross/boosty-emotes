@@ -22,7 +22,9 @@ export const STORE_KEYS = {
 	TWITCH_CHANNEL_EMOTES_PREFIX: 'twitch_emotes_',
 	SEVEN_TV_CHANNEL_EMOTES_PREFIX: '7tv_emotes_',
 	FFZ_CHANNEL_EMOTES_PREFIX: 'ffz_emotes_',
-	BTTV_CHANNEL_EMOTES_PREFIX: 'bttv_emotes_'
+	BTTV_CHANNEL_EMOTES_PREFIX: 'bttv_emotes_',
+	GLOBAL_FAVORITE_EMOTES: 'global_favorite_emotes',
+	CHANNEL_FAVORITE_EMOTES_PREFIX: 'channel_favorite_emotes_'
 };
 
 export const defaultGlobalEmotesState: GlobalEmotesState = {
@@ -35,6 +37,12 @@ export const defaultGlobalEmotesState: GlobalEmotesState = {
 export const defaultEmotePickerState: EmotePickerState = {
 	activeTab: 'boosty',
 	sets: {
+		favorite: {
+			collapsed: {
+				global: false,
+				channel: false
+			}
+		},
 		boosty: {
 			collapsed: {
 				global: false,

@@ -20,6 +20,7 @@ import {
 	type UserIdentity,
 	type UserState
 } from '@shared/models';
+import { type FavoriteEmote } from '@shared/models/favorite-emote';
 import { type Theme, type ThirdPartyEmoteProvider, type ThirdPartyProviderEmotesSets } from '@shared/types';
 
 const store = browser.storage.local;
@@ -93,6 +94,83 @@ export class Store {
 		const users = await this.getUsers();
 		const user = users.find(({ boostyUsername }) => boostyUsername === name);
 		return user ?? null;
+	}
+
+	public static async getGlobalFavoriteEmotes(): Promise<FavoriteEmote[]> {
+		const data = await store.get(STORE_KEYS.GLOBAL_FAVORITE_EMOTES);
+		return data[STORE_KEYS.GLOBAL_FAVORITE_EMOTES] ?? [];
+	}
+
+	public static async addGlobalFavoriteEmote(emote: FavoriteEmote): Promise<void> {
+		const favoriteEmotes = await this.getGlobalFavoriteEmotes();
+		const existingFavoriteEmote = favoriteEmotes.find(
+			favoriteEmote =>
+				favoriteEmote.id === emote.id &&
+				favoriteEmote.provider === emote.provider &&
+				favoriteEmote.scope === emote.scope
+		);
+
+		if (existingFavoriteEmote) {
+			return;
+		}
+
+		favoriteEmotes.push({ provider: emote.provider, scope: emote.scope, id: emote.id });
+		await store.set({ [STORE_KEYS.GLOBAL_FAVORITE_EMOTES]: favoriteEmotes });
+	}
+
+	public static async removeGlobalFavoriteEmote(emote: FavoriteEmote): Promise<void> {
+		const favoriteEmotes = await this.getGlobalFavoriteEmotes();
+		await store.set({
+			[STORE_KEYS.GLOBAL_FAVORITE_EMOTES]: favoriteEmotes.filter(
+				favoriteEmote =>
+					!(
+						favoriteEmote.id === emote.id &&
+						favoriteEmote.provider === emote.provider &&
+						favoriteEmote.scope === emote.scope
+					)
+			)
+		});
+	}
+
+	public static async getChannelFavoriteEmotes(userId: string): Promise<FavoriteEmote[]> {
+		const key = `${STORE_KEYS.CHANNEL_FAVORITE_EMOTES_PREFIX}${userId}`;
+		const data = await store.get(key);
+		return data[key] ?? [];
+	}
+
+	public static async addChannelFavoriteEmote(userId: string, emote: FavoriteEmote): Promise<void> {
+		const key = `${STORE_KEYS.CHANNEL_FAVORITE_EMOTES_PREFIX}${userId}`;
+
+		const favoriteEmotes = await this.getChannelFavoriteEmotes(userId);
+		const existingFavoriteEmote = favoriteEmotes.find(
+			favoriteEmote =>
+				favoriteEmote.id === emote.id &&
+				favoriteEmote.provider === emote.provider &&
+				favoriteEmote.scope === emote.scope
+		);
+
+		if (existingFavoriteEmote) {
+			return;
+		}
+
+		favoriteEmotes.push({ provider: emote.provider, scope: emote.scope, id: emote.id });
+		await store.set({ [key]: favoriteEmotes });
+	}
+
+	public static async removeChannelFavoriteEmote(userId: string, emote: FavoriteEmote): Promise<void> {
+		const key = `${STORE_KEYS.CHANNEL_FAVORITE_EMOTES_PREFIX}${userId}`;
+
+		const favoriteEmotes = await this.getChannelFavoriteEmotes(userId);
+		await store.set({
+			[key]: favoriteEmotes.filter(
+				favoriteEmote =>
+					!(
+						favoriteEmote.id === emote.id &&
+						favoriteEmote.provider === emote.provider &&
+						favoriteEmote.scope === emote.scope
+					)
+			)
+		});
 	}
 
 	public static async addUser(user: User): Promise<void> {
