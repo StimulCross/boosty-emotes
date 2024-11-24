@@ -19,6 +19,7 @@
 		"@namics/stylelint-bem": "^10.0.0",
 		"@stimulcross/eslint-config-typescript": "^1.6.2",
 		"@stimulcross/prettier-config": "^1.6.2",
+		"@types/semver": "^7.5.8",
 		"@types/webextension-polyfill": "^0.10.7",
 		"babel-loader": "^9.1.3",
 		"clean-webpack-plugin": "^4.0.0",
@@ -51,6 +52,7 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.6.10",
 		"@stimulcross/logger": "^7.0.0",
-		"code-tag": "^1.2.0"
+		"code-tag": "^1.2.0",
+		"semver": "^7.6.3"
 	}
 }
