@@ -24,10 +24,12 @@ Twitch: `stimulx`; Boosty: `stimulx`
 - [x] Emotes on stream page: description, chat (`https://boosty.to/<username>/streams/video_stream`)
 - [x] Emotes on chat popup page (`https://boosty.to/<username>/streams/only-chat`)
 - [x] Emote picker with third-party emotes support
-- [ ] Emotes on main page: posts, comments (`https://boosty.to/`)
+- [x] Favorite emotes
+- [x] Emotes `Tab` autocompletion
+- [x] Emotes colon (`:`) autocompletion
+- [ ] Emotes on the main page: posts, comments (`https://boosty.to/`)
 - [ ] Emotes on personal messages page (`https://boosty.to/app/messages`)
-- [ ] Emotes `Tab` completion
-- [ ] Emotes colon (`:`) completion
+- [ ] Zero-width emotes
 
 ### Support
 
