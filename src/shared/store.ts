@@ -181,7 +181,7 @@ export class Store {
 
 	public static async updateEmoteAutocompletionSettings(newSettings: EmoteAutocompletionSettings): Promise<void> {
 		const settings = await this.getEmoteAutocompletionSettings();
-		await store.set({ ...settings, ...newSettings });
+		await store.set({ [STORE_KEYS.EMOTE_AUTOCOMPLETION_SETTINGS]: { ...settings, ...newSettings } });
 	}
 
 	public static async addUser(user: User): Promise<void> {
