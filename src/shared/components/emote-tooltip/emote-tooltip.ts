@@ -45,7 +45,10 @@ export class EmoteTooltip extends DomListener {
 	}
 
 	private _isEmoteImage(element: unknown): element is HTMLImageElement {
-		return element instanceof HTMLImageElement && element.dataset.tooltip === 'emote';
+		return (
+			element instanceof HTMLImageElement &&
+			(element.dataset.tooltip === 'emote' || element.dataset.type === 'smile')
+		);
 	}
 
 	private _createEmoteTooltip(emoteImage: HTMLImageElement): void {

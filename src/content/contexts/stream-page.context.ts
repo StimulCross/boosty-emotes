@@ -11,7 +11,7 @@ export class StreamPageContext extends SingleUserContext {
 		super(
 			rootContext,
 			['ChatPublisher_root_'],
-			{ bottomOffset: -10, zIndex: 9 },
+			{ bottomOffset: 'calc(100% + 10px', zIndex: '9' },
 			{ bottomOffset: 'calc(100% + 10px)', leftOffset: '15px', width: '310px' }
 		);
 	}

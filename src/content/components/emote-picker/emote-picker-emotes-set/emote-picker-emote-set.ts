@@ -154,6 +154,20 @@ export abstract class EmotePickerEmoteSet extends DomListener {
 	private async _handleEmoteClick(emoteButton: HTMLButtonElement, ctrlKey: boolean): Promise<void> {
 		if (ctrlKey) {
 			await this._handleEmoteCtrlClick(emoteButton);
+		} else if (emoteButton.dataset.provider === 'boosty') {
+			if (!emoteButton.dataset.id) {
+				return;
+			}
+
+			const emote = this._emotesSet.get(emoteButton.dataset.id);
+
+			if (!emote) {
+				return;
+			}
+
+			const emoteTempContainer = document.createElement('span');
+			emoteTempContainer.innerHTML = emote.toHtml();
+			this._emoteInserter.insertEmote(emoteTempContainer.firstElementChild as HTMLImageElement);
 		} else {
 			const image = emoteButton.firstElementChild;
 
@@ -161,19 +175,7 @@ export abstract class EmotePickerEmoteSet extends DomListener {
 				return;
 			}
 
-			if (emoteButton.dataset.provider === 'boosty' && emoteButton.dataset.id) {
-				const emote = this._emotesSet.get(emoteButton.dataset.id);
-
-				if (!emote) {
-					return;
-				}
-
-				const emoteTempContainer = document.createElement('span');
-				emoteTempContainer.innerHTML = emote.toHtml();
-				this._emoteInserter.insertEmote(emoteTempContainer.firstElementChild as HTMLImageElement);
-			} else {
-				this._emoteInserter.insertEmote(image.alt);
-			}
+			this._emoteInserter.insertEmote(image.alt);
 		}
 	}
 
