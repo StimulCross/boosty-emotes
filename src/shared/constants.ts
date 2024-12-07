@@ -1,4 +1,3 @@
-// https://id.twitch.tv/oauth2/authorize?client_id=1vhiufgkxlf5h4f8r1udn4fvawnk8d&response_type=token%20id_token&redirect_uri=http://localhost/&scope=openid
 import { EmoteAutocompletionMatchType } from '@shared/enums';
 import { type EmotePickerState } from '@shared/models';
 import { type EmoteAutocompletionSettings } from '@shared/models/emote-autocompletion-settings';
