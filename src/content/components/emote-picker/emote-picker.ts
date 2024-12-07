@@ -27,12 +27,12 @@ export class EmotePicker {
 		private readonly _state: EmotePickerState,
 		private readonly _emoteSets: ScopesEmotesSets,
 		private readonly _favoriteEmotes: FavoriteEmotes,
-		bottomOffset?: number
+		bottomOffset?: string
 	) {
 		this.$root.classList.add('BE-emote-picker');
 
 		if (bottomOffset) {
-			this.$root.style.bottom = `calc(100% - ${bottomOffset}px)`;
+			this.$root.style.bottom = bottomOffset;
 		}
 
 		this._header = new EmotePickerHeader(

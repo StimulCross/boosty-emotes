@@ -60,10 +60,8 @@ $comment-publisher-button-color: #7c7c7c;
 	right: 15px;
 	bottom: calc(100% - 2px);
 
-	width: 300px;
+	width: 310px;
 	padding: 10px;
-
-	// height: 350px;
 
 	color: common.$black;
 	border: 1px solid common.$border-light;
@@ -454,26 +452,6 @@ $comment-publisher-button-color: #7c7c7c;
 
 .BE-emote-picker__emote {
 	display: block;
-
-	// max-width: 100%;
-	// height: 100%;
-
-	// margin: 0 2px;
-	// padding: 3px;
-
-	// cursor: pointer;
-	// user-select: none;
-
-	// transition: scale 0.1s ease-out;
-
-	// &:hover {
-	//	 background: common.$background-hover-dark;
-	//	 scale: 1.1;
-	// }
-
-	// &--hide {
-	//	 display: none;
-	// }
 }
 
 .dark-theme .BE-emote-picker__emote {

@@ -11,8 +11,8 @@ import { type RedactorsState } from '..';
 import { EmotePicker } from '.';
 
 export interface EmotePickerStyleOptions {
-	zIndex?: number;
-	bottomOffset?: number;
+	zIndex?: string;
+	bottomOffset?: string;
 }
 
 export class EmotePickerComponent extends DomListener {
