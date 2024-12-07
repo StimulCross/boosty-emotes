@@ -1,6 +1,7 @@
 import { createLogger } from '@stimulcross/logger';
 import semver from 'semver';
 import browser from 'webextension-polyfill';
+import { defaultEmoteAutocompletionSettings } from '@shared/constants';
 import { Store } from '@shared/store';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
 
@@ -17,6 +18,11 @@ export class ExtensionUpdateHandler {
 					if (semver.lt(previousVersion, '0.1.0')) {
 						await this._handleFavoriteEmotesUpdate();
 						this._logger.success('Applied 0.1.0 updates');
+					}
+
+					if (semver.lt(previousVersion, '0.2.0')) {
+						await this._handleEmoteAutocompletionUpdate();
+						this._logger.success('Applied 0.2.0 updates');
 					}
 				}
 			} catch (e) {
@@ -35,5 +41,9 @@ export class ExtensionUpdateHandler {
 
 		emotePickerState.sets.favorite = { collapsed: { global: false, channel: false } };
 		await Store.setEmotePickerState(emotePickerState);
+	}
+
+	private async _handleEmoteAutocompletionUpdate(): Promise<void> {
+		await Store.updateEmoteAutocompletionSettings(defaultEmoteAutocompletionSettings);
 	}
 }
