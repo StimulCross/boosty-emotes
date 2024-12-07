@@ -1,5 +1,7 @@
 // https://id.twitch.tv/oauth2/authorize?client_id=1vhiufgkxlf5h4f8r1udn4fvawnk8d&response_type=token%20id_token&redirect_uri=http://localhost/&scope=openid
+import { EmoteAutocompletionMatchType } from '@shared/enums';
 import { type EmotePickerState } from '@shared/models';
+import { type EmoteAutocompletionSettings } from '@shared/models/emote-autocompletion-settings';
 import { type GlobalEmotesState } from '@shared/models/global-emotes-state';
 
 export const LOGGER_APPLICATION_NAME = 'BOOSTY_EMOTES';
@@ -24,7 +26,8 @@ export const STORE_KEYS = {
 	FFZ_CHANNEL_EMOTES_PREFIX: 'ffz_emotes_',
 	BTTV_CHANNEL_EMOTES_PREFIX: 'bttv_emotes_',
 	GLOBAL_FAVORITE_EMOTES: 'global_favorite_emotes',
-	CHANNEL_FAVORITE_EMOTES_PREFIX: 'channel_favorite_emotes_'
+	CHANNEL_FAVORITE_EMOTES_PREFIX: 'channel_favorite_emotes_',
+	EMOTE_AUTOCOMPLETION_SETTINGS: 'emote_autocompletion_settings'
 };
 
 export const defaultGlobalEmotesState: GlobalEmotesState = {
@@ -75,4 +78,15 @@ export const defaultEmotePickerState: EmotePickerState = {
 			}
 		}
 	}
+};
+
+export const defaultEmoteAutocompletionSettings: EmoteAutocompletionSettings = {
+	useTabAutocompletion: true,
+	useColonAutocompletion: true,
+	matchType: EmoteAutocompletionMatchType.Includes,
+	prioritizeFavoriteEmotes: true,
+	prioritizePrefixMatchedEmotes: true,
+	limit: 25,
+	priority: ['twitch', '7tv', 'ffz', 'bttv', 'boosty'],
+	sortByPriority: false
 };

@@ -1,5 +1,6 @@
 import { html } from 'code-tag';
 import { createFavoriteIcon } from '@shared/components/favorite-icon/create-favorite-icon';
+import { EmoteAutocompletionMatchType } from '../../enums';
 import { type EmoteScope, type EmoteProvider, type EmoteSize } from '../../types';
 
 export interface EmoteOwner {
@@ -50,9 +51,11 @@ export type EmoteData = EmoteDataBase | TwitchEmoteData;
 export abstract class Emote {
 	public abstract readonly provider: EmoteProvider;
 	protected readonly _data: EmoteData;
+	private _nameLowerCase?: string;
 
 	protected constructor(provider: EmoteProvider, data: CreateEmote) {
 		this._data = { ...data, provider };
+		this._nameLowerCase = this._data.name.toLowerCase();
 	}
 
 	public get scope(): EmoteScope {
@@ -65,6 +68,26 @@ export abstract class Emote {
 
 	public get name(): string {
 		return this._data.name;
+	}
+
+	public get nameLowerCase(): string {
+		if (this._nameLowerCase) {
+			return this._nameLowerCase;
+		}
+
+		return (this._nameLowerCase = this._data.name.toLowerCase());
+	}
+
+	matches(token: string): EmoteAutocompletionMatchType | null {
+		if (this.nameLowerCase.startsWith(token)) {
+			return EmoteAutocompletionMatchType.StartsWith;
+		}
+
+		if (this.nameLowerCase.includes(token)) {
+			return EmoteAutocompletionMatchType.Includes;
+		}
+
+		return null;
 	}
 
 	public abstract getSrc(size?: EmoteSize): string;

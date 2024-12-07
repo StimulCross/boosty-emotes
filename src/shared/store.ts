@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import browser from 'webextension-polyfill';
-import { defaultEmotePickerState, STORE_KEYS } from '@shared/constants';
+import { defaultEmoteAutocompletionSettings, defaultEmotePickerState, STORE_KEYS } from '@shared/constants';
 import { BoostyUserAlreadyExistsError, TwitchUserAlreadyExistsError } from '@shared/errors';
 import {
 	BttvEmote,
@@ -20,6 +20,7 @@ import {
 	type UserIdentity,
 	type UserState
 } from '@shared/models';
+import { type EmoteAutocompletionSettings } from '@shared/models/emote-autocompletion-settings';
 import { type FavoriteEmote } from '@shared/models/favorite-emote';
 import { type Theme, type ThirdPartyEmoteProvider, type ThirdPartyProviderEmotesSets } from '@shared/types';
 
@@ -171,6 +172,16 @@ export class Store {
 					)
 			)
 		});
+	}
+
+	public static async getEmoteAutocompletionSettings(): Promise<EmoteAutocompletionSettings> {
+		const data = await store.get(STORE_KEYS.EMOTE_AUTOCOMPLETION_SETTINGS);
+		return data[STORE_KEYS.EMOTE_AUTOCOMPLETION_SETTINGS] ?? defaultEmoteAutocompletionSettings;
+	}
+
+	public static async updateEmoteAutocompletionSettings(newSettings: EmoteAutocompletionSettings): Promise<void> {
+		const settings = await this.getEmoteAutocompletionSettings();
+		await store.set({ ...settings, ...newSettings });
 	}
 
 	public static async addUser(user: User): Promise<void> {
