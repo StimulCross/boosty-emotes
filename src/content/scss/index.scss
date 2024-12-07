@@ -1,5 +1,6 @@
-@use '../../shared/components/emote-tooltip/emote-tooltip';
+@use '@shared/components/emote-tooltip/emote-tooltip';
 @use 'emote-picker';
+@use 'emote-autocompletion';
 
 .BE-emote {
 	display: inline-block;

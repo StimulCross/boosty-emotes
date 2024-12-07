@@ -3,3 +3,4 @@ export * from './replace-emotes-in-string';
 export * from './replace-emotes-in-node';
 export * from './get-caret-position';
 export * from './restore-caret-position';
+export * from './split-text-into-words-with-indices';

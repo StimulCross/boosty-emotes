@@ -1,5 +1,11 @@
 import browser from 'webextension-polyfill';
-import { EmotePickerComponent, type EmotePickerStyleOptions, RedactorsState } from '@content/components';
+import {
+	EmoteAutocompletionComponent,
+	type EmoteAutocompletionStyleOptions,
+	EmotePickerComponent,
+	type EmotePickerStyleOptions,
+	RedactorsState
+} from '@content/components';
 import { getCaretPosition } from '@content/utils';
 import { EmoteTooltip } from '@shared/components/emote-tooltip';
 import { FavoriteEmotes } from '@shared/components/favorite-emotes';
@@ -21,12 +27,14 @@ export abstract class SingleUserContext extends PageContext {
 	private readonly _observer: MutationObserver;
 	private readonly _tooltip: EmoteTooltip;
 	protected readonly _emotePickerComponent: EmotePickerComponent;
+	protected readonly _emoteAutocompletionComponent: EmoteAutocompletionComponent;
 	private readonly _redactorsState = new RedactorsState();
 
 	protected constructor(
 		rootContext: RootContext,
 		publisherRootClassNames: string[],
-		emotePickerStyleOptions?: EmotePickerStyleOptions
+		emotePickerStyleOptions?: EmotePickerStyleOptions,
+		emoteAutocompletionStyleOptions?: EmoteAutocompletionStyleOptions
 	) {
 		const $root = document.querySelector('div#root');
 
@@ -44,6 +52,15 @@ export abstract class SingleUserContext extends PageContext {
 			this,
 			this._redactorsState,
 			emotePickerStyleOptions
+		);
+
+		this._emoteAutocompletionComponent = new EmoteAutocompletionComponent(
+			this.$root,
+			this._rootContext.emitter,
+			publisherRootClassNames,
+			this,
+			this._redactorsState,
+			emoteAutocompletionStyleOptions
 		);
 
 		this._observer = this._createMutationObserver();

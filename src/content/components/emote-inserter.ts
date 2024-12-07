@@ -100,6 +100,53 @@ export class EmoteInserter {
 		}
 	}
 
+	public replaceTextWithEmote(emote: string | HTMLElement, start: number, end: number): void {
+		const caretPosition = this._redactorsState.get(this._redactor);
+
+		if (!caretPosition || this._redactor.childNodes.length === 0) {
+			return;
+		}
+
+		const block = this._redactor.children[caretPosition.blockIndex];
+
+		if (!(block instanceof HTMLElement)) {
+			throw new Error('No text block found');
+		}
+
+		const blockContent = block.querySelector('.cdx-block');
+
+		if (!(blockContent instanceof HTMLElement)) {
+			throw new Error('No block content inside block found');
+		}
+
+		if (blockContent.childNodes.length === 0) {
+			return;
+		}
+
+		const item = (blockContent.childNodes[caretPosition.itemIndex] as Node | null) ?? blockContent.lastChild;
+
+		if (!(item instanceof Text) || !item.textContent || item.textContent.length < end) {
+			return;
+		}
+
+		const left = item.textContent.slice(0, start);
+		const right = item.textContent.slice(end);
+
+		const parts: Array<string | Node> = [];
+
+		if (typeof emote === 'string') {
+			const emoteText = startsWithWhiteSpace(right) ? emote : `${emote}\u00a0`;
+			parts.push(`${left}${emoteText}\u00a0${right}`);
+			caretPosition.offset = left.length + emote.length + 1;
+		} else {
+			parts.push(left, emote, right);
+			caretPosition.itemIndex += 1;
+		}
+
+		item.replaceWith(...parts);
+		this._focusBlock(block, caretPosition);
+	}
+
 	private _insertEmoteToBlockItem(
 		item: Element | Text,
 		emote: string | HTMLElement,

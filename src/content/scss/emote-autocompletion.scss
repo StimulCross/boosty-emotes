@@ -1,0 +1,216 @@
+@use 'sass:color';
+@use '../../shared/styles/common';
+@use '../../shared/components/favorite-icon/favorite-icon';
+
+.BE-emote-autocompletion {
+	position: absolute;
+	z-index: 100 !important;
+	bottom: calc(100% - 2px);
+	left: 65px;
+
+	overflow-y: scroll;
+
+	scrollbar-color: common.$gray transparent;
+	scrollbar-width: thin;
+
+	width: 350px;
+	max-height: 400px;
+	padding: 10px;
+
+	color: common.$black;
+	border: 1px solid common.$border-light;
+	border-radius: 8px;
+
+	background: common.$white;
+}
+
+.dark-theme .BE-emote-autocompletion {
+	color: common.$white;
+	border: 1px solid common.$border-dark;
+
+	background: common.$dark;
+}
+
+.BE-emote-autocompletion__emote-matches {
+	display: flex;
+	overflow-x: hidden;
+	flex-direction: column;
+}
+
+.BE-emote-autocompletion__emote-match-provider-icon {
+	width: auto;
+	height: 10px;
+	margin-bottom: 9px;
+
+	.provider-icon {
+		width: auto;
+		height: 10px;
+		fill: common.$black;
+	}
+
+	.provider-icon#twitch-icon-svg {
+		width: 11px;
+		height: auto;
+	}
+
+	.provider-icon#boosty-icon-svg {
+		width: 10px;
+		height: auto;
+	}
+
+	&--twitch {
+		margin-bottom: 4px;
+	}
+
+	&--boosty {
+		margin-bottom: 6px;
+	}
+}
+
+.dark-theme .BE-emote-autocompletion__emote-match-provider-icon {
+	.provider-icon {
+		fill: common.$white;
+	}
+}
+
+.BE-emote-autocompletion__emote-match {
+	position: relative;
+
+	display: flex;
+
+	align-items: center;
+
+	padding: 5px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: scale 0.1s ease-out;
+
+	border: none;
+	background: none;
+
+	&--select,
+	&:hover {
+		background: common.$background-hover-dark;
+
+		.BE-emote-autocompletion__emote-match-provider-icon {
+			&--boosty {
+				.provider-icon {
+					fill: common.$boosty-color;
+				}
+			}
+
+			&--twitch {
+				// stylelint-disable-next-line no-descending-specificity
+				.provider-icon {
+					fill: common.$twitch-color;
+				}
+			}
+
+			&--7tv {
+				// stylelint-disable-next-line no-descending-specificity
+				.provider-icon {
+					fill: common.$stv-color;
+				}
+			}
+
+			&--ffz {
+				// stylelint-disable-next-line no-descending-specificity
+				.provider-icon {
+					fill: common.$ffz-color;
+				}
+			}
+
+			&--bttv {
+				// stylelint-disable-next-line no-descending-specificity
+				.provider-icon {
+					fill: common.$bttv-color;
+				}
+			}
+		}
+	}
+
+	&:focus {
+		border: none;
+	}
+}
+
+.dark-theme .BE-emote-autocompletion__emote-match {
+	&:hover {
+		background: common.$background-hover-dark;
+	}
+}
+
+.BE-BE-emote-autocompletion__emote-match-emote-container {
+	position: relative;
+
+	margin: 0 8px 0 0;
+}
+
+.BE-BE-emote-autocompletion__emote-match-emote-image-container {
+	position: relative;
+
+	margin: 0 8px 0 0;
+}
+
+.BE-emote-autocompletion__emote-match-emote {
+	max-height: 32px;
+	margin-right: 6px;
+}
+
+.BE-emote-autocompletion__emote-match-emote-name {
+	font-size: 12px;
+	font-weight: bold;
+
+	overflow-x: hidden;
+
+	margin-right: 10px;
+
+	text-overflow: ellipsis;
+
+	color: common.$black;
+}
+
+.dark-theme .BE-emote-autocompletion__emote-match-emote-name {
+	color: common.$white;
+}
+
+.BE-emote-autocompletion__emote-match-emote-provider {
+	font-size: 8px;
+	font-weight: bold;
+
+	padding: 2px 4px;
+
+	border-radius: 6px;
+
+	&--boosty {
+		color: common.$boosty-color;
+		border: 1px solid common.$boosty-color;
+		background-color: rgba(common.$boosty-color, 0.3);
+	}
+
+	&--twitch {
+		color: common.$twitch-color;
+		border: 1px solid common.$twitch-color;
+		background-color: rgba(common.$twitch-color, 0.3);
+	}
+
+	&--7tv {
+		color: common.$stv-color;
+		border: 1px solid common.$stv-color;
+		background-color: rgba(common.$stv-color, 0.3);
+	}
+
+	&--ffz {
+		color: common.$ffz-color;
+		border: 1px solid common.$ffz-color;
+		background-color: rgba(common.$ffz-color, 0.3);
+	}
+
+	&--bttv {
+		color: common.$bttv-color;
+		border: 1px solid common.$bttv-color;
+		background-color: rgba(common.$bttv-color, 0.3);
+	}
+}

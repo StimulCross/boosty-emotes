@@ -7,7 +7,12 @@ export class ChatOnlyPageContext extends SingleUserContext {
 	private static readonly _chatMessageTagsSet = new Set(['div', 'span', 'b', 'strong', 'i', 'u']);
 
 	constructor(rootContext: RootContext) {
-		super(rootContext, ['ChatPublisher_root_'], { bottomOffset: 'calc(100% + 10px', zIndex: '9' });
+		super(
+			rootContext,
+			['ChatPublisher_root_'],
+			{ bottomOffset: 'calc(100% + 10px', zIndex: '9' },
+			{ bottomOffset: 'calc(100% + 10px)', leftOffset: '15px', width: '310px' }
+		);
 	}
 
 	public async init(): Promise<void> {
