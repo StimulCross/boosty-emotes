@@ -81,6 +81,7 @@ export abstract class SingleUserContext extends PageContext {
 		this._observer.disconnect();
 		this._tooltip.destroy();
 		this._emotePickerComponent.destroy();
+		this._emoteAutocompletionComponent.destroy();
 
 		// Bound in the constructor
 		// eslint-disable-next-line @typescript-eslint/unbound-method
