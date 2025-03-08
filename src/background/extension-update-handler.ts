@@ -24,6 +24,11 @@ export class ExtensionUpdateHandler {
 						await this._handleEmoteAutocompletionUpdate();
 						this._logger.success('Applied 0.2.0 updates');
 					}
+
+					if (semver.lt(previousVersion, '0.2.2')) {
+						await this._handleChannelEmotesUpdateFix();
+						this._logger.success('Applied 0.2.2 updates');
+					}
 				}
 			} catch (e) {
 				this._logger.error('Could not apply updates', e);
@@ -45,5 +50,24 @@ export class ExtensionUpdateHandler {
 
 	private async _handleEmoteAutocompletionUpdate(): Promise<void> {
 		await Store.updateEmoteAutocompletionSettings(defaultEmoteAutocompletionSettings);
+	}
+
+	private async _handleChannelEmotesUpdateFix(): Promise<void> {
+		const users = await Store.getUsers();
+
+		for (const user of users) {
+			user.state.twitchEmotesUpdatedAt = 0;
+			user.state.sevenTvEmotesUpdatedAt = 0;
+			user.state.ffzEmotesUpdatedAt = 0;
+			user.state.bttvEmotesUpdatedAt = 0;
+			user.state.updatedAt = 0;
+
+			await Store.setTwitchChannelEmotes(user.twitchProfile.id, []);
+			await Store.setSevenTvChannelEmotes(user.twitchProfile.id, []);
+			await Store.setFfzChannelEmotes(user.twitchProfile.id, []);
+			await Store.setBttvChannelEmotes(user.twitchProfile.id, []);
+
+			await Store.updateUser(user.twitchProfile, user.state);
+		}
 	}
 }
