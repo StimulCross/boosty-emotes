@@ -339,22 +339,22 @@ export class EmotesUpdater {
 
 				const twitchChannelEmotes = await TwitchApi.getChannelEmotes(userId);
 				const localTwitchChannelEmotes = await Store.getTwitchChannelEmotes(userId);
-				let isTwitchChannelEmotesChanged = false;
+				let isChanged = false;
 
 				if (twitchChannelEmotes.length !== localTwitchChannelEmotes.length) {
-					isTwitchChannelEmotesChanged = true;
+					isChanged = true;
 				} else {
 					const localTwitchChannelEmotesSet = new Set(localTwitchChannelEmotes.map(emote => emote.id));
 
 					for (const emote of twitchChannelEmotes) {
 						if (!localTwitchChannelEmotesSet.has(emote.id)) {
-							isTwitchChannelEmotesChanged = true;
+							isChanged = true;
 							break;
 						}
 					}
 				}
 
-				if (isTwitchChannelEmotesChanged) {
+				if (isChanged) {
 					this._logger.info('Twitch channel emotes have been updated', user);
 
 					areChannelEmotesChanged ||= true;
@@ -372,7 +372,6 @@ export class EmotesUpdater {
 				this._logger.debug('Updating 7TV channel emotes...', user);
 
 				const sevenTvChannelEmotes = await this._emotesFetcher.stv.getChannelEmotes(userId);
-
 				const localSevenTvChannelEmotes = await Store.getSevenTvChannelEmotes(userId);
 				let isChanged = false;
 
@@ -381,14 +380,10 @@ export class EmotesUpdater {
 				} else {
 					const localSevenTvChannelEmotesSet = new Set(localSevenTvChannelEmotes.map(emote => emote.id));
 
-					if (sevenTvChannelEmotes.length !== localSevenTvChannelEmotesSet.size) {
-						isChanged = true;
-					} else {
-						for (const emote of sevenTvChannelEmotes) {
-							if (!localSevenTvChannelEmotesSet.has(emote.id)) {
-								areChannelEmotesChanged = true;
-								break;
-							}
+					for (const emote of sevenTvChannelEmotes) {
+						if (!localSevenTvChannelEmotesSet.has(emote.id)) {
+							isChanged = true;
+							break;
 						}
 					}
 				}
@@ -451,6 +446,7 @@ export class EmotesUpdater {
 					isChanged = true;
 				} else {
 					const localBttvChannelEmotesSet = new Set(localBttvChannelEmotes.map(emote => emote.id));
+
 					for (const emote of bttvChannelEmotes) {
 						if (!localBttvChannelEmotesSet.has(emote.id)) {
 							isChanged = true;
