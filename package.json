@@ -1,6 +1,6 @@
 {
 	"name": "boosty-emotes",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"description": "An extension that allows you to use Twitch emotes on Boosty, including third-party providers: 7TV, FrankerFaceZ, and BetterTTV.",
 	"type": "module",
 	"author": "Stimul Cross",
