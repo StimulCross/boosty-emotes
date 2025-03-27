@@ -136,7 +136,7 @@ export class EmotePickerComponent extends DomListener {
 					)
 				) {
 					this._hide();
-				} else if (this.isShown && evt.target.closest('[class*=Publisher_sendContainer_]')) {
+				} else if (this.isShown && evt.target.closest('[class*=Publisher-scss--module_sendContainer_]')) {
 					this._hide();
 				}
 			}

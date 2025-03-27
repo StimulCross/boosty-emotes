@@ -9,7 +9,7 @@ export class ChatOnlyPageContext extends SingleUserContext {
 	constructor(rootContext: RootContext) {
 		super(
 			rootContext,
-			['ChatPublisher_root_'],
+			['ChatPublisher-scss--module_root_'],
 			{ bottomOffset: 'calc(100% + 10px', zIndex: '9' },
 			{ bottomOffset: 'calc(100% + 10px)', leftOffset: '15px', width: '310px' }
 		);
@@ -18,13 +18,13 @@ export class ChatOnlyPageContext extends SingleUserContext {
 	public async init(): Promise<void> {
 		await this._initUser();
 
-		const emotePickerBtn = this.$root.querySelector('[class*=SmileButton_root_]');
+		const emotePickerBtn = this.$root.querySelector('[class*=SmileButton-scss--module_root_]');
 
 		if (emotePickerBtn) {
 			emotePickerBtn.replaceWith(createEmotePickerButton());
 		}
 
-		const messages = this.$root.querySelectorAll('[class*=ChatMessage_text_]');
+		const messages = this.$root.querySelectorAll('[class*=ChatMessage-scss--module_text_]');
 
 		for (const message of messages) {
 			this._replaceEmotesInChatMessage(message);
@@ -38,43 +38,51 @@ export class ChatOnlyPageContext extends SingleUserContext {
 			for (const mutation of mutations) {
 				if (mutation.target instanceof HTMLElement) {
 					if (
-						mutation.target.parentElement?.classList.value.includes('ChatBoxBase_list_') &&
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_list_') &&
 						mutation.addedNodes.length > 0
 					) {
 						for (const addedNode of mutation.addedNodes) {
 							if (
 								addedNode instanceof HTMLDivElement &&
 								addedNode.firstChild instanceof HTMLDivElement &&
-								addedNode.firstChild.classList.value.includes('ChatBoxBase_messageContainer_')
+								addedNode.firstChild.classList.value.includes(
+									'ChatBoxBase-scss--module_messageContainer_'
+								)
 							) {
-								const message = addedNode.firstChild.querySelector('[class*=ChatMessage_text_]');
+								const message = addedNode.firstChild.querySelector(
+									'[class*=ChatMessage-scss--module_text_]'
+								);
 
 								if (message) {
 									this._replaceEmotesInChatMessage(message);
 								}
 							}
 						}
-					} else if (mutation.target.parentElement?.classList.value.includes('ChatBoxBase_root_')) {
-						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
+					} else if (
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_root_')
+					) {
+						const messages = mutation.target.querySelectorAll('[class*=ChatMessage-scss--module_text_]');
 
 						for (const message of messages) {
 							this._replaceEmotesInChatMessage(message);
 						}
-					} else if (mutation.target.classList.value.includes('ChatMessage_text_')) {
+					} else if (mutation.target.classList.value.includes('ChatMessage-scss--module_text_')) {
 						this._replaceEmotesInChatMessage(mutation.target);
 					}
 					// Hide original tooltip
-					else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
+					else if (mutation.target.classList.value.includes('ChatMessage-scss--module_tooltip_')) {
 						mutation.target.style.display = 'none';
 					}
 					// Inject emote picker button
-					else if (mutation.target.classList.value.includes('StreamChat_chat_')) {
+					else if (mutation.target.classList.value.includes('StreamChat-scss--module_chat_')) {
 						for (const addedNode of mutation.addedNodes) {
 							if (
 								addedNode instanceof HTMLDivElement &&
-								addedNode.classList.value.includes('Chat_root_')
+								addedNode.classList.value.includes('Chat-scss--module_root_')
 							) {
-								const emotePickerBtn = addedNode.querySelector('[class*=SmileButton_root_]');
+								const emotePickerBtn = addedNode.querySelector(
+									'[class*=SmileButton-scss--module_root_]'
+								);
 								this._logger.debug(emotePickerBtn);
 
 								if (emotePickerBtn) {
@@ -93,7 +101,7 @@ export class ChatOnlyPageContext extends SingleUserContext {
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
 			ChatOnlyPageContext._chatMessageTagsSet,
-			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage_tooltip_'))
+			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage-scss--module_tooltip_'))
 		);
 	}
 

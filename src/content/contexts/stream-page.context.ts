@@ -10,7 +10,7 @@ export class StreamPageContext extends SingleUserContext {
 	constructor(rootContext: RootContext) {
 		super(
 			rootContext,
-			['ChatPublisher_root_'],
+			['ChatPublisher-scss--module_root_'],
 			{ bottomOffset: 'calc(100% + 10px', zIndex: '9' },
 			{ bottomOffset: 'calc(100% + 10px)', leftOffset: '15px', width: '310px' }
 		);
@@ -18,24 +18,7 @@ export class StreamPageContext extends SingleUserContext {
 
 	public async init(): Promise<void> {
 		await this._initUser();
-
-		const emotePickerBtn = this.$root.querySelector('[class*=SmileButton_root_]');
-
-		if (emotePickerBtn) {
-			emotePickerBtn.replaceWith(createEmotePickerButton());
-		}
-
-		const description = this.$root.querySelector('[class*=AboutStream_description_]');
-
-		if (description) {
-			this._replaceEmotesInDescription(description);
-		}
-
-		const messages = this.$root.querySelectorAll('[class*=ChatMessage_text_]');
-
-		for (const message of messages) {
-			this._replaceEmotesInChatMessage(message);
-		}
+		this._initialRender();
 
 		this._logger.debug('Initialized', this._user);
 	}
@@ -44,43 +27,61 @@ export class StreamPageContext extends SingleUserContext {
 		return new MutationObserver(mutations => {
 			for (const mutation of mutations) {
 				if (mutation.target instanceof HTMLElement) {
-					if (
-						mutation.target.parentElement?.classList.value.includes('ChatBoxBase_list_') &&
+					if (mutation.target.id === 'root') {
+						for (const node of mutation.addedNodes) {
+							if (node instanceof HTMLElement) {
+								if (node.classList.value.startsWith('App-scss--module_app_')) {
+									this._initialRender();
+								}
+							}
+						}
+					} else if (
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_list_') &&
 						mutation.addedNodes.length > 0
 					) {
 						for (const addedNode of mutation.addedNodes) {
 							if (
 								addedNode instanceof HTMLDivElement &&
 								addedNode.firstChild instanceof HTMLDivElement &&
-								addedNode.firstChild.classList.value.includes('ChatBoxBase_messageContainer_')
+								addedNode.firstChild.classList.value.includes(
+									'ChatBoxBase-scss--module_messageContainer_'
+								)
 							) {
-								const message = addedNode.firstChild.querySelector('[class*=ChatMessage_text_]');
+								const message = addedNode.firstChild.querySelector(
+									'[class*=ChatMessage-scss--module_text_]'
+								);
 
 								if (message) {
 									this._replaceEmotesInChatMessage(message);
 								}
 							}
 						}
-					} else if (mutation.target.parentElement?.classList.value.includes('ChatBoxBase_root_')) {
-						const messages = mutation.target.querySelectorAll('[class*=ChatMessage_text_]');
+					} else if (
+						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_root_')
+					) {
+						const messages = mutation.target.querySelectorAll('[class*=ChatMessage-scss--module_text_]');
 
 						for (const message of messages) {
 							this._replaceEmotesInChatMessage(message);
 						}
-					} else if (mutation.target.parentElement?.classList.value.includes('Layout_layout')) {
+					} else if (mutation.target.parentElement?.classList.value.includes('Layout-scss--module_layout')) {
 						if (mutation.addedNodes.length > 0) {
 							for (const addedNode of mutation.addedNodes) {
 								if (
 									addedNode instanceof HTMLElement &&
-									addedNode.classList.value.includes('StreamPage_block_')
+									addedNode.classList.value.includes('StreamPage-scss--module_block_')
 								) {
-									const emotePickerBtn = addedNode.querySelector('[class*=SmileButton_root_]');
+									const emotePickerBtn = addedNode.querySelector(
+										'[class*=SmileButton-scss--module_root_]'
+									);
 
 									if (emotePickerBtn) {
 										emotePickerBtn.replaceWith(createEmotePickerButton());
 									}
 
-									const description = addedNode.querySelector('[class*=AboutStream_description_]');
+									const description = addedNode.querySelector(
+										'[class*=AboutStream-scss--module_description_]'
+									);
 
 									if (description) {
 										this._replaceEmotesInDescription(description);
@@ -88,16 +89,36 @@ export class StreamPageContext extends SingleUserContext {
 								}
 							}
 						}
-					} else if (mutation.target.classList.value.includes('ChatMessage_text_')) {
+					} else if (mutation.target.classList.value.includes('ChatMessage-scss--module_text_')) {
 						this._replaceEmotesInChatMessage(mutation.target);
 					}
 					// Hide original tooltip
-					else if (mutation.target.classList.value.includes('ChatMessage_tooltip_')) {
+					else if (mutation.target.classList.value.includes('ChatMessage-scss--module_tooltip_')) {
 						mutation.target.style.display = 'none';
 					}
 				}
 			}
 		});
+	}
+
+	private _initialRender(): void {
+		const emotePickerBtn = this.$root.querySelector('[class*=SmileButton-scss--module_root_]');
+
+		if (emotePickerBtn) {
+			emotePickerBtn.replaceWith(createEmotePickerButton());
+		}
+
+		const description = this.$root.querySelector('[class*=AboutStream-scss--module_description_]');
+
+		if (description) {
+			this._replaceEmotesInDescription(description);
+		}
+
+		const messages = this.$root.querySelectorAll('[class*=ChatMessage-scss--module_text_]');
+
+		for (const message of messages) {
+			this._replaceEmotesInChatMessage(message);
+		}
 	}
 
 	private _replaceEmotesInDescription(node: Node): void {
@@ -113,7 +134,7 @@ export class StreamPageContext extends SingleUserContext {
 			node,
 			[this._channelEmotes, this._rootContext.globalEmotes],
 			StreamPageContext._chatMessageTagsSet,
-			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage_tooltip_'))
+			child => !(child instanceof HTMLDivElement && child.classList.contains('ChatMessage-scss--module_tooltip_'))
 		);
 	}
 
