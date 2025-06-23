@@ -1,156 +1,304 @@
 import { BoostyEmote } from '@shared/models/emotes';
 
-export const boostyEmotes: BoostyEmote[] = [
+export const boostyEmoteUrls = [
 	{
-		id: '05df7389-a9e9-4a51-aefc-96c9c374175c',
-		name: 'Heart'
+		id: 'heart',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.Bsdv5yfx.png',
+			x2: 'https://static.boosty.to/assets/images/medium.EVVWdVee.png',
+			x3: 'https://static.boosty.to/assets/images/large.CQMxLe5K.png'
+		}
 	},
 	{
-		id: '7b3fda0d-5ea9-4e66-a8bd-a19c590c8cef',
-		name: 'ClappingHands'
+		id: 'clapping_hands',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DIgbhLpH.png',
+			x2: 'https://static.boosty.to/assets/images/medium.Ch1gq2jb.png',
+			x3: 'https://static.boosty.to/assets/images/large.D095OexG.png'
+		}
 	},
 	{
-		id: 'bb6e8aaf-4ac6-4f71-b8a5-b9307f86071b',
-		name: 'HighVoltage'
+		id: 'high_voltage',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.zzIZ0VTY.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BJo8v9JY.png',
+			x3: 'https://static.boosty.to/assets/images/large.B4HaY3IL.png'
+		}
 	},
 	{
-		id: '3f26b442-06b1-4b94-b9bd-3a1af887057e',
-		name: 'BeamingFace'
+		id: 'beaming_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.B4FjkAoR.png',
+			x2: 'https://static.boosty.to/assets/images/medium.C3HsRVm8.png',
+			x3: 'https://static.boosty.to/assets/images/large.Dn7XoG4u.png'
+		}
 	},
 	{
-		id: '2f73c11d-ed75-4638-bb2c-4d6911d95e63',
-		name: 'PartyPopper'
+		id: 'party_popper',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DbfPknhg.png',
+			x2: 'https://static.boosty.to/assets/images/medium.Tp3wUaiv.png',
+			x3: 'https://static.boosty.to/assets/images/large.Dzd1jg1C.png'
+		}
 	},
 	{
-		id: '67198e42-128a-4a41-bf7a-94d7c98bb44f',
-		name: 'Star'
+		id: 'star',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DTI1AWyY.png',
+			x2: 'https://static.boosty.to/assets/images/medium.D1CWpLsL.png',
+			x3: 'https://static.boosty.to/assets/images/large.XRa4uaSc.png'
+		}
 	},
 	{
-		id: '5781617f-106b-4c05-bec0-f55d3904307a',
-		name: 'Gemstone'
+		id: 'gemstone',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.5iVuyszW.png',
+			x2: 'https://static.boosty.to/assets/images/medium.Bup5ypxq.png',
+			x3: 'https://static.boosty.to/assets/images/large.CjeCDp-J.png'
+		}
 	},
 	{
-		id: '1ad0dde5-846e-4c54-a20f-2d54a8ab1b85',
-		name: 'Gaspar'
+		id: 'gaspar',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DQDbshx1.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CknVUk_I.png',
+			x3: 'https://static.boosty.to/assets/images/large.SJYnXLwH.png'
+		}
 	},
 	{
-		id: '84149636-8701-4d5b-a92d-445ebc49d39c',
-		name: 'Hurt'
+		id: 'hurt',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.Ba5WUKzi.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CMLDG3ha.png',
+			x3: 'https://static.boosty.to/assets/images/large.Bi3HUCez.png'
+		}
 	},
 	{
-		id: '3a7d0922-8dc1-4175-90bc-561d3d2bda7d',
-		name: 'MoneyFace'
+		id: 'money_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.5fgUFrA-.png',
+			x2: 'https://static.boosty.to/assets/images/medium.o9-MYRhD.png',
+			x3: 'https://static.boosty.to/assets/images/large.DxHZGW8j.png'
+		}
 	},
 	{
-		id: 'da0661bb-aae6-4e54-87fa-0c4065ec435b',
-		name: 'Rocket'
+		id: 'rocket',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DaUsODaK.png',
+			x2: 'https://static.boosty.to/assets/images/medium.DfeJCs_g.png',
+			x3: 'https://static.boosty.to/assets/images/large.DvYpxZsY.png'
+		}
 	},
 	{
-		id: '9db7bb0d-1148-4686-9d0c-643d2c94837b',
-		name: 'ExplodingHead'
+		id: 'exploding_head',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.odloXb74.png',
+			x2: 'https://static.boosty.to/assets/images/medium.DMx48h1d.png',
+			x3: 'https://static.boosty.to/assets/images/large.BhoeUa7o.png'
+		}
 	},
 	{
-		id: '37a6e1ec-f63a-416f-88d4-63e48a68c71b',
-		name: 'ThinkingFace'
+		id: 'thinking_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.OhoRfcp_.png',
+			x2: 'https://static.boosty.to/assets/images/medium.C2VsCv6d.png',
+			x3: 'https://static.boosty.to/assets/images/large.BUFZrciI.png'
+		}
 	},
 	{
-		id: 'bc1334a6-af7e-4618-b37e-2be63bf8a112',
-		name: 'CheckMark'
+		id: 'check_mark',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DlZqPPZ-.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BjGfAAet.png',
+			x3: 'https://static.boosty.to/assets/images/large.CWuBzsM6.png'
+		}
 	},
 	{
-		id: '663cbbdf-639e-4dac-8912-6a580d3ef3e6',
-		name: 'CallMe'
+		id: 'call_me',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DChyZxN0.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BuM6LoQ-.png',
+			x3: 'https://static.boosty.to/assets/images/large.DWikW9PE.png'
+		}
 	},
 	{
-		id: '517b1805-13dd-43ed-ac65-bfa0fd0d16b8',
-		name: 'Burn'
+		id: 'burn',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.C9N5oBVr.png',
+			x2: 'https://static.boosty.to/assets/images/medium.C6RAD7u4.png',
+			x3: 'https://static.boosty.to/assets/images/large.fUOLawpi.png'
+		}
 	},
 	{
-		id: '4cd3b821-ec9c-4d35-827e-30be025c3ca0',
-		name: 'FaceScreaming'
+		id: 'face_screaming',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.BotZuXW8.png',
+			x2: 'https://static.boosty.to/assets/images/medium.Dnonadfr.png',
+			x3: 'https://static.boosty.to/assets/images/large.DW3ZGHcr.png'
+		}
 	},
 	{
-		id: '6d674dd1-789c-408f-9ab4-912e9a8d2539',
-		name: 'LoudlyFace'
+		id: 'loudly_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.RPfECcMP.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BPubxKji.png',
+			x3: 'https://static.boosty.to/assets/images/large.CP_D9zkk.png'
+		}
 	},
 	{
-		id: 'f3a31f3c-24b4-4760-a577-10fb0cce8605',
-		name: 'NauseatedFace'
+		id: 'nauseated_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.EIc90gFz.png',
+			x2: 'https://static.boosty.to/assets/images/medium.B1sGg7tp.png',
+			x3: 'https://static.boosty.to/assets/images/large.ntY-6Wls.png'
+		}
 	},
 	{
-		id: 'eb55272b-0724-4854-ad44-899ad286a992',
-		name: 'Eggplant'
+		id: 'eggplant',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.zejMKn4K.png',
+			x2: 'https://static.boosty.to/assets/images/medium.D-FoNTLS.png',
+			x3: 'https://static.boosty.to/assets/images/large.CCX3pSVH.png'
+		}
 	},
 	{
-		id: 'c00141f1-7f23-4841-b8c1-e3cd85f8f5bb',
-		name: 'Apple'
+		id: 'apple',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.BlyEB8FP.png',
+			x2: 'https://static.boosty.to/assets/images/medium.nVTwaxrt.png',
+			x3: 'https://static.boosty.to/assets/images/large.DetDyHwZ.png'
+		}
 	},
 	{
-		id: '0b02f581-876f-4b38-823e-00d8c026dc39',
-		name: 'Peach'
+		id: 'peach',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.D7vSuvmZ.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BQGnr-7k.png',
+			x3: 'https://static.boosty.to/assets/images/large.BFK2VtCr.png'
+		}
 	},
 	{
-		id: 'deb46686-294c-49ae-b987-6df4d41e2b9d',
-		name: 'Hamburger'
+		id: 'hamburger',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.93ZMoKJF.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CLiHmbc2.png',
+			x3: 'https://static.boosty.to/assets/images/large.D_SmocyB.png'
+		}
 	},
 	{
-		id: '5969bcfa-3dc5-4e1b-95dd-b7a1567220fb',
-		name: 'Pizza'
+		id: 'pizza',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.Bnjf6oYi.png',
+			x2: 'https://static.boosty.to/assets/images/medium.4QMn5s8t.png',
+			x3: 'https://static.boosty.to/assets/images/large.BxS3cJQF.png'
+		}
 	},
 	{
-		id: '04541c27-5491-49f6-b70d-aefbdff0884c',
-		name: 'Banana'
+		id: 'banana',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.Mk4js3sO.png',
+			x2: 'https://static.boosty.to/assets/images/medium.C2tej0mR.png',
+			x3: 'https://static.boosty.to/assets/images/large.D-oAAfI5.png'
+		}
 	},
 	{
-		id: '90ccef34-14cf-4528-8763-0d993d892dfe',
-		name: 'Moon'
+		id: 'moon',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.CW-D_RIS.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CKpamGJt.png',
+			x3: 'https://static.boosty.to/assets/images/large.CU192FVP.png'
+		}
 	},
 	{
-		id: '76119773-3a29-4548-b4c8-811f7fdc2936',
-		name: 'Sun'
+		id: 'sun',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DfUuzshy.png',
+			x2: 'https://static.boosty.to/assets/images/medium.5uEhLkCi.png',
+			x3: 'https://static.boosty.to/assets/images/large.CKhe0ZK3.png'
+		}
 	},
 	{
-		id: '58b34b35-4d64-45d1-852e-274206dd90b7',
-		name: 'ColdFace'
+		id: 'cold_face',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.M_L_QHdD.png',
+			x2: 'https://static.boosty.to/assets/images/medium.ImTxqhyy.png',
+			x3: 'https://static.boosty.to/assets/images/large.BTIpFgcJ.png'
+		}
 	},
 	{
-		id: 'fd3780a9-05f7-46fe-92ec-c5f6f2ef5aa3',
-		name: 'Devil'
+		id: 'devil',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DpACXH3h.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CSATfRKF.png',
+			x3: 'https://static.boosty.to/assets/images/large.9wWBkVxa.png'
+		}
 	},
 	{
-		id: '97cb65d2-15b7-42d2-9d44-6165f16f3e6e',
-		name: 'Shield'
+		id: 'shield',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.DvPpGsxL.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CkwRu8tE.png',
+			x3: 'https://static.boosty.to/assets/images/large.DEy9FhhZ.png'
+		}
 	},
 	{
-		id: 'fedfd339-daaf-4bff-857f-4d68ae9e5727',
-		name: 'SweatDroplets'
+		id: 'sweat_droplets',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.tZOH6AT_.png',
+			x2: 'https://static.boosty.to/assets/images/medium.6QMOCQBe.png',
+			x3: 'https://static.boosty.to/assets/images/large.BeviIdjT.png'
+		}
 	},
 	{
-		id: '58852139-f95e-4238-9c1c-871fa6d0889a',
-		name: 'Beach'
+		id: 'beach',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.rdZM3shg.png',
+			x2: 'https://static.boosty.to/assets/images/medium.CSXGKo4Z.png',
+			x3: 'https://static.boosty.to/assets/images/large.DXSpEzeZ.png'
+		}
 	},
 	{
-		id: '10f3bc42-fc33-437b-a452-de97c748ca22',
-		name: 'Ball'
+		id: 'ball',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.BZMqYUZr.png',
+			x2: 'https://static.boosty.to/assets/images/medium.BW8Ligec.png',
+			x3: 'https://static.boosty.to/assets/images/large.D9Mevhd4.png'
+		}
 	},
 	{
-		id: '5388e3ce-e4d5-4b0c-ba4c-5b58d8d35db9',
-		name: 'Gift'
+		id: 'gift',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.q0wM81oT.png',
+			x2: 'https://static.boosty.to/assets/images/medium.B9_s1AHa.png',
+			x3: 'https://static.boosty.to/assets/images/large.4Vm7MMzV.png'
+		}
 	},
 	{
-		id: '9c3d8ff6-bf13-4255-b8ff-30b9c9c98162',
-		name: 'MyPressF'
+		id: 'my_press_f',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.CpWM5M0p.png',
+			x2: 'https://static.boosty.to/assets/images/medium.WPkM-lmU.png',
+			x3: 'https://static.boosty.to/assets/images/large.DJCGz49N.png'
+		}
 	},
 	{
-		id: '97101bae-9beb-47b0-bfe2-70ac24bce094',
-		name: 'MyIlluminati'
+		id: 'my_illuminati',
+		size: {
+			x1: 'https://static.boosty.to/assets/images/small.L72uEDfn.png',
+			x2: 'https://static.boosty.to/assets/images/medium.DeIjHEBa.png',
+			x3: 'https://static.boosty.to/assets/images/large.DewxNplq.png'
+		}
 	}
-].map(
+];
+
+export const boostyEmoteUrlsMap = new Map(boostyEmoteUrls.map(emote => [emote.id, emote]));
+
+export const boostyEmotes: BoostyEmote[] = boostyEmoteUrls.map(
 	emote =>
 		new BoostyEmote({
 			scope: 'global',
 			id: emote.id,
-			name: emote.name
+			name: emote.id
 		})
 );
 

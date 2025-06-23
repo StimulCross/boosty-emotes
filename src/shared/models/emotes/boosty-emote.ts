@@ -1,4 +1,5 @@
 import { html } from 'code-tag';
+import { getBoostyEmoteUrl } from '@shared/utils/get-emote-url';
 import { type CreateEmote, Emote } from './emote';
 import { type EmoteProvider, type EmoteSize } from '../../types';
 
@@ -12,11 +13,12 @@ export class BoostyEmote extends Emote {
 	}
 
 	public override getSrc(size: EmoteSize = 1): string {
-		return `https://images.boosty.to/smile/${this._data.id}/size/${this._mapSize(size)}`;
+		return getBoostyEmoteUrl(this._data.id, size === 4 ? 3 : size);
 	}
 
 	public override toHtml(size: EmoteSize = 1, classes: string = 'BE-emote'): string {
 		return html`<img
+				translate="no"
 				class="${classes}"
 				alt="${this._data.name}"
 				src="${this.getSrc(size)}"
@@ -27,21 +29,5 @@ export class BoostyEmote extends Emote {
 				loading="lazy"
 				decoding="async"
 			/>`;
-	}
-
-	private _mapSize(size: EmoteSize): string {
-		switch (size) {
-			case 1:
-				return 'small';
-
-			case 2:
-				return 'medium';
-
-			case 4:
-				return 'large';
-
-			default:
-				throw new Error(`Unknown Boosty emote size: ${size}`);
-		}
 	}
 }

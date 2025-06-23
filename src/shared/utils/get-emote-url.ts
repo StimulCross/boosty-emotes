@@ -1,3 +1,4 @@
+import { boostyEmoteUrlsMap } from '@shared/models';
 import {
 	type BoostyEmoteSize,
 	type BttvEmoteSize,
@@ -6,24 +7,8 @@ import {
 	type TwitchEmoteSize
 } from '@shared/types';
 
-function mapBoostyEmoteSizeSize(size: BoostyEmoteSize): string {
-	switch (size) {
-		case 1:
-			return 'small';
-
-		case 2:
-			return 'medium';
-
-		case 3:
-			return 'large';
-
-		default:
-			throw new Error(`Unknown Boosty emote size: ${size}`);
-	}
-}
-
 export function getBoostyEmoteUrl(id: string, size: BoostyEmoteSize): string {
-	return `https://images.boosty.to/smile/${id}/size/${mapBoostyEmoteSizeSize(size)}`;
+	return boostyEmoteUrlsMap.get(id)?.size[`x${size}`] ?? '';
 }
 
 export function getTwitchEmoteUrl(id: string, size: TwitchEmoteSize): string {
