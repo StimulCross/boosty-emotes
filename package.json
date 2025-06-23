@@ -53,6 +53,7 @@
 		"@floating-ui/dom": "^1.6.10",
 		"@stimulcross/logger": "^7.0.0",
 		"code-tag": "^1.2.0",
+		"p-timeout": "^6.1.4",
 		"semver": "^7.6.3"
 	}
 }

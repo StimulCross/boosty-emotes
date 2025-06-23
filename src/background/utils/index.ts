@@ -1,1 +1,2 @@
-export { handleSendMessageError } from './handle-send-message-error';
+export * from './handle-send-message-error';
+export * from './with-timeout';

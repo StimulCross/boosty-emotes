@@ -1,14 +1,19 @@
 import { createLogger } from '@stimulcross/logger';
 import browser from 'webextension-polyfill';
 import { BACKGROUND_EVENTS } from '@/background/constants';
-import { handleSendMessageError } from '@/background/utils';
+import { handleSendMessageError, withTimeout } from '@/background/utils';
 import { defaultGlobalEmotesState } from '@shared/constants';
 import { type EventEmitter } from '@shared/event-emitter';
 import { type User } from '@shared/models';
 import { type GlobalEmotesState } from '@shared/models/global-emotes-state';
 import { Store } from '@shared/store';
 import { TwitchApi } from '@shared/twitch-api';
-import { type Message, type MessageChannelEmotesUpdate, type MessageGlobalEmotesUpdate } from '@shared/types';
+import {
+	type Message,
+	type MessageChannelEmotesUpdate,
+	type MessageGlobalEmotesUpdate,
+	type ThirdPartyEmoteProvider
+} from '@shared/types';
 import { createLoggerOptions } from '@shared/utils/create-logger-options';
 import { EmotesFetcher } from './emotes-fetcher';
 
@@ -109,12 +114,7 @@ export class EmotesUpdater {
 		const globalEmotesState = await Store.getGlobalEmotesState();
 
 		if (!globalEmotesState) {
-			await Store.updateTwitchGlobalEmotesState({
-				twitchGlobalEmotesUpdatedAt: 0,
-				sevenTvGlobalEmotesUpdatedAt: 0,
-				ffzGlobalEmotesUpdatedAt: 0,
-				bttvGlobalEmotesUpdatedAt: 0
-			});
+			await Store.updateTwitchGlobalEmotesState(defaultGlobalEmotesState);
 		}
 	}
 
@@ -126,6 +126,8 @@ export class EmotesUpdater {
 	}
 
 	private _initTimers(): void {
+		this._clearTimers();
+
 		this._usersTimer = setInterval(() => {
 			this._updateUsers().catch(e => this._logger.warn(e));
 		}, this._usersUpdateInterval + 60_000);
@@ -188,141 +190,29 @@ export class EmotesUpdater {
 	}
 
 	private async _updateGlobalEmotes(): Promise<void> {
-		const globalEmotesState = await this._getGlobalEmotesState();
-		let areGlobalEmotesChanged = false;
+		const updaters: Array<[ThirdPartyEmoteProvider, Promise<boolean>]> = [
+			['twitch', withTimeout(this._updateTwitchGlobalEmotes())],
+			['7tv', withTimeout(this._updateSevenTvGlobalEmotes())],
+			['ffz', withTimeout(this._updateFfzGlobalEmotes())],
+			['bttv', withTimeout(this._updateBttvGlobalEmotes())]
+		];
 
-		try {
-			if (
-				this._shouldUpdateGlobalEmotes(globalEmotesState.twitchGlobalEmotesUpdatedAt) &&
-				(await Store.getTwitchAccessToken())
-			) {
-				this._logger.debug('Updating Twitch global emotes...');
+		const result = await Promise.allSettled(updaters.map(async ([, promise]) => await promise));
 
-				const twitchGlobalEmotes = await TwitchApi.getGlobalEmotes();
-				let isChanged = false;
+		let areEmotesChanged = false;
 
-				if (twitchGlobalEmotes.length !== this._twitchGlobalEmotesSet.size) {
-					isChanged = true;
-				} else {
-					for (const emote of twitchGlobalEmotes) {
-						if (!this._twitchGlobalEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
+		for (let i = 0; i < result.length; i++) {
+			const res = result[i];
 
-				if (isChanged) {
-					this._logger.info('Twitch global emotes have been updated');
-
-					areGlobalEmotesChanged ||= true;
-					await Store.setTwitchGlobalEmotes(twitchGlobalEmotes);
-					this._twitchGlobalEmotesSet = new Set(twitchGlobalEmotes.map(emote => emote.id));
-				}
-
-				await Store.updateTwitchGlobalEmotesState({ twitchGlobalEmotesUpdatedAt: Date.now() });
+			if (res.status === 'fulfilled') {
+				areEmotesChanged = true;
+			} else {
+				const provider = updaters[i][0];
+				this._logger.warn(`Could not update "${provider}" global emotes`, res.reason);
 			}
-		} catch (e) {
-			this._logger.warn('Could not update Twitch global emotes', e);
 		}
 
-		try {
-			if (this._shouldUpdateGlobalEmotes(globalEmotesState.sevenTvGlobalEmotesUpdatedAt)) {
-				this._logger.debug('Updating 7TV global emotes...');
-
-				const sevenTvGlobalEmotes = await this._emotesFetcher.stv.getGlobalEmotes();
-				let isChanged = false;
-
-				if (sevenTvGlobalEmotes.length !== this._sevenTvGlobalEmotesSet.size) {
-					isChanged = true;
-				} else {
-					for (const emote of sevenTvGlobalEmotes) {
-						if (!this._sevenTvGlobalEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('7TV global emotes have been updated');
-
-					areGlobalEmotesChanged ||= true;
-					await Store.setSevenTvGlobalEmotes(sevenTvGlobalEmotes);
-					this._sevenTvGlobalEmotesSet = new Set(sevenTvGlobalEmotes.map(emote => emote.id));
-				}
-
-				await Store.updateTwitchGlobalEmotesState({ sevenTvGlobalEmotesUpdatedAt: Date.now() });
-			}
-		} catch (e) {
-			this._logger.warn('Could not update 7TV global emotes', e);
-		}
-
-		try {
-			if (this._shouldUpdateGlobalEmotes(globalEmotesState.ffzGlobalEmotesUpdatedAt)) {
-				this._logger.debug('Updating FFZ global emotes...');
-
-				const ffzGlobalEmotes = await this._emotesFetcher.ffz.getGlobalEmotes();
-				let isChanged = false;
-
-				if (ffzGlobalEmotes.length !== this._ffzGlobalEmotesSet.size) {
-					isChanged = true;
-				} else {
-					for (const emote of ffzGlobalEmotes) {
-						if (!this._ffzGlobalEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('FFZ global emotes have been updated');
-
-					areGlobalEmotesChanged ||= true;
-					await Store.setFfzGlobalEmotes(ffzGlobalEmotes);
-					this._ffzGlobalEmotesSet = new Set(ffzGlobalEmotes.map(emote => emote.id));
-				}
-
-				await Store.updateTwitchGlobalEmotesState({ ffzGlobalEmotesUpdatedAt: Date.now() });
-			}
-		} catch (e) {
-			this._logger.warn('Could not update FFZ global emotes', e);
-		}
-
-		try {
-			if (this._shouldUpdateGlobalEmotes(globalEmotesState.bttvGlobalEmotesUpdatedAt)) {
-				this._logger.debug('Updating BTTV global emotes...');
-
-				const bttvGlobalEmotes = await this._emotesFetcher.bttv.getGlobalEmotes();
-				let isChanged = false;
-
-				if (bttvGlobalEmotes.length !== this._bttvGlobalEmotesSet.size) {
-					isChanged = true;
-				} else {
-					for (const emote of bttvGlobalEmotes) {
-						if (!this._bttvGlobalEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('BTTV global emotes have been updated');
-
-					areGlobalEmotesChanged ||= true;
-					await Store.setBttvGlobalEmotes(bttvGlobalEmotes);
-					this._bttvGlobalEmotesSet = new Set(bttvGlobalEmotes.map(emote => emote.id));
-				}
-
-				await Store.updateTwitchGlobalEmotesState({ bttvGlobalEmotesUpdatedAt: Date.now() });
-			}
-		} catch (e) {
-			this._logger.warn('Could not update BTTV global emotes', e);
-		}
-
-		if (areGlobalEmotesChanged) {
+		if (areEmotesChanged) {
 			this._sendMessageToContent({ type: 'global_emotes_update' } satisfies MessageGlobalEmotesUpdate).catch(e =>
 				handleSendMessageError(e, this._logger)
 			);
@@ -330,148 +220,32 @@ export class EmotesUpdater {
 	}
 
 	private async _updateChannelEmotesForUser(user: User): Promise<void> {
-		const userId = user.twitchProfile.id;
-		let areChannelEmotesChanged = false;
+		const updaters: Array<[ThirdPartyEmoteProvider, Promise<boolean>]> = [
+			['twitch', withTimeout(this._updateTwitchChannelEmotes(user))],
+			['7tv', withTimeout(this._updateSevenTvChannelEmotes(user))],
+			['ffz', withTimeout(this._updateFfzChannelEmotes(user))],
+			['bttv', withTimeout(this._updateBttvChannelEmotes(user))]
+		];
 
-		if (this._shouldUpdateChannelEmotes(user.state.twitchEmotesUpdatedAt) && (await Store.getTwitchAccessToken())) {
-			try {
-				this._logger.debug('Updating Twitch channel emotes...', user);
+		const result = await Promise.allSettled(updaters.map(async ([, promise]) => await promise));
 
-				const twitchChannelEmotes = await TwitchApi.getChannelEmotes(userId);
-				const localTwitchChannelEmotes = await Store.getTwitchChannelEmotes(userId);
-				let isChanged = false;
+		let areEmotesChanged = false;
 
-				if (twitchChannelEmotes.length !== localTwitchChannelEmotes.length) {
-					isChanged = true;
-				} else {
-					const localTwitchChannelEmotesSet = new Set(localTwitchChannelEmotes.map(emote => emote.id));
+		for (let i = 0; i < result.length; i++) {
+			const res = result[i];
 
-					for (const emote of twitchChannelEmotes) {
-						if (!localTwitchChannelEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('Twitch channel emotes have been updated', user);
-
-					areChannelEmotesChanged ||= true;
-					await Store.setTwitchChannelEmotes(userId, twitchChannelEmotes);
-				}
-
-				await Store.updateUser(user.twitchProfile, { twitchEmotesUpdatedAt: Date.now() });
-			} catch (e) {
-				this._logger.warn('Could not update Twitch channel emotes', user, e);
+			if (res.status === 'fulfilled') {
+				areEmotesChanged = true;
+			} else {
+				const provider = updaters[i][0];
+				this._logger.warn(`Could not update "${provider}" channel emotes`, res.reason);
 			}
 		}
 
-		if (this._shouldUpdateChannelEmotes(user.state.sevenTvEmotesUpdatedAt)) {
-			try {
-				this._logger.debug('Updating 7TV channel emotes...', user);
-
-				const sevenTvChannelEmotes = await this._emotesFetcher.stv.getChannelEmotes(userId);
-				const localSevenTvChannelEmotes = await Store.getSevenTvChannelEmotes(userId);
-				let isChanged = false;
-
-				if (sevenTvChannelEmotes.length !== localSevenTvChannelEmotes.length) {
-					isChanged = true;
-				} else {
-					const localSevenTvChannelEmotesSet = new Set(localSevenTvChannelEmotes.map(emote => emote.id));
-
-					for (const emote of sevenTvChannelEmotes) {
-						if (!localSevenTvChannelEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('7TV channel emotes have been updated', user);
-
-					areChannelEmotesChanged ||= true;
-					await Store.setSevenTvChannelEmotes(userId, sevenTvChannelEmotes);
-				}
-
-				await Store.updateUser(user.twitchProfile, { sevenTvEmotesUpdatedAt: Date.now() });
-			} catch (e) {
-				this._logger.warn('Could not update 7TV channel emotes', user, e);
-			}
-		}
-
-		if (this._shouldUpdateChannelEmotes(user.state.ffzEmotesUpdatedAt)) {
-			try {
-				this._logger.debug('Updating FFZ channel emotes...', user);
-
-				const ffzTvChannelEmotes = await this._emotesFetcher.ffz.getChannelEmotes(userId);
-				const localFfzChannelEmotes = await Store.getFfzChannelEmotes(userId);
-				let isChanged = false;
-
-				if (ffzTvChannelEmotes.length !== localFfzChannelEmotes.length) {
-					isChanged = true;
-				} else {
-					const localFfzChannelEmotesSet = new Set(localFfzChannelEmotes.map(emote => emote.id));
-
-					for (const emote of ffzTvChannelEmotes) {
-						if (!localFfzChannelEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('FFZ channel emotes have been updated', user);
-
-					areChannelEmotesChanged ||= true;
-					await Store.setFfzChannelEmotes(userId, ffzTvChannelEmotes);
-				}
-
-				await Store.updateUser(user.twitchProfile, { ffzEmotesUpdatedAt: Date.now() });
-			} catch (e) {
-				this._logger.warn('Could not update FFZ channel emotes', user, e);
-			}
-		}
-
-		if (this._shouldUpdateChannelEmotes(user.state.bttvEmotesUpdatedAt)) {
-			try {
-				this._logger.debug('Updating BTTV channel emotes...', user);
-				const bttvChannelEmotes = await this._emotesFetcher.bttv.getChannelEmotes(userId);
-				const localBttvChannelEmotes = await Store.getBttvChannelEmotes(userId);
-				let isChanged = false;
-
-				if (bttvChannelEmotes.length !== localBttvChannelEmotes.length) {
-					isChanged = true;
-				} else {
-					const localBttvChannelEmotesSet = new Set(localBttvChannelEmotes.map(emote => emote.id));
-
-					for (const emote of bttvChannelEmotes) {
-						if (!localBttvChannelEmotesSet.has(emote.id)) {
-							isChanged = true;
-							break;
-						}
-					}
-				}
-
-				if (isChanged) {
-					this._logger.info('BTTV channel emotes have been updated', user);
-
-					areChannelEmotesChanged ||= true;
-					await Store.setBttvChannelEmotes(userId, bttvChannelEmotes);
-				}
-
-				await Store.updateUser(user.twitchProfile, { bttvEmotesUpdatedAt: Date.now() });
-			} catch (e) {
-				this._logger.warn('Could not update BTTV channel emotes', user, e);
-			}
-		}
-
-		if (areChannelEmotesChanged) {
+		if (areEmotesChanged) {
 			this._sendMessageToContent({
 				type: 'channel_emotes_update',
-				data: { userId }
+				data: { userId: user.twitchProfile.id }
 			} satisfies MessageChannelEmotesUpdate).catch(e => handleSendMessageError(e, this._logger));
 		}
 	}
@@ -500,5 +274,299 @@ export class EmotesUpdater {
 				await browser.tabs.sendMessage(tab.id, message);
 			}
 		}
+	}
+
+	private async _updateTwitchGlobalEmotes(): Promise<boolean> {
+		const globalEmotesState = await this._getGlobalEmotesState();
+
+		if (
+			!this._shouldUpdateGlobalEmotes(globalEmotesState.twitchGlobalEmotesUpdatedAt) ||
+			!(await Store.getTwitchAccessToken())
+		) {
+			return false;
+		}
+
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating Twitch global emotes...');
+
+			const twitchGlobalEmotes = await TwitchApi.getGlobalEmotes();
+
+			isChanged =
+				twitchGlobalEmotes.length !== this._twitchGlobalEmotesSet.size ||
+				twitchGlobalEmotes.some(emote => !this._twitchGlobalEmotesSet.has(emote.id));
+
+			if (isChanged) {
+				this._logger.info('Twitch global emotes have been updated');
+				await Store.setTwitchGlobalEmotes(twitchGlobalEmotes);
+				this._twitchGlobalEmotesSet = new Set(twitchGlobalEmotes.map(emote => emote.id));
+			}
+
+			await Store.updateTwitchGlobalEmotesState({ twitchGlobalEmotesUpdatedAt: Date.now() });
+		} catch (e) {
+			this._logger.warn('Could not update Twitch global emotes', e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateSevenTvGlobalEmotes(): Promise<boolean> {
+		const globalEmotesState = await this._getGlobalEmotesState();
+
+		if (!this._shouldUpdateGlobalEmotes(globalEmotesState.sevenTvGlobalEmotesUpdatedAt)) {
+			return false;
+		}
+
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating 7TV global emotes...');
+
+			const sevenTvGlobalEmotes = await this._emotesFetcher.stv.getGlobalEmotes();
+
+			isChanged =
+				sevenTvGlobalEmotes.length !== this._sevenTvGlobalEmotesSet.size ||
+				sevenTvGlobalEmotes.some(emote => !this._sevenTvGlobalEmotesSet.has(emote.id));
+
+			if (isChanged) {
+				this._logger.info('7TV global emotes have been updated');
+
+				await Store.setSevenTvGlobalEmotes(sevenTvGlobalEmotes);
+				this._sevenTvGlobalEmotesSet = new Set(sevenTvGlobalEmotes.map(emote => emote.id));
+			}
+
+			await Store.updateTwitchGlobalEmotesState({ sevenTvGlobalEmotesUpdatedAt: Date.now() });
+		} catch (e) {
+			this._logger.warn('Could not update 7TV global emotes', e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateFfzGlobalEmotes(): Promise<boolean> {
+		const globalEmotesState = await this._getGlobalEmotesState();
+
+		if (!this._shouldUpdateGlobalEmotes(globalEmotesState.ffzGlobalEmotesUpdatedAt)) {
+			return false;
+		}
+
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating FFZ global emotes...');
+
+			const ffzGlobalEmotes = await this._emotesFetcher.ffz.getGlobalEmotes();
+
+			isChanged =
+				ffzGlobalEmotes.length !== this._ffzGlobalEmotesSet.size ||
+				ffzGlobalEmotes.some(emote => !this._ffzGlobalEmotesSet.has(emote.id));
+
+			if (isChanged) {
+				this._logger.info('FFZ global emotes have been updated');
+
+				await Store.setFfzGlobalEmotes(ffzGlobalEmotes);
+				this._ffzGlobalEmotesSet = new Set(ffzGlobalEmotes.map(emote => emote.id));
+			}
+
+			await Store.updateTwitchGlobalEmotesState({ ffzGlobalEmotesUpdatedAt: Date.now() });
+		} catch (e) {
+			this._logger.warn('Could not update FFZ global emotes', e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateBttvGlobalEmotes(): Promise<boolean> {
+		const globalEmotesState = await this._getGlobalEmotesState();
+
+		if (!this._shouldUpdateGlobalEmotes(globalEmotesState.bttvGlobalEmotesUpdatedAt)) {
+			return false;
+		}
+
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating BTTV global emotes...');
+
+			const bttvGlobalEmotes = await this._emotesFetcher.bttv.getGlobalEmotes();
+
+			isChanged =
+				bttvGlobalEmotes.length !== this._bttvGlobalEmotesSet.size ||
+				bttvGlobalEmotes.some(emote => !this._bttvGlobalEmotesSet.has(emote.id));
+
+			if (isChanged) {
+				this._logger.info('BTTV global emotes have been updated');
+
+				await Store.setBttvGlobalEmotes(bttvGlobalEmotes);
+				this._bttvGlobalEmotesSet = new Set(bttvGlobalEmotes.map(emote => emote.id));
+			}
+
+			await Store.updateTwitchGlobalEmotesState({ bttvGlobalEmotesUpdatedAt: Date.now() });
+		} catch (e) {
+			this._logger.warn('Could not update BTTV global emotes', e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateTwitchChannelEmotes(user: User): Promise<boolean> {
+		if (
+			!this._shouldUpdateChannelEmotes(user.state.twitchEmotesUpdatedAt) ||
+			!(await Store.getTwitchAccessToken())
+		) {
+			return false;
+		}
+
+		const userId = user.twitchProfile.id;
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating Twitch channel emotes...', user);
+
+			const twitchChannelEmotes = await TwitchApi.getChannelEmotes(userId);
+			const localTwitchChannelEmotes = await Store.getTwitchChannelEmotes(userId);
+
+			if (twitchChannelEmotes.length !== localTwitchChannelEmotes.length) {
+				isChanged = true;
+			} else {
+				const localEmoteIds = new Set(localTwitchChannelEmotes.map(emote => emote.id));
+				isChanged = twitchChannelEmotes.some(emote => !localEmoteIds.has(emote.id));
+			}
+
+			await Store.updateUser(user.twitchProfile, { twitchEmotesUpdatedAt: Date.now() });
+
+			if (isChanged) {
+				this._logger.info('Twitch channel emotes have been updated', user);
+				await Store.setTwitchChannelEmotes(userId, twitchChannelEmotes);
+			}
+		} catch (e) {
+			this._logger.warn('Could not update Twitch channel emotes', user, e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateSevenTvChannelEmotes(user: User): Promise<boolean> {
+		if (!this._shouldUpdateChannelEmotes(user.state.sevenTvEmotesUpdatedAt)) {
+			return false;
+		}
+
+		const userId = user.twitchProfile.id;
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating 7TV channel emotes...', user);
+
+			const sevenTvChannelEmotes = await this._emotesFetcher.stv.getChannelEmotes(userId);
+			const localSevenTvChannelEmotes = await Store.getSevenTvChannelEmotes(userId);
+
+			if (sevenTvChannelEmotes.length !== localSevenTvChannelEmotes.length) {
+				isChanged = true;
+			} else {
+				const localEmoteIds = new Set(localSevenTvChannelEmotes.map(emote => emote.id));
+				isChanged = sevenTvChannelEmotes.some(emote => !localEmoteIds.has(emote.id));
+
+				for (const emote of sevenTvChannelEmotes) {
+					if (!localEmoteIds.has(emote.id)) {
+						isChanged = true;
+						break;
+					}
+				}
+			}
+
+			await Store.updateUser(user.twitchProfile, { sevenTvEmotesUpdatedAt: Date.now() });
+
+			if (isChanged) {
+				this._logger.info('7TV channel emotes have been updated', user);
+				await Store.setSevenTvChannelEmotes(userId, sevenTvChannelEmotes);
+			}
+		} catch (e) {
+			this._logger.warn('Could not update 7TV channel emotes', user, e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateFfzChannelEmotes(user: User): Promise<boolean> {
+		if (!this._shouldUpdateChannelEmotes(user.state.ffzEmotesUpdatedAt)) {
+			return false;
+		}
+
+		const userId = user.twitchProfile.id;
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating FFZ channel emotes...', user);
+
+			const ffzTvChannelEmotes = await this._emotesFetcher.ffz.getChannelEmotes(userId);
+			const localFfzChannelEmotes = await Store.getFfzChannelEmotes(userId);
+
+			if (ffzTvChannelEmotes.length !== localFfzChannelEmotes.length) {
+				isChanged = true;
+			} else {
+				const localEmoteIds = new Set(localFfzChannelEmotes.map(emote => emote.id));
+				isChanged = ffzTvChannelEmotes.some(emote => !localEmoteIds.has(emote.id));
+
+				for (const emote of ffzTvChannelEmotes) {
+					if (!localEmoteIds.has(emote.id)) {
+						isChanged = true;
+						break;
+					}
+				}
+			}
+
+			await Store.updateUser(user.twitchProfile, { ffzEmotesUpdatedAt: Date.now() });
+
+			if (isChanged) {
+				this._logger.info('FFZ channel emotes have been updated', user);
+				await Store.setFfzChannelEmotes(userId, ffzTvChannelEmotes);
+			}
+		} catch (e) {
+			this._logger.warn('Could not update FFZ channel emotes', user, e);
+		}
+
+		return isChanged;
+	}
+
+	private async _updateBttvChannelEmotes(user: User): Promise<boolean> {
+		if (!this._shouldUpdateChannelEmotes(user.state.bttvEmotesUpdatedAt)) {
+			return false;
+		}
+
+		const userId = user.twitchProfile.id;
+		let isChanged = false;
+
+		try {
+			this._logger.debug('Updating BTTV channel emotes...', user);
+
+			const bttvChannelEmotes = await this._emotesFetcher.bttv.getChannelEmotes(userId);
+			const localBttvChannelEmotes = await Store.getBttvChannelEmotes(userId);
+
+			if (bttvChannelEmotes.length !== localBttvChannelEmotes.length) {
+				isChanged = true;
+			} else {
+				const localEmoteIds = new Set(localBttvChannelEmotes.map(emote => emote.id));
+				isChanged = bttvChannelEmotes.some(emote => !localEmoteIds.has(emote.id));
+
+				for (const emote of bttvChannelEmotes) {
+					if (!localEmoteIds.has(emote.id)) {
+						isChanged = true;
+						break;
+					}
+				}
+			}
+
+			await Store.updateUser(user.twitchProfile, { bttvEmotesUpdatedAt: Date.now() });
+
+			if (isChanged) {
+				this._logger.info('BTTV channel emotes have been updated', user);
+				await Store.setBttvChannelEmotes(userId, bttvChannelEmotes);
+			}
+		} catch (e) {
+			this._logger.warn('Could not update BTTV channel emotes', user, e);
+		}
+
+		return isChanged;
 	}
 }
