@@ -94,6 +94,7 @@ export abstract class Emote {
 
 	public toHtml(size: EmoteSize = 1, classes: string = 'BE-emote'): string {
 		return html`<img
+				translate="no"
 				class="${classes}"
 				alt="${this._data.name}"
 				src="${this.getSrc(size)}"
