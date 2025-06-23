@@ -1,3 +1,4 @@
+import { getTwitchEmoteUrl } from '@shared/utils/get-emote-url';
 import { type CreateEmote, Emote } from './emote';
 import { type EmoteProvider, type EmoteSize } from '../../types';
 
@@ -11,6 +12,6 @@ export class TwitchEmote extends Emote {
 	}
 
 	public override getSrc(size: EmoteSize = 1): string {
-		return `https://static-cdn.jtvnw.net/emoticons/v2/${this._data.id}/default/light/${size === 4 ? 3 : size}.0`;
+		return getTwitchEmoteUrl(this._data.id, size === 4 ? 3 : size);
 	}
 }

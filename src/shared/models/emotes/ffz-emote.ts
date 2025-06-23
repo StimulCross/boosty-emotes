@@ -1,3 +1,4 @@
+import { getFfzEmoteUrl } from '@shared/utils/get-emote-url';
 import { type CreateEmote, Emote } from './emote';
 import { type EmoteProvider, type EmoteSize } from '../../types';
 
@@ -11,6 +12,6 @@ export class FfzEmote extends Emote {
 	}
 
 	public override getSrc(size: EmoteSize = 1): string {
-		return `https://cdn.frankerfacez.com/emoticon/${this._data.id}/${size}`;
+		return getFfzEmoteUrl(this._data.id, size);
 	}
 }

@@ -1,3 +1,4 @@
+import { getSevenTvEmoteUrl } from '@shared/utils/get-emote-url';
 import { type CreateEmote, Emote } from './emote';
 import { type EmoteProvider, type EmoteSize } from '../../types';
 
@@ -11,6 +12,6 @@ export class StvEmote extends Emote {
 	}
 
 	public override getSrc(size: EmoteSize = 1): string {
-		return `https://cdn.7tv.app/emote/${this._data.id}/${size}x.webp`;
+		return getSevenTvEmoteUrl(this._data.id, size);
 	}
 }

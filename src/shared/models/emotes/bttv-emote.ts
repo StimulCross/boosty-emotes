@@ -1,3 +1,4 @@
+import { getBttvEmoteUrl } from '@shared/utils/get-emote-url';
 import { type CreateEmote, Emote } from './emote';
 import { type EmoteProvider, type EmoteSize } from '../../types';
 
@@ -11,6 +12,6 @@ export class BttvEmote extends Emote {
 	}
 
 	public override getSrc(size: EmoteSize = 1): string {
-		return `https://cdn.betterttv.net/emote/${this._data.id}/${size === 4 ? 3 : size}x.webp`;
+		return getBttvEmoteUrl(this._data.id, size === 4 ? 3 : size);
 	}
 }
