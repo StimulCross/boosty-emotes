@@ -25,38 +25,32 @@ export class ChannelPageContext extends SingleUserContext {
 		return new MutationObserver(mutations => {
 			for (const mutation of mutations) {
 				if (mutation.target instanceof HTMLElement) {
-					if (mutation.target.id === 'root') {
-						for (const node of mutation.addedNodes) {
-							if (node instanceof HTMLElement) {
-								if (node.classList.value.startsWith('App-scss--module_app_')) {
-									this._initialRender();
-								}
-							}
-						}
-					}
-					// Watch for re-render of the feed
-					else if (mutation.target.id === 'column-1') {
-						for (const node of mutation.addedNodes) {
-							if (node instanceof HTMLElement) {
-								if (node.classList.value.startsWith('Feed-scss--module_feed')) {
-									const posts = node.querySelectorAll('[class^=Feed-scss--module_itemWrap_]');
+					// Watch for re-renders of comments
+					if (mutation.target.classList.value.startsWith('CommentView-scss--module_content_')) {
+						this._logger.debug('Processing comment...', mutation.target);
 
-									for (const post of posts) {
-										this._processPost(post);
-									}
-								}
-							}
-						}
+						this._replaceEmotesInComment(mutation.target);
 					}
-					// Watch for about section content updates
-					else if (mutation.target.classList.value.includes('AboutAuthor-scss--module_content')) {
+					// Update subscription description
+					else if (
+						mutation.target.parentElement?.classList.value.startsWith(
+							'ScrollableComponent-scss--module_root_'
+						) &&
+						mutation.addedNodes.length > 0
+					) {
 						for (const node of mutation.addedNodes) {
-							this._replaceEmotesInAboutSection(node);
+							if (node instanceof HTMLDivElement) {
+								this._logger.debug('Processing subscription description block...', node);
+
+								this._replaceEmotesInTargetDescription(node);
+							}
 						}
 					}
 					// Watch for dynamically loading posts on route change
 					else if (mutation.target.classList.value.includes('Feed-scss--module_feed')) {
 						for (const node of mutation.addedNodes) {
+							this._logger.debug('Processing post...', node);
+
 							if (!(node instanceof HTMLElement)) {
 								return;
 							}
@@ -75,6 +69,8 @@ export class ChannelPageContext extends SingleUserContext {
 								!node.classList.value.includes('ShowMore-scss--module_showMore_') &&
 								!node.classList.value.includes('Spinner-scss--module_loader_')
 							) {
+								this._logger.debug('Processing loaded comment...', node);
+
 								const commentContent = node.querySelector('[class*=CommentView-scss--module_content_]');
 
 								if (commentContent) {
@@ -83,19 +79,47 @@ export class ChannelPageContext extends SingleUserContext {
 							}
 						}
 					}
-					// Watch for posts update when they are expanding
-					else if (mutation.target.classList.value.startsWith('Post-scss--module_content_')) {
+					// Watch for re-render of the feed
+					else if (mutation.target.id === 'column-1') {
 						for (const node of mutation.addedNodes) {
+							if (node instanceof HTMLElement) {
+								if (node.classList.value.startsWith('Feed-scss--module_feed')) {
+									this._logger.debug('Feed updated. Processing posts...', mutation);
+
+									const posts = node.querySelectorAll('[class^=Feed-scss--module_itemWrap_]');
+
+									for (const post of posts) {
+										this._processPost(post);
+									}
+								}
+							}
+						}
+					}
+					// Watch for about section content updates
+					else if (mutation.target.classList.value.includes('AboutAuthor-scss--module_content')) {
+						this._logger.debug('Processing about section...', mutation);
+
+						for (const node of mutation.addedNodes) {
+							this._replaceEmotesInAboutSection(node);
+						}
+					}
+					// Watch for posts update when they are expanding
+					else if (
+						mutation.target.classList.value.startsWith('Post-scss--module_content_') &&
+						mutation.addedNodes.length > 0
+					) {
+						for (const node of mutation.addedNodes) {
+							this._logger.debug('Processing expanded post block...', node);
+
 							this._replaceEmotesInPost(node);
 						}
 					}
-					// Watch for re-renders of comments
-					else if (mutation.target.classList.value.startsWith('CommentView-scss--module_content_')) {
-						this._replaceEmotesInComment(mutation.target);
-					}
+
 					// Update page when layout changes
 					else if (mutation.target.classList.value.startsWith('Layout-scss--module_content_')) {
 						if (mutation.addedNodes.length > 0) {
+							this._logger.debug('Processing layout change...', mutation.target);
+
 							const aboutContent = this.$root.querySelector('[class*=AboutAuthor-scss--module_content]');
 
 							if (aboutContent) {
@@ -118,7 +142,10 @@ export class ChannelPageContext extends SingleUserContext {
 						}
 					}
 					// Update targets descriptions on target cards refresh
+					// TODO: Remove?
 					else if (mutation.target.classList.value.includes('Targets-scss--module_card_')) {
+						this._logger.debug('Processing target card...', mutation.target);
+
 						if (mutation.addedNodes.length > 0) {
 							const targets = mutation.target.querySelectorAll(
 								'[class^=TargetItemCommon-scss--module_description_]'
@@ -129,28 +156,31 @@ export class ChannelPageContext extends SingleUserContext {
 							}
 						}
 					}
-					// Update subscription description
-					else if (
-						mutation.target.parentElement?.classList.value.startsWith(
-							'ScrollableComponent-scss--module_root_'
-						)
-					) {
-						this._replaceEmotesInTargetDescription(mutation.target);
-					}
 					// Stream chat on channel page
 					else if (
 						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_list_') &&
 						mutation.addedNodes.length > 0
 					) {
-						for (const addedNode of mutation.addedNodes) {
+						for (const node of mutation.addedNodes) {
 							if (
-								addedNode instanceof HTMLDivElement &&
-								addedNode.firstChild instanceof HTMLDivElement &&
-								addedNode.firstChild.classList.value.includes(
-									'ChatBoxBase-scss--module_messageContainer_'
-								)
+								node instanceof HTMLDivElement &&
+								node.firstChild instanceof HTMLDivElement &&
+								node.firstChild.classList.value.includes('ChatBoxBase-scss--module_messageContainer_')
 							) {
-								const message = addedNode.firstChild.querySelector(
+								const messageContainer = node.firstChild;
+
+								if (
+									messageContainer.firstChild instanceof HTMLDivElement &&
+									messageContainer.firstChild.classList.value.includes(
+										'ChatSystemMessage-scss--module_root_'
+									)
+								) {
+									continue;
+								}
+
+								this._logger.debug('Processing chat message...', node);
+
+								const message = messageContainer.querySelector(
 									'[class*=ChatMessage-scss--module_text_]'
 								);
 
@@ -159,19 +189,11 @@ export class ChannelPageContext extends SingleUserContext {
 								}
 							}
 						}
-					} else if (
-						mutation.target.parentElement?.classList.value.includes('ChatBoxBase-scss--module_root_')
-					) {
-						const messages = mutation.target.querySelectorAll('[class*=ChatMessage-scss--module_text_]');
-
-						for (const message of messages) {
-							this._replaceEmotesInChatMessage(message);
-						}
-					} else if (mutation.target.classList.value.includes('ChatMessage-scss--module_text_')) {
-						this._replaceEmotesInChatMessage(mutation.target);
 					}
 					// Hide original tooltip
 					else if (mutation.target.classList.value.includes('ChatMessage-scss--module_tooltip_')) {
+						this._logger.debug('Hiding original tooltip...', mutation.target);
+
 						mutation.target.style.display = 'none';
 					}
 					// Inject emote picker button
@@ -181,6 +203,8 @@ export class ChannelPageContext extends SingleUserContext {
 								node instanceof HTMLElement &&
 								node.classList.value.includes('Stream-scss--module_chat_')
 							) {
+								this._logger.debug('Processing chat button...', node);
+
 								const emoteButton = node.querySelector('[class*=SmileButton-scss--module_root_]');
 
 								if (emoteButton) {
