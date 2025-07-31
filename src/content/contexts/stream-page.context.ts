@@ -89,7 +89,6 @@ export class StreamPageContext extends SingleUserContext {
 					}
 					// Hide original tooltip
 					else if (mutation.target.classList.value.includes('ChatMessage-scss--module_tooltip_')) {
-						console.log(mutation);
 						this._logger.debug('Hiding original tooltip...', mutation.target);
 
 						mutation.target.style.display = 'none';
