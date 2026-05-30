@@ -1,6 +1,6 @@
 {
 	"description": {
-		"message": "A browser extension for Chromium-based browsers and Firefox that allows you to use Twitch emotes on Boosty, including third-party providers: 7TV, FrankerFaceZ, and BetterTTV.",
+		"message": "Use Twitch emotes (including 7TV, FFZ, and BTTV) on Boosty.",
 		"description": "The main description of the extension shown in the browser web store and extensions manager"
 	},
 	"copied": {

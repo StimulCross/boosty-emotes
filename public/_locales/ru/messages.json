@@ -1,6 +1,6 @@
 {
 	"description": {
-		"message": "Браузерное расширение для Chromium и Firefox, которое даёт возможность использовать смайлы Twitch на Boosty, включая смайлы сторонних провайдеров: 7TV, FrankerFaceZ и BetterTTV.",
+		"message": "Используй смайлы Twitch, 7TV, FrankerFaceZ и BetterTTV на Boosty!",
 		"description": "Главное описание расширения для магазинов (Chrome Web Store, AMO)"
 	},
 	"copied": {
