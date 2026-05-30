@@ -1,22 +1,25 @@
 {
+	"extends": "./.wxt/tsconfig.json",
 	"compilerOptions": {
-		"strict": true,
-		"module": "CommonJS",
-		"target": "ES2018",
-		"esModuleInterop": true,
-		"sourceMap": true,
-		"rootDir": "src",
-		"outDir": "dist",
-		"noEmitOnError": true,
-		"lib": ["ESNext.Promise", "DOM", "DOM.Iterable", "ES2021.String"],
-		"typeRoots": ["node_modules/@types"],
+		"target": "ES2023",
+		"lib": ["ES2023", "DOM", "DOM.Iterable", "ESNext.Collection", "ESNext.Iterator"],
+
+		"module": "ESNext",
+
+		"moduleResolution": "bundler",
 		"paths": {
-			"@/*": ["./src/*"],
-			"@shared/*": ["./src/shared/*"],
-			"@content/*": ["./src/content/*"],
-			"@popup/*": ["./src/popup/*"]
-		}
+			"@shared/*": ["./src/shared/*"]
+		},
+		"resolveJsonModule": true,
+		"allowImportingTsExtensions": true,
+
+		"strict": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"isolatedModules": true,
+		"skipLibCheck": true
 	},
-	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"]
 }

@@ -1,0 +1,39 @@
+.root {
+	--color: #8c8c8c;
+	--color-hover: #c9c9c9;
+	--color-active: #c9c9c9;
+
+	font-family: inherit;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 0 8px;
+
+	cursor: pointer;
+
+	color: var(--color);
+	border: none;
+	background-color: transparent;
+	appearance: none;
+}
+
+.icon {
+	width: calc(12px + 0.75rem);
+	height: calc(12px + 0.75rem);
+
+	transition: color 0.2s;
+}
+
+.icon:hover {
+	color: var(--color-hover);
+}
+
+.icon:active {
+	color: var(--color-active);
+}
+
+.active .icon {
+	color: var(--color-active);
+}

@@ -1,3 +1,4 @@
-export * from './twitch-response';
-export * from './twitch-emotes';
-export * from './twitch-user';
+export type * from './twitch-emotes'
+export type * from './twitch-response'
+export type * from './twitch-token-info.ts'
+export type * from './twitch-user'

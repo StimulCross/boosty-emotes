@@ -1,0 +1,109 @@
+.root {
+	width: var(--BE-emote-autocompletion-width);
+
+	max-height: inherit;
+	padding: 10px;
+
+	color: var(--BE-color-text-regular);
+	border: 1px solid var(--BE-color-border);
+	border-radius: 8px;
+
+	background-color: var(--BE-color-bg-tooltip);
+	box-shadow: var(--BE-shadow-tooltip);
+}
+
+.matches {
+	display: flex;
+	overflow-x: hidden;
+	flex-direction: column;
+}
+
+.providerIcon svg {
+	width: auto;
+	height: 10px;
+
+	fill: var(--BE-color-text-regular);
+}
+
+.boostyIcon svg {
+	height: 12px;
+}
+
+.twitchIcon svg {
+	height: 13px;
+}
+
+.bttvIcon svg {
+	height: 12px;
+}
+
+.match {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	padding: 5px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: scale 0.1s ease-out;
+
+	border: none;
+	background: none;
+	gap: 12px;
+
+	&.active,
+	&:hover {
+		backdrop-filter: var(--BE-backdrop-contrast);
+		scale: 1.015;
+
+		.providerIcon.boostyIcon svg {
+			fill: var(--BE-color-provider-boosty);
+		}
+
+		.providerIcon.twitchIcon svg {
+			fill: var(--BE-color-provider-twitch);
+		}
+
+		.providerIcon.sevenTvIcon svg {
+			fill: var(--BE-color-provider-stv);
+		}
+
+		.providerIcon.ffzIcon svg {
+			fill: var(--BE-color-provider-ffz);
+		}
+
+		.providerIcon.bttvIcon svg {
+			fill: var(--BE-color-provider-bttv);
+		}
+	}
+}
+
+.emote {
+	position: relative;
+}
+
+.emoteImage {
+	max-height: 32px;
+}
+
+.favoriteIcon svg {
+	fill: var(--BE-color-favorite);
+}
+
+.emoteName {
+	font-size: 12px;
+	font-weight: bold;
+
+	overflow-x: hidden;
+
+	text-overflow: ellipsis;
+}
+
+.emoteName mark {
+	color: var(--BE-color-text-regular);
+	background-color: var(--BE-color-text-highlight);
+}

@@ -1,0 +1,25 @@
+.favoriteIcon {
+	line-height: 0;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 14px;
+	height: 14px;
+	padding: 0;
+
+	border-radius: 50%;
+	background-color: rgb(0 0 0 / 70%);
+}
+
+.favoriteIcon svg {
+	display: block;
+
+	width: 10px;
+	height: 10px;
+}

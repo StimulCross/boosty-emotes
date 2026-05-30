@@ -1,0 +1,26 @@
+body {
+	--page-width: 300px;
+	--page-height: 500px;
+
+	font-family: sans-serif, serif;
+
+	overflow: hidden;
+
+	width: var(--page-width);
+	max-width: var(--page-width);
+	height: var(--page-height);
+	max-height: var(--page-height);
+
+	margin: 0;
+
+	color: var(--text-primary);
+	background-color: var(--bg-primary);
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	height: 100vh;
+}

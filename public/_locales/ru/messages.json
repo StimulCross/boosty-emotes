@@ -1,0 +1,248 @@
+{
+	"description": {
+		"message": "Браузерное расширение для Chromium и Firefox, которое даёт возможность использовать смайлы Twitch на Boosty, включая смайлы сторонних провайдеров: 7TV, FrankerFaceZ и BetterTTV.",
+		"description": "Главное описание расширения для магазинов (Chrome Web Store, AMO)"
+	},
+	"copied": {
+		"message": "Скопировано",
+		"description": "Всплывающее уведомление при успешном копировании в буфер обмена"
+	},
+	"search_placeholder": {
+		"message": "Поиск",
+		"description": "Текст-заглушка для поля поиска"
+	},
+	"auth_button": {
+		"message": "Войти через Twitch",
+		"description": "Текст на главной кнопке авторизации"
+	},
+	"auth_description": {
+		"message": "Смайлы Twitch, 7TV, FrankerFaceZ и BetterTTV на Boosty.",
+		"description": "Краткое описание расширения под заголовком на странице входа"
+	},
+	"auth_why_login_title": {
+		"message": "Зачем нужен вход через Twitch?",
+		"description": "Заголовок блока с объяснением причины авторизации"
+	},
+	"auth_why_login_text": {
+		"message": "Авторизация работает исключительно как шлюз. Нам нужен базовый токен доступа (access token), чтобы расширение могло отправлять запросы к Twitch API и получать списки смайлов.",
+		"description": "Основной текст, объясняющий механизм работы API"
+	},
+	"auth_any_account_text": {
+		"message": "Подойдет абсолютно любой аккаунт — расширению нужен только доступ к публичным данным, личная информация не собирается.",
+		"description": "Успокаивающий текст о безопасности данных"
+	},
+	"header_settings": {
+		"message": "Настройки",
+		"description": "Подсказка или заголовок для кнопки настроек в шапке"
+	},
+	"header_global_emotes": {
+		"message": "Глобальные смайлы",
+		"description": "Подсказка или заголовок для раздела глобальных смайлов в шапке"
+	},
+	"header_logout": {
+		"message": "Выйти",
+		"description": "Подсказка для кнопки выхода из аккаунта в шапке"
+	},
+	"header_back_button": {
+		"message": "Назад",
+		"description": "Текст или подсказка для кнопки возврата на предыдущий экран"
+	},
+	"home_page_delete_user_button_title": {
+		"message": "Удалить пользователя",
+		"description": "Подсказка для кнопки удаления стримера из списка"
+	},
+	"alerts_twitch_token_expired": {
+		"message": "Срок действия токена Twitch истёк. Смайлы Twitch не будут обновляться. Пожалуйста, войдите снова, чтобы обновить токен.",
+		"description": "Уведомление об истечении срока действия токена API Twitch"
+	},
+	"add_user_add_button": {
+		"message": "Добавить",
+		"description": "Текст на кнопке подтверждения добавления пользователя"
+	},
+	"add_user_twitch_input_placeholder": {
+		"message": "Никнейм Twitch",
+		"description": "Текст-заглушка для поля ввода имени канала на Twitch"
+	},
+	"add_user_boosty_input_placeholder": {
+		"message": "Никнейм Boosty",
+		"description": "Текст-заглушка для поля ввода имени аккаунта на Boosty"
+	},
+	"add_user_empty_inputs_error": {
+		"message": "Все поля должны быть заполнены",
+		"description": "Ошибка при попытке отправить форму с пустыми полями"
+	},
+	"add_user_user_does_not_exist": {
+		"message": "Пользователь Twitch @$USER$ не найден. Возможно, аккаунт удален или забанен.",
+		"description": "Ошибка, когда API Twitch не находит пользователя",
+		"placeholders": {
+			"user": {
+				"content": "$1",
+				"example": "StimulX"
+			}
+		}
+	},
+	"add_user_twitch_user_already_exists": {
+		"message": "Пользователь Twitch @$TWITCH_USER$ уже связан с Boosty @$BOOSTY_USER$",
+		"description": "Ошибка при попытке добавить Twitch аккаунт, который уже есть в базе",
+		"placeholders": {
+			"twitch_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"boosty_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_boosty_user_already_exists": {
+		"message": "Пользователь Boosty @$BOOSTY_USER$ уже связан с Twitch @$TWITCH_USER$",
+		"description": "Ошибка при попытке назначить Boosty аккаунт, который уже привязан к другому Twitch",
+		"placeholders": {
+			"boosty_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"twitch_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_unknown_error": {
+		"message": "Неизвестная ошибка. Попробуйте ещё раз.",
+		"description": "Стандартная ошибка-фоллбэк для непредвиденных ситуаций"
+	},
+	"emote_stats_total_emotes": {
+		"message": "Всего",
+		"description": "Лейбл для отображения общего количества смайлов у пользователя"
+	},
+	"emote_stats_updated_at": {
+		"message": "Обновлено",
+		"description": "Лейбл для времени последнего обновления списка смайлов"
+	},
+	"emote_set_empty": {
+		"message": "Смайлы не найдены",
+		"description": "Текст-заглушка, если у провайдера или пользователя нет смайлов"
+	},
+	"emote_global_set_title": {
+		"message": "Глобальные смайлы",
+		"description": "Заголовок для секции с глобальными смайлами провайдеров"
+	},
+	"emote_channel_set_title": {
+		"message": "Смайлы канала",
+		"description": "Заголовок для секции со смайлами конкретного канала"
+	},
+	"favorite_tab_title": {
+		"message": "ИЗБРАННОЕ",
+		"description": "Заголовок вкладки с избранными смайлами пользователя"
+	},
+	"settings_appearance_title": {
+		"message": "Внешний вид",
+		"description": "Заголовок раздела визуальных настроек"
+	},
+	"settings_theme_label": {
+		"message": "Тема",
+		"description": "Лейбл для селектора выбора цветовой темы"
+	},
+	"settings_theme_auto": {
+		"message": "Системная",
+		"description": "Опция синхронизации темы с настройками ОС/браузера"
+	},
+	"settings_theme_light": {
+		"message": "Светлая",
+		"description": "Опция выбора светлой темы"
+	},
+	"settings_theme_dark": {
+		"message": "Тёмная",
+		"description": "Опция выбора тёмной темы"
+	},
+	"settings_autocompletion_title": {
+		"message": "Автодополнение",
+		"description": "Заголовок раздела настроек автодополнения в чате"
+	},
+	"settings_use_tab_autocompletion_label": {
+		"message": "Tab автодополнение",
+		"description": "Лейбл переключателя автодополнения по клавише Tab"
+	},
+	"settings_use_tab_autocompletion_desc": {
+		"message": "Открывает меню автодополнения смайлов для текущего слова при нажатии Tab",
+		"description": "Подробное описание функции автодополнения по Tab"
+	},
+	"settings_use_colon_autocompletion_label": {
+		"message": "Автодополнение по двоеточию (:)",
+		"description": "Лейбл переключателя автодополнения через префикс двоеточия"
+	},
+	"settings_use_colon_autocompletion_desc": {
+		"message": "Открывает меню автодополнения смайлов при вводе двоеточия с текстом (например, :kappa...)",
+		"description": "Подробное описание функции автодополнения по двоеточию"
+	},
+	"settings_limit_label": {
+		"message": "Лимит подсказок",
+		"description": "Лейбл настройки максимального количества смайлов в списке автодополнения"
+	},
+	"settings_limit_desc": {
+		"message": "Максимальное количество смайлов в списке автодополнения",
+		"description": "Подробное описание лимита выдачи автодополнения"
+	},
+	"settings_match_type_label": {
+		"message": "Тип поиска",
+		"description": "Лейбл выбора алгоритма сопоставления текста и имени смайла"
+	},
+	"settings_match_type_desc": {
+		"message": "Как смайлы сопоставляются с введённым текстом",
+		"description": "Подробное описание настройки типа поиска"
+	},
+	"settings_match_type_starts_with": {
+		"message": "Начинается с",
+		"description": "Опция строгого поиска, где имя смайла должно начинаться с введенного текста"
+	},
+	"settings_match_type_contains": {
+		"message": "Содержит",
+		"description": "Опция поиска, где введенный текст может быть в любой части имени смайла"
+	},
+	"settings_prioritize_prefix_matched_emotes_label": {
+		"message": "Приоритет префиксных совпадений",
+		"description": "Лейбл переключателя, поднимающего смайлы с точным совпадением префикса выше в списке"
+	},
+	"settings_prioritize_prefix_matched_emotes_desc": {
+		"message": "Смайлы, начинающиеся с введённого текста, появляются выше в списке",
+		"description": "Подробное описание настройки приоритета префиксов"
+	},
+	"settings_prioritize_favorite_emotes_label": {
+		"message": "Приоритет избранных",
+		"description": "Лейбл переключателя, поднимающего избранные смайлы в начало выдачи"
+	},
+	"settings_prioritize_favorite_emotes_desc": {
+		"message": "Избранные смайлы всегда отображаются в начале списка",
+		"description": "Подробное описание настройки приоритета избранных смайлов"
+	},
+	"settings_sort_by_priority_label": {
+		"message": "Сортировка по приоритету провайдеров",
+		"description": "Лейбл переключателя сортировки по иерархии провайдеров (7TV, BTTV и т.д.)"
+	},
+	"settings_sort_by_priority_desc": {
+		"message": "Сортировать результаты по порядку провайдеров, заданному ниже",
+		"description": "Подробное описание настройки сортировки провайдеров"
+	},
+	"tooltip_global_emote_title": {
+		"message": "Глобальный смайл",
+		"description": "Подсказка, указывающая, что смайл доступен глобально на платформе"
+	},
+	"tooltip_channel_emote_title": {
+		"message": "Смайл канала",
+		"description": "Подсказка, указывающая, что смайл принадлежит конкретному каналу"
+	},
+	"tooltip_overlay_emote_title": {
+		"message": "Оверлей",
+		"description": "Подсказка, указывающая, что смайл является наложением (zero-width overlay)"
+	},
+	"tooltip_modifier_emote_title": {
+		"message": "Модификатор",
+		"description": "Подсказка, указывающая, что смайл применяет визуальный эффект (например, модификаторы FFZ)"
+	},
+	"tooltip_favorite_emote_title": {
+		"message": "Избранный",
+		"description": "Подсказка для иконки/кнопки добавления смайла в избранное"
+	}
+}

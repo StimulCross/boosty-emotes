@@ -1,0 +1,8 @@
+.scrollContainerY {
+	overflow-y: auto;
+
+	min-height: 0;
+
+	scrollbar-color: var(--BE-color-scrollbar-thumb) var(--BE-color-bg-tooltip);
+	scrollbar-width: thin;
+}

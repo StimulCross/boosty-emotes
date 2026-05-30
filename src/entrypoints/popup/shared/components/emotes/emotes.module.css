@@ -1,0 +1,352 @@
+.root {
+	--side-padding: 10px;
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	height: 100%;
+	padding: 0 var(--side-padding);
+}
+
+.tabs {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+	margin-bottom: 10px;
+	gap: 6px;
+}
+
+.tabIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 3px;
+
+	max-width: 16px;
+	height: 16px;
+}
+
+.tabIcon svg {
+	max-width: 16px;
+	height: 16px;
+	fill: var(--text-primary);
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: center;
+	gap: 8px;
+
+	padding: 10px 8px;
+
+	cursor: pointer;
+
+	border-radius: 8px;
+	background: var(--bg-primary);
+}
+
+.tab:hover {
+	background: var(--bg-hover);
+}
+
+.tabHidden {
+	display: none;
+}
+
+.tabActive {
+	background: var(--bg-secondary);
+}
+
+.tabName {
+	font-size: 14px;
+
+	position: absolute;
+
+	overflow: hidden;
+
+	width: auto;
+	min-width: 0;
+	max-width: 0;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition:
+		opacity 0.1s ease-in-out,
+		transform 0.15s ease-in-out,
+		max-width 0.15s ease-in-out;
+
+	transform: translateX(-8px);
+	text-align: center;
+	white-space: nowrap;
+
+	opacity: 0;
+}
+
+.tabActive .tabName {
+	font-weight: bold;
+
+	position: relative;
+
+	max-width: 200px;
+
+	transform: translateX(0);
+
+	opacity: 1;
+}
+
+.tabHidden {
+	display: none;
+}
+
+.tabBoosty:hover .tabIcon svg,
+.tabActive.tabBoosty .tabIcon svg {
+	fill: var(--color-provider-boosty);
+}
+
+.tabTwitch:hover .tabIcon svg,
+.tabActive.tabTwitch .tabIcon svg {
+	fill: var(--color-provider-twitch);
+}
+
+.tabStv:hover .tabIcon svg,
+.tabActive.tabStv .tabIcon svg {
+	fill: var(--color-provider-stv);
+}
+
+.tabFfz:hover .tabIcon svg,
+.tabActive.tabFfz .tabIcon svg {
+	fill: var(--color-provider-ffz);
+}
+
+.tabBttv:hover .tabIcon svg,
+.tabActive.tabBttv .tabIcon svg {
+	fill: var(--color-provider-bttv);
+}
+
+.tabFavorite:hover .tabIcon svg,
+.tabActive.tabFavorite .tabIcon svg {
+	fill: var(--color-favorite);
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 10px;
+	padding: 5px;
+
+	border-radius: 5px;
+	background-color: var(--bg-secondary);
+}
+
+.searchIcon {
+	width: 16px;
+	height: 16px;
+	margin: 2px 6px 0;
+}
+
+.searchIcon svg {
+	fill: var(--text-primary);
+}
+
+.searchInput {
+	width: 100%;
+
+	color: var(--text-primary);
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+
+	min-height: 0;
+}
+
+.emoteSet {
+	display: none;
+	flex: 1;
+
+	gap: 5px;
+
+	min-height: 0;
+}
+
+.emoteSetShow {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+
+	min-height: 0;
+}
+
+.emoteSetContainer {
+	font-size: 14px;
+	font-weight: bold;
+
+	display: flex;
+	flex: 1;
+	flex-flow: column;
+	flex-flow: column;
+
+	width: 100%;
+	min-height: 0;
+
+	text-align: left;
+
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.emoteSetContainerCollapsed::after {
+	content: '\002B';
+}
+
+.emoteContainerHide {
+	display: none;
+}
+
+.emoteStats {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.emotesStatsItem {
+	font-size: 13px;
+
+	color: var(--text-secondary);
+}
+
+.emotes {
+	display: flex;
+	align-content: flex-start;
+	align-items: center;
+	flex: 1;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	width: calc(100% + var(--side-padding) * 2);
+	margin-left: calc(var(--side-padding) * -1);
+	padding-top: 15px;
+	padding-right: var(--side-padding);
+	padding-left: var(--side-padding);
+	gap: 6px;
+}
+
+.emoteButton {
+	position: relative;
+
+	display: block;
+
+	box-sizing: border-box;
+
+	padding: 5px;
+
+	user-select: none;
+
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 4px;
+}
+
+.emoteButton:hover {
+	background-color: var(--bg-hover);
+}
+
+.favoriteEmote {
+	border-color: color-mix(in srgb, var(--color-favorite) 40%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--color-favorite) 15%, transparent);
+}
+
+.favoriteEmote:hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--color-favorite) 35%, transparent);
+}
+
+.favoriteEmote:not(.overlayEmote, .modifierEmote) {
+	background-color: color-mix(in srgb, var(--color-favorite) 15%, transparent);
+}
+
+.favoriteEmote:not(.overlayEmote, .modifierEmote):hover {
+	background-color: color-mix(in srgb, var(--color-favorite) 20%, transparent);
+}
+
+.overlayEmote {
+	background-color: color-mix(in srgb, var(--color-emote-overlay-type) 15%, transparent);
+}
+
+.overlayEmote:hover {
+	background-color: color-mix(in srgb, var(--color-emote-overlay-type) 20%, transparent);
+}
+
+.overlayEmote:not(.favoriteEmote) {
+	border-color: color-mix(in srgb, var(--color-emote-overlay-type) 40%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--color-emote-overlay-type) 15%, transparent);
+}
+
+.overlayEmote:not(.favoriteEmote):hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--color-emote-overlay-type) 35%, transparent);
+}
+
+.modifierEmote {
+	background-color: color-mix(in srgb, var(--color-emote-modifier-type) 15%, transparent);
+}
+
+.modifierEmote:hover {
+	background-color: color-mix(in srgb, var(--color-emote-modifier-type) 20%, transparent);
+}
+
+.modifierEmote:not(.favoriteEmote) {
+	border-color: color-mix(in srgb, var(--color-emote-modifier-type) 40%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--color-emote-modifier-type) 15%, transparent);
+}
+
+.modifierEmote:not(.favoriteEmote):hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--color-emote-modifier-type) 35%, transparent);
+}
+
+.favoriteEmote::after {
+	position: absolute;
+	z-index: 1;
+
+	top: -7px;
+	right: -7px;
+
+	width: 12px;
+	height: 12px;
+
+	content: '';
+	pointer-events: none;
+
+	background-color: var(--color-favorite);
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.75l3.24 6.56 7.26 1.06-5.25 5.11 1.24 7.23L12 17.25l-6.49 3.46 1.24-7.23-5.25-5.11 7.26-1.06L12 1.75z'/%3E%3C/svg%3E");
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+
+	filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+}
+
+.emote {
+	max-width: 100%;
+	height: auto;
+}
+
+.emoteHidden {
+	display: none;
+}
+
+.favoriteIcon svg {
+	fill: var(--color-favorite);
+}

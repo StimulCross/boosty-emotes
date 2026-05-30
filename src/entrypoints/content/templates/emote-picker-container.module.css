@@ -1,0 +1,71 @@
+.root {
+	--BE-emote-picker-width: 330px;
+
+	position: absolute;
+	z-index: 100 !important;
+	right: 20px;
+	bottom: 100%;
+}
+
+.root[data-placement='stream-chat'] {
+	--BE-emote-picker-width: 310px;
+
+	z-index: 9;
+	right: unset;
+	bottom: calc(100% + 10px);
+	left: 50%;
+
+	transform: translateX(-50%);
+}
+
+.root[data-placement='channel-stream-chat'] {
+	--BE-emote-picker-width: 310px;
+
+	z-index: 9;
+	right: 15px;
+	bottom: calc(100% + 10px);
+}
+
+.root[data-placement='messages'] {
+	--BE-emote-picker-width: 310px;
+
+	z-index: 100;
+	right: 30px;
+	bottom: calc(100% + 8px);
+}
+
+.root[data-placement='new-post'] {
+	--BE-emote-picker-width: 310px;
+
+	z-index: 10 !important;
+	right: 20px;
+	bottom: 60px;
+}
+
+.root :where(*, *::before, *::after) {
+	box-sizing: inherit;
+}
+
+.root :where(button) {
+	font: inherit;
+
+	padding: 0;
+
+	cursor: pointer;
+
+	color: inherit;
+
+	border: none;
+	background: none;
+}
+
+.root :where(ul, ol) {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.root :where(svg) {
+	display: block;
+}

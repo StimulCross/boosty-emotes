@@ -1,3 +1,3 @@
-import { type EmoteProvider } from '@shared/types/index';
+import type { EmoteProvider } from '@shared/types'
 
-export type EmotePickerTab = EmoteProvider | 'favorite';
+export type EmotePickerTab = EmoteProvider | 'favorite'

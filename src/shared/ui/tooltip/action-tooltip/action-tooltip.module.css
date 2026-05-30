@@ -1,0 +1,28 @@
+.root {
+	font-size: 12px;
+	font-weight: 600;
+
+	padding: 6px 10px;
+
+	animation: fadeIn 0.15s ease-in-out both;
+
+	white-space: nowrap;
+
+	border-radius: 6px;
+	background: rgb(0 0 0 / 0.7);
+	backdrop-filter: blur(15px);
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-8px);
+
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0px);
+
+		opacity: 1;
+	}
+}

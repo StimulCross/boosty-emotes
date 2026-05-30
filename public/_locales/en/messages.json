@@ -1,0 +1,248 @@
+{
+	"description": {
+		"message": "A browser extension for Chromium-based browsers and Firefox that allows you to use Twitch emotes on Boosty, including third-party providers: 7TV, FrankerFaceZ, and BetterTTV.",
+		"description": "The main description of the extension shown in the browser web store and extensions manager"
+	},
+	"copied": {
+		"message": "Copied",
+		"description": "Tooltip or toast notification text shown when an item is copied to the clipboard"
+	},
+	"search_placeholder": {
+		"message": "Search",
+		"description": "Placeholder text for search input fields"
+	},
+	"auth_button": {
+		"message": "Login with Twitch",
+		"description": "Text on the main authentication button"
+	},
+	"auth_description": {
+		"message": "Twitch, 7TV, FrankerFaceZ, and BetterTTV emotes on Boosty.",
+		"description": "Brief description of the extension below the title on the auth page"
+	},
+	"auth_why_login_title": {
+		"message": "Why login with Twitch?",
+		"description": "Title of the block explaining the reason for authorization"
+	},
+	"auth_why_login_text": {
+		"message": "Authorization works purely as a gateway. We need a basic access token so the extension can send requests to the Twitch API and fetch emote lists.",
+		"description": "Main text explaining the API mechanism and token usage"
+	},
+	"auth_any_account_text": {
+		"message": "Absolutely any account will work — the extension only needs access to public data, no personal info is collected.",
+		"description": "Reassurance text regarding data safety and privacy"
+	},
+	"header_settings": {
+		"message": "Settings",
+		"description": "Title for the settings button/page in the header"
+	},
+	"header_global_emotes": {
+		"message": "Global emotes",
+		"description": "Title for the global emotes section in the header"
+	},
+	"header_logout": {
+		"message": "Log out",
+		"description": "Title for the logout button in the header"
+	},
+	"header_back_button": {
+		"message": "Back",
+		"description": "Text for the back navigation button"
+	},
+	"home_page_delete_user_button_title": {
+		"message": "Delete user",
+		"description": "Tooltip for the button used to remove a linked streamer from the list"
+	},
+	"alerts_twitch_token_expired": {
+		"message": "Your Twitch token has expired. Twitch emotes cannot be updated until the token is renewed. Please log in again.",
+		"description": "Alert message shown when the Twitch API access token is no longer valid"
+	},
+	"add_user_add_button": {
+		"message": "Add",
+		"description": "Text on the button to confirm adding a new user"
+	},
+	"add_user_twitch_input_placeholder": {
+		"message": "Twitch username",
+		"description": "Placeholder for the input field where the user types a Twitch channel name"
+	},
+	"add_user_boosty_input_placeholder": {
+		"message": "Boosty username",
+		"description": "Placeholder for the input field where the user types a Boosty channel name"
+	},
+	"add_user_empty_inputs_error": {
+		"message": "All fields must be filled in",
+		"description": "Error message shown when a required form field is left empty"
+	},
+	"add_user_user_does_not_exist": {
+		"message": "Twitch user @$USER$ not found. The account might be deleted or banned.",
+		"description": "Error message when the Twitch API cannot find the requested user",
+		"placeholders": {
+			"user": {
+				"content": "$1",
+				"example": "StimulX"
+			}
+		}
+	},
+	"add_user_twitch_user_already_exists": {
+		"message": "Twitch user @$TWITCH_USER$ is already linked to Boosty user @$BOOSTY_USER$",
+		"description": "Error message when attempting to add a Twitch user that is already in the database",
+		"placeholders": {
+			"twitch_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"boosty_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_boosty_user_already_exists": {
+		"message": "Boosty user @$BOOSTY_USER$ is already linked to Twitch user @$TWITCH_USER$",
+		"description": "Error message when attempting to assign a Boosty user that is already linked to another Twitch account",
+		"placeholders": {
+			"boosty_user": {
+				"content": "$1",
+				"example": "StimulX"
+			},
+			"twitch_user": {
+				"content": "$2",
+				"example": "stimulx"
+			}
+		}
+	},
+	"add_user_unknown_error": {
+		"message": "Unknown error. Try again.",
+		"description": "Generic fallback error message for unexpected failures"
+	},
+	"emote_stats_total_emotes": {
+		"message": "Total",
+		"description": "Label for the total count of emotes for a specific user"
+	},
+	"emote_stats_updated_at": {
+		"message": "Updated",
+		"description": "Label indicating the last time the emote list was fetched"
+	},
+	"emote_set_empty": {
+		"message": "No emotes found",
+		"description": "Placeholder text shown when a user or provider has no emotes available"
+	},
+	"emote_global_set_title": {
+		"message": "Global emotes",
+		"description": "Title for the section containing globally available emotes from providers"
+	},
+	"emote_channel_set_title": {
+		"message": "Channel emotes",
+		"description": "Title for the section containing emotes specific to a certain channel"
+	},
+	"favorite_tab_title": {
+		"message": "FAVORITE",
+		"description": "Title of the tab containing the user's favorite emotes"
+	},
+	"settings_appearance_title": {
+		"message": "Appearance",
+		"description": "Title for the visual settings section"
+	},
+	"settings_theme_label": {
+		"message": "Theme",
+		"description": "Label for the color theme selection dropdown"
+	},
+	"settings_theme_auto": {
+		"message": "System",
+		"description": "Option to sync the extension theme with the OS/browser settings"
+	},
+	"settings_theme_light": {
+		"message": "Light",
+		"description": "Option for the light color theme"
+	},
+	"settings_theme_dark": {
+		"message": "Dark",
+		"description": "Option for the dark color theme"
+	},
+	"settings_autocompletion_title": {
+		"message": "Autocompletion",
+		"description": "Title for the chat autocompletion settings section"
+	},
+	"settings_use_tab_autocompletion_label": {
+		"message": "Tab autocompletion",
+		"description": "Label for the toggle enabling emote completion via the Tab key"
+	},
+	"settings_use_tab_autocompletion_desc": {
+		"message": "Opens the emote autocomplete menu for the current word when Tab is pressed",
+		"description": "Detailed description of the Tab autocompletion feature"
+	},
+	"settings_use_colon_autocompletion_label": {
+		"message": "Colon (:) autocompletion",
+		"description": "Label for the toggle enabling emote completion via the colon prefix"
+	},
+	"settings_use_colon_autocompletion_desc": {
+		"message": "Opens the emote autocomplete menu when typing a colon followed by text (e.g., :kappa...)",
+		"description": "Detailed description of the colon autocompletion feature"
+	},
+	"settings_limit_label": {
+		"message": "Suggestions limit",
+		"description": "Label for the input controlling the maximum number of autocomplete suggestions"
+	},
+	"settings_limit_desc": {
+		"message": "Maximum number of emotes shown in the autocomplete list",
+		"description": "Detailed description of the suggestions limit setting"
+	},
+	"settings_match_type_label": {
+		"message": "Match type",
+		"description": "Label for selecting how the typed text matches emote names"
+	},
+	"settings_match_type_desc": {
+		"message": "How emotes are matched against your input",
+		"description": "Detailed description of the match type setting"
+	},
+	"settings_match_type_starts_with": {
+		"message": "Starts with",
+		"description": "Option where the emote name must begin with the typed text"
+	},
+	"settings_match_type_contains": {
+		"message": "Contains",
+		"description": "Option where the emote name can contain the typed text anywhere"
+	},
+	"settings_prioritize_prefix_matched_emotes_label": {
+		"message": "Prioritize prefix matches",
+		"description": "Label for the toggle that sorts strict prefix matches higher in results"
+	},
+	"settings_prioritize_prefix_matched_emotes_desc": {
+		"message": "Emotes starting with your input appear higher in the list",
+		"description": "Detailed description of the prefix prioritization setting"
+	},
+	"settings_prioritize_favorite_emotes_label": {
+		"message": "Prioritize favorites",
+		"description": "Label for the toggle that sorts favorite emotes higher in results"
+	},
+	"settings_prioritize_favorite_emotes_desc": {
+		"message": "Favorite emotes always appear at the top of the list",
+		"description": "Detailed description of the favorite prioritization setting"
+	},
+	"settings_sort_by_priority_label": {
+		"message": "Sort by provider priority",
+		"description": "Label for the toggle that sorts emotes based on the provider hierarchy"
+	},
+	"settings_sort_by_priority_desc": {
+		"message": "Sort results by the provider order defined below",
+		"description": "Detailed description of the provider priority sorting setting"
+	},
+	"tooltip_global_emote_title": {
+		"message": "Global emote",
+		"description": "Tooltip indicating that an emote is globally available on the platform"
+	},
+	"tooltip_channel_emote_title": {
+		"message": "Channel emote",
+		"description": "Tooltip indicating that an emote is specific to a certain channel"
+	},
+	"tooltip_overlay_emote_title": {
+		"message": "Overlay",
+		"description": "Tooltip indicating that an emote is a zero-width overlay (e.g., 7TV overlays)"
+	},
+	"tooltip_modifier_emote_title": {
+		"message": "Modifier",
+		"description": "Tooltip indicating that an emote applies a visual modifier (e.g., FFZ modifiers)"
+	},
+	"tooltip_favorite_emote_title": {
+		"message": "Favorite",
+		"description": "Tooltip for the button/icon used to mark an emote as favorite"
+	}
+}

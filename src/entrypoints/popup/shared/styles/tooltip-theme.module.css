@@ -1,0 +1,16 @@
+.tooltipTheme {
+	--tooltip-border-color: var(--border-default);
+	--tooltip-border-radius: 5px;
+	--tooltip-background: var(--bg-transparent);
+	--tooltip-text-color: var(--text-primary);
+	--tooltip-provider-name-color: var(--text-secondary);
+	--tooltip-boosty-icon-color: var(--color-provider-boosty);
+	--tooltip-twitch-icon-color: var(--color-provider-twitch);
+	--tooltip-stv-icon-color: var(--color-provider-stv);
+	--tooltip-ffz-icon-color: var(--color-provider-ffz);
+	--tooltip-bttv-icon-color: var(--color-provider-bttv);
+	--tooltip-name-color: var(--text-primary);
+	--tooltip-backdrop-blur: 15px;
+	--tooltip-overlay-type-color: var(--color-emote-overlay-type);
+	--tooltip-modifier-type-color: var(--color-emote-modifier-type);
+}

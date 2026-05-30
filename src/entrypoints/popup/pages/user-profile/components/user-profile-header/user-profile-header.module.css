@@ -1,0 +1,100 @@
+.root {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	flex-direction: column;
+
+	min-height: 0;
+}
+
+.headerContainer {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: center;
+
+	width: 100%;
+	padding: 12px 20px;
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-clip: border-box;
+	background-size: cover;
+}
+
+.avatar {
+	--avatar-size: 45px;
+
+	width: 100%;
+	max-width: var(--avatar-size);
+	height: 100%;
+	max-height: var(--avatar-size);
+
+	margin-right: 10px;
+
+	border: 3px solid var(--color-brand-secondary);
+	border-radius: 50%;
+
+	background-color: var(--bg-primary);
+	background-size: contain;
+}
+
+.avatar img {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 50%;
+}
+
+.usernamesContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+
+	width: 100%;
+}
+
+.usernameContainer {
+	display: flex;
+	align-items: center;
+}
+
+.platformIcon {
+	--platform-icon-size: 14px;
+
+	display: flex;
+
+	max-width: var(--platform-icon-size);
+	margin-top: 2px;
+	margin-right: 6px;
+}
+
+.platformIcon svg {
+	width: var(--platform-icon-size);
+	height: var(--platform-icon-size);
+}
+
+.twitchIcon svg {
+	fill: var(--color-provider-twitch);
+}
+
+.boostyIcon svg {
+	fill: var(--color-provider-boosty);
+}
+
+.username {
+	font-size: 14px;
+	font-weight: bold;
+
+	overflow: hidden;
+
+	max-width: 170px;
+
+	text-overflow: ellipsis;
+}
+
+.username:hover {
+	text-decoration: underline;
+
+	color: var(--color-brand-primary);
+}

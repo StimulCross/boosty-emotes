@@ -1,0 +1,45 @@
+.row {
+	display: flex;
+	align-items: center;
+
+	justify-content: space-between;
+
+	padding: 12px 0;
+	gap: 24px;
+}
+
+.textInfo {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.rowColumn {
+	align-items: flex-end;
+	flex-direction: column;
+}
+
+.rowColumn .textInfo {
+	width: 100%;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: 500;
+
+	color: var(--text-primary);
+}
+
+.description {
+	font-size: 12px;
+	line-height: 1.4;
+
+	margin-top: 4px;
+
+	color: var(--text-muted);
+}
+
+.control {
+	flex-shrink: 0;
+}

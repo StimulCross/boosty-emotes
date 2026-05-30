@@ -1,0 +1,19 @@
+@keyframes contentFadeIn {
+	from {
+		transform: translateX(-20px);
+
+		opacity: 0;
+	}
+
+	to {
+		transform: translateX(0);
+
+		opacity: 1;
+	}
+}
+
+.contentFadeIn {
+	flex: inherit;
+
+	animation: contentFadeIn 0.1s ease-in-out;
+}

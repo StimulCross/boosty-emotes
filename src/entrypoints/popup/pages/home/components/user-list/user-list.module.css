@@ -1,0 +1,263 @@
+.root {
+	--avatar-size: 60px;
+	--avatar-overlap: calc(var(--avatar-size) / 2);
+
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	width: auto;
+
+	padding: 0 10px;
+
+	color: var(--text-primary);
+}
+
+.userCard {
+	position: relative;
+
+	display: flex;
+	overflow: visible;
+	align-items: center;
+
+	width: 100%;
+	height: calc(var(--avatar-size) + var(--avatar-size) / 2);
+	margin-bottom: 25px;
+
+	transition: scale 0.1s ease-in-out;
+
+	isolation: isolate;
+}
+
+.avatar {
+	z-index: 2;
+
+	flex-shrink: 0;
+
+	width: var(--avatar-size);
+	height: var(--avatar-size);
+
+	border: 3px solid var(--color-brand-secondary);
+	border-radius: 50%;
+
+	background-color: var(--bg-primary);
+	background-size: contain;
+}
+
+.avatar img {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 50%;
+}
+
+.userCardBody {
+	--user-card-border-radius: 5px;
+
+	position: relative;
+	z-index: 1;
+
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	flex: 1;
+	justify-content: space-between;
+
+	height: 100%;
+
+	margin-left: calc(var(--avatar-overlap) * -1);
+
+	padding: 0 30px 0 calc(var(--avatar-overlap) + 10px);
+
+	border-radius: var(--user-card-border-radius);
+	box-shadow: var(--shadow-default);
+}
+
+.userCardBody::before {
+	--card-banner: unset;
+
+	position: absolute;
+	z-index: -1;
+
+	content: '';
+	pointer-events: none;
+
+	border-radius: inherit;
+	background-image:
+		linear-gradient(
+			to right,
+			var(--bg-secondary) 10%,
+			color-mix(in srgb, var(--bg-secondary), transparent 30%) 50%,
+			color-mix(in srgb, var(--bg-secondary), transparent 70%) 100%
+		),
+		var(--card-banner);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	inset: 0;
+}
+
+:root[data-theme='dark'] .userCardBody::before {
+	background-image:
+		linear-gradient(
+			to right,
+			var(--bg-secondary) 10%,
+			color-mix(in srgb, var(--bg-secondary), transparent 30%) 50%,
+			color-mix(in srgb, var(--bg-secondary), transparent 70%) 100%
+		),
+		var(--card-banner);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) .userCardBody::before {
+		background-image:
+			linear-gradient(
+				to right,
+				var(--bg-secondary) 10%,
+				color-mix(in srgb, var(--bg-secondary), transparent 30%) 50%,
+				color-mix(in srgb, var(--bg-secondary), transparent 70%) 100%
+			),
+			var(--card-banner);
+	}
+}
+
+.userCard:hover {
+	cursor: pointer;
+
+	scale: 1.02;
+}
+
+.userCard:hover .avatar {
+	border: 3px solid var(--color-brand-primary);
+}
+
+.userCard:hover .userCardBody {
+	box-shadow: var(--shadow-hover);
+}
+
+.usernamesContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	margin-right: auto;
+	gap: 4px;
+}
+
+.usernameContainer {
+	display: flex;
+	align-items: center;
+
+	padding-bottom: 4px;
+}
+
+.platformIcon {
+	display: flex;
+
+	max-width: 16px;
+	margin-top: 2px;
+	margin-right: 6px;
+}
+
+.platformIcon svg {
+	width: 16px;
+	height: 16px;
+	margin-bottom: 1px;
+}
+
+.twitchIcon svg {
+	margin-top: 2px;
+	fill: var(--color-provider-twitch);
+}
+
+.boostyIcon svg {
+	fill: var(--color-provider-boosty);
+}
+
+.username {
+	font-family: sans-serif, serif;
+	font-size: 15px;
+	font-weight: bold;
+
+	overflow: hidden;
+
+	max-width: 160px;
+
+	text-overflow: ellipsis;
+}
+
+.deleteButton {
+	--delete-button-width: 30px;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	width: var(--delete-button-width);
+	height: 100%;
+
+	transition:
+		transform 0.2s ease-in-out,
+		background-color 0.1s ease-in-out;
+
+	transform: translateX(var(--delete-button-width));
+
+	border-radius: var(--user-card-border-radius);
+	background-color: transparent;
+}
+
+.userCardBody:hover .deleteButton {
+	transform: translateX(calc(var(--delete-button-width) - 12px));
+
+	background-color: color-mix(in srgb, var(--color-delete-user-button), transparent 25%);
+}
+
+.userCardBody:hover .deleteButton:hover {
+	transition: transform 0.1s ease-in-out;
+	transform: translateX(0);
+
+	background-color: var(--color-delete-user-button-hover);
+}
+
+.deleteButton:active {
+	background-color: var(--color-delete-user-button-active);
+}
+
+.deleteButtonChevronIcon {
+	font-size: 18px;
+
+	align-self: flex-start;
+
+	transform: translateX(-3px);
+
+	opacity: 1;
+	color: white;
+}
+
+.deleteButtonIcon {
+	font-size: 20px;
+
+	display: none;
+
+	transition: opacity 0.1s ease-in-out;
+
+	opacity: 0;
+	color: white;
+}
+
+.deleteButton:hover .deleteButtonChevronIcon {
+	display: none;
+}
+
+.deleteButton:hover .deleteButtonIcon {
+	display: block;
+
+	opacity: 1;
+}

@@ -1,0 +1,28 @@
+.select {
+	font-size: 14px;
+
+	height: 32px;
+
+	padding: 4px 4px;
+
+	cursor: pointer;
+	transition: border-color 0.2s;
+
+	color: var(--text-primary);
+	border: 1px solid var(--border-default);
+	border-radius: 6px;
+	outline: none;
+	background-color: var(--bg-secondary);
+}
+
+.select:hover {
+	border-color: var(--text-muted);
+}
+
+.select option:hover {
+	background: var(--color-brand-primary);
+}
+
+.select:focus-visible {
+	border-color: var(--color-brand-primary);
+}

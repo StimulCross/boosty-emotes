@@ -1,0 +1,174 @@
+.root {
+	--header-height: 50px;
+
+	position: relative;
+	z-index: 10;
+	/*top: 0;*/
+
+	height: var(--header-height);
+	max-height: var(--header-height);
+	padding: 10px;
+
+	color: var(--text-primary);
+	background-color: var(--bg-primary);
+
+	box-shadow: var(--shadow-default);
+}
+
+.headerShow {
+	display: block;
+}
+
+.userIdentity {
+	display: none;
+	align-items: center;
+	flex-shrink: 0;
+	justify-content: center;
+
+	animation: fadeIn 0.1s ease-out both;
+}
+
+.userIdentityShow {
+	display: flex;
+}
+
+.identity {
+	display: flex;
+	align-items: center;
+
+	margin-right: auto;
+}
+
+.avatar {
+	width: 30px;
+	height: 30px;
+	margin-right: 8px;
+
+	border-radius: 50%;
+}
+
+.username {
+	font-family: sans-serif, serif;
+	font-size: 15px;
+	font-weight: bold;
+
+	overflow: hidden;
+
+	max-width: 150px;
+
+	text-overflow: ellipsis;
+}
+
+.logout {
+	margin-left: auto;
+}
+
+.menuButton {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.menuButton:hover {
+	color: var(--color-brand-primary);
+}
+
+.menu {
+	position: absolute;
+	z-index: 1000;
+	top: 31px;
+	right: 31px;
+
+	display: none;
+
+	animation: fadeIn 0.1s ease-out both;
+
+	border-radius: 5px;
+	background: var(--bg-primary);
+
+	box-shadow: var(--shadow-default);
+}
+
+:root[data-theme='dark'] .menu {
+	background: var(--bg-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) .menu {
+		background: var(--bg-secondary);
+	}
+}
+
+.menuShow {
+	display: block;
+}
+
+.menuList {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+}
+
+.menuListItem {
+	font-size: 14px;
+	font-weight: bold;
+
+	padding: 10px;
+
+	cursor: pointer;
+
+	border-bottom: 1px solid var(--border-default);
+	border-radius: 5px;
+}
+
+.menuListItem:hover {
+	background-color: var(--bg-hover);
+}
+
+.menuListItemCrit {
+	color: var(--color-critical);
+}
+
+.backButton {
+	display: none;
+	align-items: center;
+
+	padding: 5px;
+
+	user-select: none;
+
+	animation: fadeIn 0.1s ease-out both;
+}
+
+.backButtonShow {
+	display: flex;
+}
+
+.backButtonIcon {
+	width: 14px;
+	margin-right: 14px;
+}
+
+.backButtonText {
+	font-size: 16px;
+}
+
+.backButtonIcon:hover,
+.backButtonText:hover,
+.backButton:hover .backButtonIcon,
+.backButton:hover .backButtonText {
+	color: var(--color-brand-primary);
+}
+
+@keyframes fadeIn {
+	from {
+		transform: translateY(-20px);
+
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+
+		opacity: 1;
+	}
+}

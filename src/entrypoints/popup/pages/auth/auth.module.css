@@ -1,0 +1,111 @@
+.root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	padding: 16px;
+
+	background-color: inherit;
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	max-width: 400px;
+
+	text-align: center;
+	gap: 24px;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 700;
+
+	margin: 0;
+
+	color: var(--text-primary);
+}
+
+.description {
+	font-size: 14px;
+	line-height: 1.4;
+
+	margin: 0;
+
+	color: var(--text-secondary);
+}
+
+.disclaimerBox {
+	display: flex;
+	flex-direction: column;
+
+	padding: 16px 12px;
+
+	text-align: left;
+
+	border: 1px solid var(--border-default);
+	border-radius: 8px;
+	background-color: var(--bg-secondary);
+	gap: 12px;
+}
+
+.disclaimerTitle {
+	font-size: 15px;
+	font-weight: 600;
+
+	margin: 0;
+
+	color: var(--text-primary);
+}
+
+.disclaimerText {
+	font-size: 13px;
+	line-height: 1.4;
+
+	margin: 0;
+
+	color: var(--text-secondary);
+}
+
+.disclaimerHighlight {
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+
+	margin: 0;
+
+	color: var(--color-provider-twitch);
+}
+
+.authButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+
+	width: 100%;
+	padding: 10px 16px;
+}
+
+.twitchIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.twitchIcon svg {
+	width: 22px;
+	height: 22px;
+	fill: currentColor;
+}

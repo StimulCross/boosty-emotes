@@ -1,0 +1,6 @@
+.root {
+	display: flex;
+	flex-direction: row-reverse;
+
+	margin-top: 8px;
+}

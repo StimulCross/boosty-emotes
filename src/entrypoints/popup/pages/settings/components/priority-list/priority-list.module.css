@@ -1,0 +1,113 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	padding: 12px 0;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	padding: 8px 12px;
+
+	transition:
+		border-color 0.2s,
+		background-color 0.2s,
+		transform 0.1s;
+
+	border: 1px solid var(--border-default);
+	border-radius: 6px;
+
+	background-color: var(--bg-secondary);
+}
+
+.item[draggable='true'] {
+	cursor: grab;
+}
+
+.item[draggable='true']:active {
+	cursor: grabbing;
+}
+
+.item.dragging {
+	opacity: 0.5;
+	background-color: var(--bg-hover);
+}
+
+.itemLeft {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.dragHandle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: grab;
+
+	color: var(--text-muted);
+}
+
+.itemName {
+	font-size: 14px;
+
+	text-transform: uppercase;
+
+	color: var(--text-primary);
+}
+
+.controls {
+	display: flex;
+	gap: 4px;
+}
+
+.controlButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 4px;
+
+	cursor: pointer;
+	transition:
+		background-color 0.2s,
+		color 0.2s;
+
+	color: var(--text-muted);
+	border: none;
+	border-radius: 4px;
+	background: transparent;
+}
+
+.controlButton:hover:not(:disabled) {
+	color: var(--text-primary);
+	background-color: var(--bg-hover);
+}
+
+.controlButton:disabled {
+	cursor: not-allowed;
+
+	opacity: 0.3;
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+	fill: currentColor;
+}

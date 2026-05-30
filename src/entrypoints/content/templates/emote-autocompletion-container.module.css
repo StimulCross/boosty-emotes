@@ -1,0 +1,54 @@
+.root {
+	--BE-emote-autocompletion-width: 350px;
+	--BE-emote-autocompletion-height: 250px;
+
+	position: absolute;
+	z-index: 100;
+
+	max-height: var(--BE-emote-autocompletion-height);
+}
+
+.root[data-placement='stream-chat'] {
+	--BE-emote-autocompletion-width: 310px;
+
+	position: absolute;
+
+	z-index: 9;
+	bottom: calc(100% + 10px);
+	left: 50%;
+
+	transform: translateX(-50%);
+}
+
+.root :where(*, *::before, *::after) {
+	box-sizing: inherit;
+}
+
+.root :where(button) {
+	font: inherit;
+
+	padding: 0;
+
+	cursor: pointer;
+
+	color: inherit;
+
+	border: none;
+	background: none;
+}
+
+.root :where(ul, ol) {
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.root :where(svg) {
+	display: block;
+}
+
+.root :where(figure) {
+	margin: 0;
+	padding: 0;
+}

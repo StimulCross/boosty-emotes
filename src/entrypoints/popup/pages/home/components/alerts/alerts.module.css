@@ -1,0 +1,63 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.alert {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+
+	width: 100%;
+
+	padding: 8px;
+	gap: 6px;
+
+	border-radius: 5px;
+}
+
+.info {
+	background-color: var(--bg-alert-info);
+}
+
+.success {
+	background-color: var(--bg-alert-success);
+}
+
+.warning {
+	background-color: var(--bg-alert-warning);
+}
+
+.danger {
+	background-color: var(--bg-alert-danger);
+}
+
+.message {
+	font-size: 14px;
+
+	align-self: flex-start;
+	flex: 1;
+
+	padding: 6px 0;
+}
+
+.icon {
+	font-size: 14px;
+	font-weight: 200;
+
+	cursor: default;
+	user-select: none;
+	text-align: center;
+
+	color: color-mix(in srgb, var(--text-primary), transparent 20%);
+}
+
+.closeButton {
+	align-self: flex-start;
+
+	user-select: none;
+
+	color: color-mix(in srgb, var(--text-primary), transparent 20%);
+}

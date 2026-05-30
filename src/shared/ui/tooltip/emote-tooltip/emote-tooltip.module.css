@@ -1,0 +1,184 @@
+:where(.tooltipTheme) {
+	--tooltip-border-color: rgb(255 255 255 / 20%);
+	--tooltip-border-radius: 5px;
+	--tooltip-background: rgb(0 0 0 / 70%);
+	--tooltip-text-color: #fff;
+	--tooltip-provider-name-color: currentColor;
+	--tooltip-name-color: currentColor;
+	--tooltip-backdrop-blur: 15px;
+	--tooltip-overlay-type-color: currentColor;
+	--tooltip-modifier-type-color: currentColor;
+	--tooltip-favorite-color: currentColor;
+}
+
+.root {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+
+	width: max-content;
+	max-width: 275px;
+
+	padding: 10px 8px 12px;
+
+	transition: opacity 0.2s ease-in-out;
+	transform: translateZ(0);
+
+	color: var(--tooltip-text-color);
+
+	border: 1px solid var(--tooltip-border-color);
+	border-radius: var(--tooltip-border-radius);
+	background: var(--tooltip-background);
+	will-change: opacity, transform, backdrop-filter;
+
+	backdrop-filter: blur(var(--tooltip-backdrop-blur));
+}
+
+.image {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 100px;
+	margin-bottom: 10px;
+	object-fit: contain;
+}
+
+.nameContainer {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 4px;
+}
+
+.name {
+	font-size: 14px;
+	font-weight: bold;
+
+	overflow: hidden;
+
+	width: 100%;
+	overflow-wrap: anywhere;
+
+	text-align: center;
+
+	color: var(--tooltip-name-color);
+}
+
+.providerIcon svg {
+	display: block;
+
+	width: 16px;
+	height: 16px;
+}
+
+.boostyIcon svg {
+	width: 14px;
+	height: 14px;
+	fill: var(--tooltip-boosty-icon-color);
+}
+
+.twitchIcon svg {
+	width: 15px;
+	height: 15px;
+	fill: var(--tooltip-twitch-icon-color);
+}
+
+.stvIcon svg {
+	fill: var(--tooltip-stv-icon-color);
+}
+
+.ffzIcon svg {
+	fill: var(--tooltip-ffz-icon-color);
+}
+
+.bttvIcon svg {
+	width: 14px;
+	height: 14px;
+	fill: var(--tooltip-bttv-icon-color);
+}
+
+.scope {
+	font-size: 12px;
+	font-weight: bold;
+
+	margin-top: 8px;
+
+	color: var(--tooltip-provider-name-color);
+}
+
+.favoriteContainer {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 4px;
+
+	margin-top: 8px;
+}
+
+.favoriteText {
+	font-size: 12px;
+	font-weight: bold;
+
+	color: var(--tooltip-favorite-color);
+}
+
+.favoriteContainer svg {
+	width: 12px;
+	height: 12px;
+	fill: var(--tooltip-favorite-color);
+
+	margin-bottom: 0.1em;
+}
+
+.type {
+	font-size: 12px;
+	font-weight: bold;
+
+	margin-top: 8px;
+}
+
+.overlayType {
+	color: var(--tooltip-overlay-type-color);
+}
+
+.modifierType {
+	color: var(--tooltip-modifier-type-color);
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	margin: 10px 0;
+
+	opacity: 0.5;
+	background-color: var(--tooltip-border-color);
+}
+
+.modifiersList {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+
+	width: 100%;
+}
+
+.modifierItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+}
+
+.modifierImage {
+	width: auto;
+	max-height: 20px;
+	object-fit: contain;
+}
+
+.modifierName {
+	font-size: 12px;
+
+	opacity: 0.8;
+	color: var(--tooltip-text-color);
+}

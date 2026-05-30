@@ -1,8 +1,7 @@
-import { type UserIdentity } from '@shared/models/user-identity';
-import { type UserState } from '@shared/models/user-state';
+import type { BoostyUser, TwitchUser, UserState } from '@shared/models'
 
 export interface User {
-	boostyUsername: string;
-	twitchProfile: UserIdentity;
-	state: UserState;
+	boostyProfile: BoostyUser
+	twitchProfile: TwitchUser
+	state: UserState
 }

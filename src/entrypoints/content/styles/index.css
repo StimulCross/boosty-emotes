@@ -1,0 +1,53 @@
+:root {
+	--BE-color-primary: #f15f2c;
+
+	--BE-border-radius: 8px;
+	--BE-backdrop-contrast: contrast(0.8);
+
+	--BE-color-favorite: #f1b509;
+	--BE-color-provider-boosty: #f15f2c;
+	--BE-color-provider-twitch: #a970ff;
+	--BE-color-provider-stv: #28b1a6;
+	--BE-color-provider-ffz: #c58b66;
+	--BE-color-provider-bttv: #e53d4c;
+
+	--BE-color-text-regular: black;
+	--BE-color-text-secondary: #1e1e1e;
+	--BE-color-bg-tooltip: #eee;
+	--BE-color-bg-tooltip-secondary: #dadada;
+	--BE-color-border: #cccccc;
+	--BE-color-scrollbar-thumb: #828282;
+
+	--BE-shadow-tooltip: rgba(0, 0, 0, 0.1) 0 2px 8px, rgba(0, 0, 0, 0.1) 0 4px 8px, rgba(0, 0, 0, 0.1) 0 8px 16px;
+
+	--BE-color-text-highlight: rgb(241 95 44 / 0.6);
+
+	--BE-color-bg-emote-tooltip: rgb(235 235 235 / 0.6);
+	--BE-color-border-emote-tooltip: #cccccc;
+
+	--BE-color-emote-overlay-type: #12aae3;
+	--BE-color-emote-modifier-type: #0a9145;
+}
+
+body.dark-theme {
+	--BE-color-favorite: gold;
+
+	--BE-color-text-regular: #eee;
+	--BE-color-text-secondary: #dfdfdf;
+	--BE-color-bg-tooltip: #2f2f2f;
+	--BE-color-bg-tooltip-secondary: #262626;
+	--BE-color-border: #3c3c3c;
+
+	--BE-color-bg-emote-tooltip: rgb(25 25 25 / 0.6);
+	--BE-color-border-emote-tooltip: #353535;
+
+	--BE-color-emote-overlay-type: #23adc8;
+	--BE-color-emote-modifier-type: #37a254;
+}
+
+div[class*='CommentView-scss--module_contentWrapper_'] {
+	overflow: visible !important;
+	overflow-wrap: anywhere !important;
+
+	word-break: break-word !important;
+}

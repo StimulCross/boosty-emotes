@@ -1,0 +1,61 @@
+.root {
+	--button-bg: unset;
+	--button-bg-hover: unset;
+	--button-bg-active: unset;
+
+	font-weight: bold;
+
+	padding: 6px 8px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: box-shadow 0.1s ease-in-out;
+
+	color: white;
+	border: none;
+	border-radius: 5px;
+
+	background-color: var(--button-bg);
+}
+
+.root:hover {
+	background-color: var(--button-bg-hover);
+}
+
+.root:active,
+.root:disabled {
+	background-color: var(--button-bg-active);
+}
+
+.primary {
+	--button-bg: var(--color-brand-primary);
+	--button-bg-hover: var(--color-brand-primary-hover);
+	--button-bg-active: var(--color-brand-primary-active);
+}
+
+.secondary {
+	--button-bg: var(--color-brand-secondary);
+	--button-bg-hover: var(--color-brand-secondary-hover);
+	--button-bg-active: var(--color-brand-secondary-active);
+}
+
+.small {
+	font-size: 14px;
+}
+
+.medium {
+	font-size: 16px;
+
+	padding: 8px 10px;
+}
+
+.large {
+	font-size: 18px;
+
+	padding: 10px 12px;
+}
+
+.root:disabled {
+	cursor: not-allowed;
+}

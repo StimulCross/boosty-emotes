@@ -1,0 +1,383 @@
+.root {
+	--side-padding: 10px;
+	display: flex;
+	flex-direction: column;
+
+	width: var(--BE-emote-picker-width);
+	height: 380px;
+	padding: 10px var(--side-padding);
+
+	color: var(--BE-color-text-regular);
+	border: 1px solid var(--BE-color-border);
+	border-radius: var(--BE-border-radius);
+	background: var(--BE-color-bg-tooltip);
+	box-shadow: var(--BE-shadow-tooltip);
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 10px;
+	padding: 5px;
+
+	border-radius: 5px;
+	background-color: var(--BE-color-bg-tooltip-secondary);
+}
+
+.searchIcon {
+	width: 16px;
+	height: 16px;
+	margin: 2px 6px 0;
+}
+
+.searchIcon svg {
+	fill: var(--BE-color-text-regular);
+}
+
+.searchInput {
+	width: 100%;
+
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.tabs {
+	display: flex;
+	overflow-x: auto;
+	align-items: center;
+	justify-content: space-between;
+
+	margin-bottom: 10px;
+	padding: 0;
+	gap: 3px;
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--BE-color-border) transparent;
+}
+
+.tabIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 3px;
+
+	max-width: 16px;
+	height: 16px;
+}
+
+.tabIcon svg {
+	max-width: 16px;
+	height: 16px;
+	fill: var(--BE-color-text-regular);
+}
+
+.tab {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	justify-content: center;
+	gap: 8px;
+
+	padding: 8px 8px;
+
+	cursor: pointer;
+
+	transition: backdrop-filter 0.1s ease-in-out;
+
+	border-radius: 8px;
+}
+
+.tab:hover {
+	backdrop-filter: var(--BE-backdrop-contrast);
+}
+
+.tabHidden {
+	display: none;
+}
+
+.tabActive {
+	padding: 10px 8px;
+	backdrop-filter: var(--BE-backdrop-contrast);
+}
+
+.tabName {
+	font-size: 14px;
+
+	position: absolute;
+
+	overflow: hidden;
+
+	width: auto;
+	min-width: 0;
+	max-width: 0;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition:
+		opacity 0.1s ease-in-out,
+		transform 0.15s ease-in-out,
+		max-width 0.15s ease-in-out;
+
+	transform: translateX(-8px);
+	text-align: center;
+	white-space: nowrap;
+
+	opacity: 0;
+}
+
+.tabActive .tabName {
+	font-weight: bold;
+
+	position: relative;
+
+	max-width: 200px;
+
+	transform: translateX(0);
+
+	opacity: 1;
+}
+
+.tabHidden {
+	display: none;
+}
+
+.tabBoosty:hover .tabIcon svg,
+.tabActive.tabBoosty .tabIcon svg {
+	fill: var(--BE-color-provider-boosty);
+}
+
+.tabTwitch:hover .tabIcon svg,
+.tabActive.tabTwitch .tabIcon svg {
+	fill: var(--BE-color-provider-twitch);
+}
+
+.tabStv:hover .tabIcon svg,
+.tabActive.tabStv .tabIcon svg {
+	fill: var(--BE-color-provider-stv);
+}
+
+.tabFfz:hover .tabIcon svg,
+.tabActive.tabFfz .tabIcon svg {
+	fill: var(--BE-color-provider-ffz);
+}
+
+.tabBttv:hover .tabIcon svg,
+.tabActive.tabBttv .tabIcon svg {
+	fill: var(--BE-color-provider-bttv);
+}
+
+.tabFavorite:hover .tabIcon svg,
+.tabActive.tabFavorite .tabIcon svg {
+	fill: var(--BE-color-favorite);
+}
+
+.body {
+	display: flex;
+
+	overflow-y: auto;
+	flex: 1;
+	flex-direction: column;
+
+	min-height: 0;
+	scrollbar-width: thin;
+	scrollbar-track-color: var(--BE-color-bg-tooltip);
+}
+
+.tabContent {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.tabContentHidden {
+	display: none;
+}
+
+.emoteSet {
+	display: flex;
+	flex-direction: column;
+}
+
+.emoteSetHidden {
+	display: none !important;
+}
+
+.emoteSetHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+
+	width: 100%;
+	padding: 6px 8px;
+
+	cursor: pointer;
+	user-select: none;
+
+	transition: backdrop-filter 0.1s ease-in-out;
+
+	border: none;
+	border-radius: 4px;
+	background-color: transparent;
+}
+
+.emoteSetHeaderTitle {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.emoteSetHeaderCount {
+	font-size: 12px;
+	font-weight: bold;
+
+	margin-left: auto;
+
+	transform: translateY(1px);
+
+	color: var(--BE-color-text-secondary);
+}
+
+.emoteSetHeader:hover {
+	backdrop-filter: var(--BE-backdrop-contrast);
+}
+
+.emoteSetHeader::after {
+	font-weight: bold;
+
+	content: '\2212';
+}
+
+.emoteSetCollapsed .emoteSetHeader::after {
+	content: '\002B';
+}
+
+.emoteSetContent {
+	display: block;
+
+	padding-top: 5px;
+}
+
+.emoteSetCollapsed .emoteSetContent {
+	display: none;
+}
+
+.emotesList {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	padding: 5px;
+
+	list-style: none;
+	gap: 6px;
+}
+
+.emoteItem {
+}
+
+.emoteItemHidden {
+	display: none;
+}
+
+.emoteButton {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 5px;
+
+	cursor: pointer;
+	user-select: none;
+
+	border: 1px solid transparent;
+	border-radius: 4px;
+	background: transparent;
+}
+
+.emoteButton:hover {
+	backdrop-filter: var(--BE-backdrop-contrast);
+}
+
+.favoriteEmote {
+	border-color: color-mix(in srgb, var(--BE-color-favorite) 40%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--BE-color-favorite) 15%, transparent);
+}
+
+.favoriteEmote:hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--BE-color-favorite) 35%, transparent);
+}
+
+.favoriteEmote:not(.overlayEmote, .modifierEmote) {
+	background-color: color-mix(in srgb, var(--BE-color-favorite) 15%, transparent);
+}
+
+.favoriteEmote:not(.overlayEmote, .modifierEmote):hover {
+	background-color: color-mix(in srgb, var(--BE-color-favorite) 20%, transparent);
+}
+
+.favoriteEmote::after {
+	position: absolute;
+	z-index: 1;
+
+	top: -7px;
+	right: -7px;
+
+	width: 12px;
+	height: 12px;
+
+	content: '';
+	pointer-events: none;
+
+	background-color: var(--BE-color-favorite);
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.75l3.24 6.56 7.26 1.06-5.25 5.11 1.24 7.23L12 17.25l-6.49 3.46 1.24-7.23-5.25-5.11 7.26-1.06L12 1.75z'/%3E%3C/svg%3E");
+	mask-repeat: no-repeat;
+	mask-position: center;
+	mask-size: contain;
+
+	filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.9));
+}
+
+.overlayEmote {
+	background-color: color-mix(in srgb, var(--BE-color-emote-overlay-type) 15%, transparent);
+}
+
+.overlayEmote:hover {
+	background-color: color-mix(in srgb, var(--BE-color-emote-overlay-type) 20%, transparent);
+}
+
+.overlayEmote:not(.favoriteEmote) {
+	border-color: color-mix(in srgb, var(--BE-color-emote-overlay-type) 50%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--BE-color-emote-overlay-type) 15%, transparent);
+}
+
+.overlayEmote:not(.favoriteEmote):hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--BE-color-emote-overlay-type) 35%, transparent);
+}
+
+.modifierEmote {
+	background-color: color-mix(in srgb, var(--BE-color-emote-modifier-type) 15%, transparent);
+}
+
+.modifierEmote:hover {
+	background-color: color-mix(in srgb, var(--BE-color-emote-modifier-type) 20%, transparent);
+}
+
+.modifierEmote:not(.favoriteEmote) {
+	border-color: color-mix(in srgb, var(--BE-color-emote-modifier-type) 50%, transparent);
+	box-shadow: 0 0 10px 1px color-mix(in srgb, var(--BE-color-emote-modifier-type) 15%, transparent);
+}
+
+.modifierEmote:not(.favoriteEmote):hover {
+	box-shadow: 0 0 20px 2px color-mix(in srgb, var(--BE-color-emote-modifier-type) 35%, transparent);
+}
+
+.emoteImage {
+	max-width: 100%;
+	height: auto;
+}

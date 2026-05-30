@@ -1,1 +1,1 @@
-export { TwitchApi } from './twitch-api';
+export { TwitchApi } from './twitch-api'

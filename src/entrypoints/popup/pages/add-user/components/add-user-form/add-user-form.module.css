@@ -1,0 +1,90 @@
+.root {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	padding: 20px;
+}
+
+.errorMessageContainer {
+	--height: 100px;
+
+	position: absolute;
+	right: 0;
+	bottom: 100%;
+	left: 0;
+
+	display: flex;
+
+	align-items: flex-end;
+
+	height: var(--height);
+	max-height: var(--height);
+	margin-top: 12px;
+	padding: 0 20px;
+}
+
+.errorMessage {
+	font-size: 14px;
+
+	color: var(--color-critical);
+}
+
+.platformInput {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+
+	margin-bottom: 20px;
+}
+
+.platformIcon {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+	justify-content: center;
+
+	width: 16px;
+	height: 16px;
+}
+
+.twitchIcon {
+	fill: var(--color-provider-twitch);
+}
+
+.boostyIcon {
+	fill: var(--color-brand-primary);
+}
+
+.usernameInput {
+	font-size: 16px;
+	font-weight: 700;
+
+	flex: 1;
+
+	box-sizing: border-box;
+
+	min-width: 0;
+
+	color: var(--text-primary);
+	border: none;
+	border-bottom: 2px solid var(--border-default);
+	background: var(--bg-primary);
+}
+
+.usernameInput:focus {
+	border: none;
+	border-bottom: 2px solid var(--color-brand-primary);
+	outline: none;
+}
+
+.usernameInput::placeholder {
+	color: var(--text-muted);
+}
+
+.inputButton {
+	width: 100%;
+	padding: 8px 10px;
+}

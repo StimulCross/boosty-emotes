@@ -1,3 +1,3 @@
 export interface TwitchResponse<T> {
-	data: T[];
+	data: T[]
 }

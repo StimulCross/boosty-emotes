@@ -1,0 +1,44 @@
+.emoteBox {
+	all: unset;
+
+	display: inline-grid;
+	overflow: visible !important;
+
+	margin-bottom: 0.2em;
+
+	cursor: pointer;
+
+	vertical-align: middle !important;
+	place-items: center;
+}
+
+.emoteBox:focus-visible {
+	border-radius: 4px;
+	outline: 2px solid var(--BE-color-primary);
+}
+
+.emote {
+	width: auto;
+	max-height: 32px;
+	margin-bottom: 0.2em;
+
+	vertical-align: middle !important;
+	grid-area: 1 / 1;
+}
+
+.overlay {
+	z-index: 1;
+
+	width: auto !important;
+
+	max-width: none !important;
+	height: 32px;
+	max-height: none !important;
+
+	pointer-events: none;
+	grid-area: 1 / 1;
+}
+
+.modifier {
+	display: none;
+}

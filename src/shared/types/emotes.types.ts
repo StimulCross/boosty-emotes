@@ -1,17 +1,29 @@
-import { type Emote } from '@shared/models';
+import type {
+	BOOSTY_EMOTE_SIZES,
+	BTTV_EMOTE_SIZES,
+	FFZ_EMOTE_SIZES,
+	StvEmoteSizes,
+	TWITCH_EMOTE_SIZES,
+} from '@shared/constants.ts'
+import type { Emote } from '@shared/models'
 
-export type ThirdPartyEmoteProvider = 'twitch' | '7tv' | 'ffz' | 'bttv';
-export type EmoteProvider = 'boosty' | ThirdPartyEmoteProvider;
-export type EmoteScope = 'global' | 'channel';
+export type EmoteType = 'emote' | 'overlay' | 'modifier'
 
-export type BoostyEmoteSize = 1 | 2 | 3;
-export type TwitchEmoteSize = 1 | 2 | 3;
-export type SevenTvEmoteSize = 1 | 2 | 3 | 4;
-export type FfzEmoteSize = 1 | 2 | 4;
-export type BttvEmoteSize = 1 | 2 | 3;
-export type EmoteSize = 1 | 2 | 4;
+export const THIRD_PARTY_EMOTE_PROVIDERS = ['twitch', 'stv', 'ffz', 'bttv'] as const
+export type ThirdPartyEmoteProvider = typeof THIRD_PARTY_EMOTE_PROVIDERS[number]
 
-export type EmotesSet = Map<string, Emote>;
-export type ProviderEmotesSets = Map<EmoteProvider, EmotesSet>;
-export type ThirdPartyProviderEmotesSets = Map<ThirdPartyEmoteProvider, EmotesSet>;
-export type ScopesEmotesSets = Map<EmoteScope, ProviderEmotesSets>;
+export const EMOTE_PROVIDERS = ['boosty', ...THIRD_PARTY_EMOTE_PROVIDERS] as const
+export type EmoteProvider = typeof EMOTE_PROVIDERS[number]
+
+export const EMOTE_SCOPES = ['global', 'channel'] as const
+export type EmoteScope = typeof EMOTE_SCOPES[number]
+
+export type BoostyEmoteSize = (typeof BOOSTY_EMOTE_SIZES)[number]
+export type TwitchEmoteSize = (typeof TWITCH_EMOTE_SIZES)[number]
+export type StvEmoteSize = (typeof StvEmoteSizes)[number]
+export type FfzEmoteSize = (typeof FFZ_EMOTE_SIZES)[number]
+export type BttvEmoteSize = (typeof BTTV_EMOTE_SIZES)[number]
+
+export type EmoteSize = 1 | 2 | 3 | 4
+
+export type EmoteMap<TEmote extends Emote = Emote> = Map<string, TEmote>
