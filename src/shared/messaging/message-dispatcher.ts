@@ -34,7 +34,12 @@ export class MessageDispatcher {
 						continue
 
 					browser.tabs.sendMessage(tab.id, event)
-						.catch(err => this._logger.error(`Failed to broadcast event [${event.type}]`, err))
+						.catch(err => {
+							if (err instanceof Error && err.message.includes('Receiving end does not exist'))
+								return
+
+							this._logger.error(`Failed to broadcast event [${event.type}]`, err)
+						})
 				}
 			})
 			.catch(err => this._logger.error('Failed to query tabs', err))
