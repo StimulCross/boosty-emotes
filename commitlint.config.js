@@ -1,1 +1,1 @@
-export * from '@stimulcross/commitlint-config'
+export { default } from '@stimulcross/commitlint-config'
