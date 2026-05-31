@@ -48,8 +48,12 @@ export default defineConfig({
 		},
 		css: {
 			modules: {
+				context: path.resolve(__dirname, 'src'),
 				generateScopedName: '[name]_[local]_[hash:base64:5]',
 			},
 		},
 	}),
+	zip: {
+		includeSources: ['.env'],
+	},
 })
