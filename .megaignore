@@ -1,2 +1,3 @@
 -d:dist
 -d:.idea
+-d:node_modules
