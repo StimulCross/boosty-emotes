@@ -10,7 +10,7 @@ Add the Twitch streamers whose emotes you want to use to the extension to unlock
 
 ### Usage
 
-1. Install the extension for [Chromium](https://chromewebstore.google.com/detail/boosty-emotes/pejlmncncgbgabfhakeogmhmjinpbign) or [Firefox](YOUR_FIREFOX_LINK).
+1. Install the extension for [Chromium](https://chromewebstore.google.com/detail/boosty-emotes/pejlmncncgbgabfhakeogmhmjinpbign) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/boosty-emotes/).
 2. Log in using your Twitch account.
 3. Add Twitch streamers whose emotes you want to use.
 
@@ -24,12 +24,12 @@ You can see the extension in action on my Boosty page: `https://boosty.to/stimul
 
 **Supported Pages & Areas:**
 
-- **Channel Page**
-- **Stream Page**
-- **Chat Popup Page**
-- **Main Page Feed**
-- **Personal Messages**
-- **Post Creation & Editing**
+- Channel Page
+- Stream Page
+- Chat Popup Page
+- Main Page Feed
+- Personal Messages
+- Post Creation & Editing
 
 **Emote Capabilities:**
 
